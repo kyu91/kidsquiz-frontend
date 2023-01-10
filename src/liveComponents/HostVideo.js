@@ -27,7 +27,8 @@ const HostVideo = () => {
                 height="150"
                 src='https://www.w3schools.com/html/mov_bbb.mp4'
                 autoPlay
-                controls
+                playsInline
+                muted
             />
         </Paper>
 

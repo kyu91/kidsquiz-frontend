@@ -28,7 +28,8 @@ const GuestVideo = () => {
                 height="150"
                 src='https://www.w3schools.com/html/mov_bbb.mp4'
                 autoPlay
-                controls
+                playsInline
+                muted
             />
         </Paper>
         <Paper elevation={3}>
@@ -38,7 +39,8 @@ const GuestVideo = () => {
                 height="150"
                 src='https://www.w3schools.com/html/mov_bbb.mp4'
                 autoPlay
-                controls
+                playsInline
+                muted
             />
         </Paper>
         <Paper elevation={3}>
@@ -48,7 +50,8 @@ const GuestVideo = () => {
                 height="150"
                 src='https://www.w3schools.com/html/mov_bbb.mp4'
                 autoPlay
-                controls
+                playsInline
+                muted
             />
         </Paper>
         <Paper elevation={3}>
@@ -58,7 +61,8 @@ const GuestVideo = () => {
                 height="150"
                 src='https://www.w3schools.com/html/mov_bbb.mp4'
                 autoPlay
-                controls
+                playsInline
+                muted
             />
         </Paper>
     </Box>
