@@ -3,6 +3,7 @@ import GuestVideo from './GuestVideo';
 import HostVideo from './HostVideo';
 import Box from '@mui/material/Box';
 import LiveNav from './LiveNav';
+import Canvas from './Canvas';
 
 import './live_style.css';
 
@@ -26,7 +27,7 @@ const LiveMain = () => {
                 <LiveNav></LiveNav>
             </div>
             <div className = "canvarsPosition">
-                캠버스 구역
+                <Canvas></Canvas>
             </div>
             <div className = "hostVideoPosition">
                 <HostVideo></HostVideo>
