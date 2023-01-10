@@ -55,7 +55,7 @@ function App() {
      
 
             {/* 라이브 페이지 라우터 */}
-            <Route path="/live:id" element={
+            <Route path="/live/:id" element={
               <Container maxWidth="xl">
                 <LiveMain></LiveMain>
               </Container>
