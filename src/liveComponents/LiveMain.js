@@ -9,7 +9,9 @@ import './live_style.css';
 
 
 const LiveMain = () => {
+    
   return (
+
     <div>
 
         <GuestVideo></GuestVideo>
