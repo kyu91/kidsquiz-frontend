@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Canvars = () => {
+const TempCanvas = () => {
     //canvas에 마우스로 그릴수 있는 리액트 코드 짜줘
     const drawRef = React.useRef(null)
     const [isDrawing, setIsDrawing] = React.useState(false)
@@ -92,4 +92,4 @@ const Canvars = () => {
   )
 }
 
-export default Canvars
+export default TempCanvas
