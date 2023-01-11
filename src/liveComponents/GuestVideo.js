@@ -1,11 +1,19 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { sizing } from '@mui/system';
 import CardMedia from '@mui/material/CardMedia';
+import useStore from '../store';
 
 
-const GuestVideo = () => {
+
+
+const GuestVideo = ({guestNames}) => {
+    const {names, setNames} = useStore();
+    const [guestInfos, setGuestInfos] = React.useState([[]]);
+    console.log(names);
+
+
+
   return (
     <Box
         sx={{
@@ -17,54 +25,28 @@ const GuestVideo = () => {
             m: 1,
             mb: 5,
             width: 1/5,
-            height: 140,
+            height: 160,
             },
         }}
     >
-        <Paper elevation={3}>
-            <CardMedia
-                component="video"
-                alt="green iguana"
-                height="150"
-                src='https://www.w3schools.com/html/mov_bbb.mp4'
-                autoPlay
-                playsInline
-                muted
-            />
-        </Paper>
-        <Paper elevation={3}>
-            <CardMedia
-                component="video"
-                alt="green iguana"
-                height="150"
-                src='https://www.w3schools.com/html/mov_bbb.mp4'
-                autoPlay
-                playsInline
-                muted
-            />
-        </Paper>
-        <Paper elevation={3}>
-            <CardMedia
-                component="video"
-                alt="green iguana"
-                height="150"
-                src='https://www.w3schools.com/html/mov_bbb.mp4'
-                autoPlay
-                playsInline
-                muted
-            />
-        </Paper>
-        <Paper elevation={3}>
-            <CardMedia
-                component="video"
-                alt="green iguana"
-                height="150"
-                src='https://www.w3schools.com/html/mov_bbb.mp4'
-                autoPlay
-                playsInline
-                muted
-            />
-        </Paper>
+        {
+            names.map((guestName, index) => {
+                return (
+                    <Paper elevation={3} key={index}>
+                        <CardMedia
+                            component="video"
+                            alt="green iguana"
+                            height="150"
+                            src='https://www.w3schools.com/html/mov_bbb.mp4'
+                            autoPlay
+                            playsInline
+                            muted
+                        />
+                        <p>{guestName[0]}</p>
+                    </Paper>
+                )
+            })
+        }
     </Box>
   )
 }

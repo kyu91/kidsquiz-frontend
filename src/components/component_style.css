@@ -3,3 +3,8 @@
     height: 100%;   
     display: none;
 }
+
+.createClassButton{
+    text-align: center;
+    padding-top: 80px;
+}
