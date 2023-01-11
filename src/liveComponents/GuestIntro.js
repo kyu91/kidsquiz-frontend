@@ -2,52 +2,70 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CardCover from '@mui/material/CardMedia';
+import { NavLink } from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+
 
 import { useLocation } from 'react-router-dom';
+// import useStore from '../store';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+//모달
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
-const theme = createTheme();
 
 
 const GuestIntro = () => {
-    const [names, setNames] = React.useState('');
+    // const {names, setNames} = useStore();
+    // console.log(names);
+
+    //현재URL에서 /intro를 제거
+    const location = useLocation();
+    const updatedUrl = location.pathname.replace('/intro', '');
+
+    //사용자가 들어올때마다 고유 키를 생성
+    const guestKey = Math.random().toString(36).substr(2, 9);
+
+    console.log(guestKey);
+
+
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(names);
-        setNames("");
-        
+      e.preventDefault();   
+      
+      //로컬스토리지에 이름과 고유키를 저장
+      localStorage.setItem('gusetName', e.target.name.value);
+      localStorage.setItem('guestKey', guestKey);
+      
+
+    }
+    
+
+    //모달
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {
+      setOpen(false);
+      window.location.reload();
     }
 
-    const location = useLocation();
-    const updatedUrl = location.replace('/intro', '');
-    window.location.href = `${updatedUrl}`;
     
-    
-    
-    
-    
+
        
   return (
-    <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -83,24 +101,34 @@ const GuestIntro = () => {
             type="text"
             id="name"
             autoComplete="current-password"
-            onChange={(e) => {
-                setNames(e.target.value);
-            }}
           />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={() => {}}
-          >
-            입장하기
-          </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleOpen}
+            >
+              입장하기
+            </Button>
+
+            {/* 모달 */}
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  환영합니다.
+                </Typography>
+                <NavLink to={updatedUrl}>강의실 이동</NavLink>
+              </Box>
+            </Modal>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
-  </ThemeProvider>
   )
 }
 

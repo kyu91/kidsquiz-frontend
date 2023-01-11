@@ -9,6 +9,7 @@ import {
 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import './component_style.css';
 
 
 
@@ -66,7 +67,7 @@ export default function Boards() {
         },
       }}
     >
-        <Paper elevation={3}>
+        <Paper elevation={3} className='createClassButton'>
             <Button variant="contained" component={Link} to = "/class/new">강의 생성</Button>   
         </Paper>
         {
