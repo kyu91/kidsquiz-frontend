@@ -9,8 +9,7 @@ import useStore from '../store';
 
 const GuestVideo = ({guestNames}) => {
     const {names, setNames} = useStore();
-    const [guestInfos, setGuestInfos] = React.useState([[]]);
-    console.log(names);
+
 
 
 
