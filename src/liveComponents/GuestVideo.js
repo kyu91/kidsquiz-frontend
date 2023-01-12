@@ -2,15 +2,32 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import CardMedia from '@mui/material/CardMedia';
-import useStore from '../store';
 
 
+import MediasoupController from '../controller/MediasoupController';
 
+const controller = MediasoupController();
 
-const GuestVideo = ({guestNames}) => {
-    const {names, setNames} = useStore();
-    const [guestInfos, setGuestInfos] = React.useState([[]]);
-    console.log(names);
+// const ENDPOINT = "http://13.125.34.115:4000/";
+
+const GuestVideo =  () => {
+    
+    
+    React.useEffect(() => {
+        
+        //로컬스토리지에 저장된 이름과 방이름을 가져옴
+        const guestName = localStorage.getItem('gusetName');
+        const roomName = localStorage.getItem('roomName');
+        
+        console.log('드가기전')
+        const initCall = async () => {
+            await controller.init(roomName, guestName);
+        };
+        
+        initCall();
+        console.log('드가기후')
+    }, [])
+
 
 
 
@@ -29,24 +46,30 @@ const GuestVideo = ({guestNames}) => {
             },
         }}
     >
-        {
-            names.map((guestName, index) => {
-                return (
-                    <Paper elevation={3} key={index}>
-                        <CardMedia
-                            component="video"
-                            alt="green iguana"
-                            height="150"
-                            src='https://www.w3schools.com/html/mov_bbb.mp4'
-                            autoPlay
-                            playsInline
-                            muted
-                        />
-                        <p>{guestName[0]}</p>
-                    </Paper>
-                )
-            })
-        }
+
+             
+        <div id = 'video'>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <video id="localVideo" autoPlay muted ></video>
+                            <div style={{textAlign: 'center'}}>
+                                <span id="userName"> 유진 👻   </span>
+                                <button id="mute"> <i id="muteIcon"></i></button><span> </span>
+                                <button id="camera"><i id="cameraIcon"></i></button><span> </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="videoContainer"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p></p>
+        </div>
+             
+   
     </Box>
   )
 }

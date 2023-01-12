@@ -24,6 +24,7 @@
     "fabric": "^5.3.0",
     "http": "^0.0.1-security",
     "http-proxy-middleware": "^2.0.6",
+    "mediasoup-client": "^3.6.70",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

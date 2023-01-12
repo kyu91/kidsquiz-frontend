@@ -1,5 +1,5 @@
 import './Canvas.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
 import { v1 as uuid } from 'uuid'
 import { emitModify, emitAdd, emitAddP, modifyObj, addObj,addPObj, emitDelete, deleteObj, emitClear, clearObj } from './socket'

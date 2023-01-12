@@ -5,9 +5,6 @@ import HostVideo from './HostVideo';
 import Box from '@mui/material/Box';
 import LiveNav from './LiveNav';
 import Canvas from './Canvas';
-import useStore from '../store';
-
-
 
 import './live_style.css';
 
@@ -19,9 +16,10 @@ const LiveMain = () => {
     const token = localStorage.getItem('token');
     const guestKey = localStorage.getItem('guestKey');
 
+
     //게스트 이름과 고유키를 저장할 배열
     const [guestNames, setGuestNames] = React.useState([['김석규', '123'], ['김석규2', '1234']]);
-    const { names, setNames } = useStore();
+
     
     //로컬스토리지에서 name 가져오기
     const name = localStorage.getItem('gusetName');
@@ -44,6 +42,7 @@ const LiveMain = () => {
                 return;
             }
         }
+        
     }, []);
 
 
