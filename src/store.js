@@ -1,12 +1,16 @@
 import {create} from 'zustand';
 
-let useStore = create((set) => ({
-  names: [['홍길동', 1234]],
-  setNames(e){
-    set((state) => ({ names: [[...state.names], e ] }));
-  },
+let useSocket = create((set) => ({
+  socket: {},
+  setSockets(){
+    set((state) => ({
+      socket: state.socket
+    }));
+  }
+
+
 }));
 
 
 
-export default useStore;
+export default useSocket;

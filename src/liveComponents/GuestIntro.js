@@ -8,9 +8,13 @@ import Container from '@mui/material/Container';
 import CardCover from '@mui/material/CardMedia';
 import { NavLink } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
+//store.js improt
 
 
 import { useLocation } from 'react-router-dom';
+
+
+
 // import useStore from '../store';
 
 //모달
@@ -39,7 +43,8 @@ const GuestIntro = () => {
     //사용자가 들어올때마다 고유 키를 생성
     const guestKey = Math.random().toString(36).substr(2, 9);
 
-    console.log(guestKey);
+    //방이름을 추출
+    const roomName = updatedUrl.split('/')[2];
 
 
 
@@ -49,7 +54,13 @@ const GuestIntro = () => {
       //로컬스토리지에 이름과 고유키를 저장
       localStorage.setItem('gusetName', e.target.name.value);
       localStorage.setItem('guestKey', guestKey);
-      
+      localStorage.setItem('roomName', roomName);
+
+      // controller.init(roomName, e.target.name.value);
+
+      console.log(e.target.name.value); 
+      console.log(updatedUrl);
+      console.log(roomName);
 
     }
     
