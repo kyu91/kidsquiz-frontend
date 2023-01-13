@@ -22,7 +22,7 @@ const LiveMain = () => {
 
     
     //로컬스토리지에서 name 가져오기
-    const name = localStorage.getItem('gusetName');
+    const name = localStorage.getItem('guestName');
     const key = localStorage.getItem('guestKey');
 
     
@@ -65,7 +65,7 @@ const LiveMain = () => {
                 <LiveNav></LiveNav>
             </div>
             <div className = "canvarsPosition">
-                {/* <Canvas></Canvas> */}
+                <Canvas></Canvas>
             </div>
             <div className = "hostVideoPosition">
                 <HostVideo guestNames={guestNames}></HostVideo>

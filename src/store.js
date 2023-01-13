@@ -1,16 +1,14 @@
 import {create} from 'zustand';
 
-let useSocket = create((set) => ({
-  socket: {},
-  setSockets(){
-    set((state) => ({
-      socket: state.socket
+let useProducerId = create((set) => ({
+  useproducerId: [],
+  setProducerId : (state) =>{
+    set((e) => ({
+      useproducerId: [...state.useproducerId, e]
     }));
   }
 
 
 }));
 
-
-
-export default useSocket;
+export default useProducerId;

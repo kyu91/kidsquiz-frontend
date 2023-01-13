@@ -52,7 +52,7 @@ const GuestIntro = () => {
       e.preventDefault();   
       
       //로컬스토리지에 이름과 고유키를 저장
-      localStorage.setItem('gusetName', e.target.name.value);
+      localStorage.setItem('guestName', e.target.name.value);
       localStorage.setItem('guestKey', guestKey);
       localStorage.setItem('roomName', roomName);
 
