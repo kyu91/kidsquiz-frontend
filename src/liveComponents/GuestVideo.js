@@ -1,35 +1,40 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import CardMedia from '@mui/material/CardMedia';
+import useProducerId from '../store';
+import './live_style.css'
 
 
 import MediasoupController from '../controller/MediasoupController';
 
+
+//
+import {io} from "socket.io-client";
+import * as mediasoupClient from 'mediasoup-client';
+import VideoContainer from '../liveComponents/VideoContainer';
+import RemoteMedia from './RemoteMedia';
+
+
+
+
 const controller = MediasoupController();
 
-// const ENDPOINT = "http://13.125.34.115:4000/";
+const socket = io.connect("http://localhost:4000") 
+
 
 const GuestVideo =  () => {
+    const guestName = localStorage.getItem('guestName');
     
     
     React.useEffect(() => {
+        console.log('유진아 화이팅');
+        controller.init();
+        // const initCall = async() => {
+        //     controller.init();
+        // };
         
-        //로컬스토리지에 저장된 이름과 방이름을 가져옴
-        const guestName = localStorage.getItem('gusetName');
-        const roomName = localStorage.getItem('roomName');
+        // initCall();
         
-        console.log('드가기전')
-        const initCall = async () => {
-            await controller.init(roomName, guestName);
-        };
-        
-        initCall();
-        console.log('드가기후')
     }, [])
-
-
-
 
   return (
     <Box
@@ -49,24 +54,29 @@ const GuestVideo =  () => {
 
              
         <div id = 'video'>
-            <table>
+            <table className = "mainTable">
                 <tbody>
                     <tr>
-                        <td>
-                            <video id="localVideo" autoPlay muted ></video>
-                            <div style={{textAlign: 'center'}}>
-                                <span id="userName"> 유진 👻   </span>
-                                <button id="mute"> <i id="muteIcon"></i></button><span> </span>
-                                <button id="camera"><i id="cameraIcon"></i></button><span> </span>
+                        <td >
+                            <div className='localColumn'>
+                                <video id="localVideo" autoPlay muted>
+                                </video>
+                                <div style={{textAlign: 'center'}}>
+                                    <span id="userName"> {guestName} 👻   </span>
+                                    <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span>
+                                    <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span>
+                                </div>
                             </div>
                         </td>
-                        <td>
-                            <div id="videoContainer"></div>
+                        <td className='remotColumn'>
+                            <div id="videoContainer" style={{display: 'flex'}}> 
+                            
+                                
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <p></p>
         </div>
              
    
