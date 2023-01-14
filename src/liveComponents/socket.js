@@ -65,7 +65,7 @@ export const addimageObj = canvas => {
     const {url, id} = data
     let object
     fabric.Image.fromURL(url, function(Image){
-      Image.scale(0.3);
+      Image.scale(0.4);
       object = Image
       object.set({id : id})
       canvas.add(object);

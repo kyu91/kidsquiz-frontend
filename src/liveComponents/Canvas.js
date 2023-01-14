@@ -17,12 +17,25 @@ function Canvas() {
   const [widthvalue,setWidthvalue] = useState(1);
   const [colorvalue,setColorvalue] = useState('#000000');
   const [imageURL,setimageURL] = useState('');
+  const [show,setShow] = useState(false);
+
+  const drawmode = () => {
+    if (canvas.isDrawingMode === true){
+      canvas.isDrawingMode = false
+      setShow(false)
+    }
+    else {
+      canvas.isDrawingMode = true
+      setShow(true)
+      console.log(canvas.freeDrawingBrush);
+    }
+  }
 
 
   const addImage = ()=> {
     let object
     fabric.Image.fromURL(imageURL, function(Image){
-      Image.scale(0.3);
+      Image.scale(0.4);
       object = Image
       object.set({id: uuid()})
       canvas.add(object);
@@ -112,15 +125,6 @@ function Canvas() {
     [canvas]
   )
 
-  const drawmode = () => {
-    if (canvas.isDrawingMode === true){
-      canvas.isDrawingMode = false
-      console.log('test성공');
-    }
-    else {
-      canvas.isDrawingMode = true
-    }
-  }
 
   const addShape = (e) => {
     let type = e.target.name;
@@ -318,7 +322,7 @@ function Canvas() {
       </ButtonGroup>
 
       <span className='info'>{widthvalue}</span>
-      <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>
+      {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
 
       <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 
         onChange={(e)=>{setimageURL(e.target.value); console.log(e.target.value);}}></input>
