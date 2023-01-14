@@ -7,12 +7,11 @@
 
 .hostVideoPosition{
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 5px;
+    right: 5px;
 }
 
 .canvarsPosition{
-    
     width: 100%;
     height: 700px;
     background-color: rgb(245, 245, 245);
@@ -29,7 +28,13 @@
     background-color: blueviolet;
 }
 
+#videoPosition {
+    width: 200px;
+    background: transparent;
+    background-color: rgba(255,255,255,0.9);
+}
 video{
-    width: 100px;
+    width: 100%;
 }
 
+/* localVideo */

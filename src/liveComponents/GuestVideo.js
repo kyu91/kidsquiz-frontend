@@ -26,21 +26,21 @@ const GuestVideo =  () => {
     }, [])
 
   return (
-    <Box
-        sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center', //Paper를 가로로 정렬
-            // alignContent: 'center', // Paper 요소를 세로로 정렬
-            '& > :not(style)': {
-            m: 1,
-            mb: 5,
-            width: 1/5,
-            height: 160,
-            },
-        }}
-    >
-
+    // <Box
+    //     sx={{
+    //         display: 'flex',
+    //         flexWrap: 'wrap',
+    //         justifyContent: 'center', //Paper를 가로로 정렬
+    //         // alignContent: 'center', // Paper 요소를 세로로 정렬
+    //         '& > :not(style)': {
+    //         m: 1,
+    //         mb: 5,
+    //         width: 1/5,
+    //         height: 160,
+    //         },
+    //     }}
+    // >
+<>
              
         <div id = 'video'>
             <div className = "mainTable">
@@ -50,14 +50,14 @@ const GuestVideo =  () => {
                             <video id="localVideo" autoPlay muted>
                             </video>
                             <div>
-                                <span id="userName"> {guestName} 👻   </span>
+                                <span id="userName"> {guestName ? guestName : "🌼 선생님"} </span>
                                 <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span>
                                 <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span>
                             </div>
                         </div>
                     </div>
                     
-                    <div className='remotColumn'>
+                    <div className='remoteColumn'>
                         <div id="videoContainer"> 
                         
                             
@@ -68,7 +68,8 @@ const GuestVideo =  () => {
         </div>
              
    
-    </Box>
+    {/* </Box> */}
+    </>
   )
 }
 
