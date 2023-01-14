@@ -3,12 +3,19 @@ import * as mediasoupClient from 'mediasoup-client';
 
 
 
- 
+
+const socket = io.connect("http://localhost:4000")
+
+//익스포트 함수 
+export const getSocket= ()=> {
+    return socket
+}
   
 
 const MediasoupController = (producerId) => {
 
-    const socket = io.connect("http://localhost:4000")
+    
+    console.log("확인🔥🔥🔥🔥🔥🔥",socket)
     let device
     let rtpCapabilities
     let producerTransport
@@ -55,6 +62,7 @@ const MediasoupController = (producerId) => {
         socket.on('connection-success', ({ socketId }) => {
             console.log("나 찍혀야해 !!!! 🚀🚀 initCall");
             console.log(socketId)
+            console.log("확인🔥🔥🔥🔥🔥🔥",socket)
             getLocalStream();
         });
         

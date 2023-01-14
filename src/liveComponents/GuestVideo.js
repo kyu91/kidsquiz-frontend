@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import './live_style.css'
+import './css/live_style.css'
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
