@@ -304,7 +304,8 @@ function Canvas() {
           type='button' 
           class="navBtn"
           name='on/off(draw)' 
-          onClick={drawmode}> 그리기</Button>
+          onClick={drawmode}> 그리기</Button>      
+     
         <input 
           key="color"
           type='color' 
@@ -312,7 +313,7 @@ function Canvas() {
           onClick={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
-        
+
       
       </ButtonGroup>
 

@@ -52,11 +52,11 @@ const LiveMain = () => {
             history(`${location.pathname}/intro`);
         }
 
-        for (let i = 0; i < guestNames.length; i++) {
-            if (guestNames[i].key === key) {
-                return;
-            }
-        }
+        // for (let i = 0; i < guestNames.length; i++) {
+        //     if (guestNames[i].key === key) {
+        //         return;
+        //     }
+        // }
         
     }, []);
 

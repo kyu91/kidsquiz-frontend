@@ -14,6 +14,9 @@ import CreateClass from './components/CreateClass';
 import LiveMain from './liveComponents/LiveMain';
 import GuestIntro from './liveComponents/GuestIntro';
 
+//css리셋
+import { Reset } from 'styled-reset'
+
 function App() {
 
   const location = useLocation();
@@ -35,6 +38,7 @@ function App() {
   return (
     <>
       <React.Fragment>
+        <Reset />
         <CssBaseline />
         
           <Routes>

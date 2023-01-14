@@ -1,6 +1,9 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import './live_style.css'
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+
 
 
 //컨트롤러 임포트
@@ -24,6 +27,8 @@ const GuestVideo =  () => {
         
         controller.init();
     }, [])
+
+
 
   return (
     // <Box
@@ -50,9 +55,17 @@ const GuestVideo =  () => {
                             <video id="localVideo" autoPlay muted>
                             </video>
                             <div>
-                                <span id="userName"> {guestName ? guestName : "🌼 선생님"} </span>
-                                <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span>
-                                <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span>
+                                 <span id="userName"> {guestName ? guestName : "🌼 선생님"} </span>
+                                {/* <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span> */}
+                                
+                                <button id="mute">
+                                     
+                                </button>
+                                <button id="camera">
+                                <VideocamIcon id="muteIcon"></VideocamIcon> 
+                                </button>
+                                
+                                {/* <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span> */}
                             </div>
                         </div>
                     </div>
