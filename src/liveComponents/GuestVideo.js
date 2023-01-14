@@ -1,76 +1,88 @@
-import * as React from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import CardMedia from '@mui/material/CardMedia';
+import './live_style.css'
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
 
+
+//컨트롤러 임포트
 import MediasoupController from '../controller/MediasoupController';
 
 const controller = MediasoupController();
 
-// const ENDPOINT = "http://13.125.34.115:4000/";
-
 const GuestVideo =  () => {
+    const guestName = localStorage.getItem('guestName');
+    //토큰이 있는 비디오는 좌측 아래에 보여야 하고 guestKey가 있는 비디오는 우측 위에 보여야 한다.
+    const token = localStorage.getItem('token');
+    const guestKey = localStorage.getItem('guestKey');
+
+    const [guestNames, setGuestNames] = React.useState([]);
+    const [guestKeys, setGuestKeys] = React.useState([]);
+
+    const videoPositionRef = React.useRef(null);
+
     
-    
-    React.useEffect(() => {
+    React.useEffect( () => {
         
-        //로컬스토리지에 저장된 이름과 방이름을 가져옴
-        const guestName = localStorage.getItem('gusetName');
-        const roomName = localStorage.getItem('roomName');
-        
-        console.log('드가기전')
-        const initCall = async () => {
-            await controller.init(roomName, guestName);
-        };
-        
-        initCall();
-        console.log('드가기후')
+        controller.init();
     }, [])
 
 
 
-
   return (
-    <Box
-        sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center', //Paper를 가로로 정렬
-            // alignContent: 'center', // Paper 요소를 세로로 정렬
-            '& > :not(style)': {
-            m: 1,
-            mb: 5,
-            width: 1/5,
-            height: 160,
-            },
-        }}
-    >
-
+    // <Box
+    //     sx={{
+    //         display: 'flex',
+    //         flexWrap: 'wrap',
+    //         justifyContent: 'center', //Paper를 가로로 정렬
+    //         // alignContent: 'center', // Paper 요소를 세로로 정렬
+    //         '& > :not(style)': {
+    //         m: 1,
+    //         mb: 5,
+    //         width: 1/5,
+    //         height: 160,
+    //         },
+    //     }}
+    // >
+<>
              
         <div id = 'video'>
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <video id="localVideo" autoPlay muted ></video>
-                            <div style={{textAlign: 'center'}}>
-                                <span id="userName"> 유진 👻   </span>
-                                <button id="mute"> <i id="muteIcon"></i></button><span> </span>
-                                <button id="camera"><i id="cameraIcon"></i></button><span> </span>
+            <div className = "mainTable">
+                <div>
+                    <div id = "videoPosition" className='localColumn'>
+                        <div >
+                            <video id="localVideo" autoPlay muted>
+                            </video>
+                            <div>
+                                 <span id="userName"> {guestName ? guestName : "🌼 선생님"} </span>
+                                {/* <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span> */}
+                                
+                                <button id="mute">
+                                     
+                                </button>
+                                <button id="camera">
+                                <VideocamIcon id="muteIcon"></VideocamIcon> 
+                                </button>
+                                
+                                {/* <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span> */}
                             </div>
-                        </td>
-                        <td>
-                            <div id="videoContainer"></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <p></p>
+                        </div>
+                    </div>
+                    
+                    <div className='remoteColumn'>
+                        <div id="videoContainer"> 
+                        
+                            
+                        </div>
+                    </div>     
+                </div>
+            </div>
         </div>
              
    
-    </Box>
+    {/* </Box> */}
+    </>
   )
 }
 

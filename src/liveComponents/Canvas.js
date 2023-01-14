@@ -5,6 +5,11 @@ import { v1 as uuid } from 'uuid'
 import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj,emitClear,clearObj
   ,emitAddImage, addimageObj } from './socket'
 
+//석규
+import './Canvas.css';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
 function Canvas() {
   const [canvas, setCanvas] = useState('');
   const [widthvalue,setWidthvalue] = useState(1);
@@ -250,34 +255,65 @@ function Canvas() {
   return (
     <div className='App'>
       <div>
-        <button type='button' name='circle' onClick={addShape}>
-          Add a Circle
-      </button>
-        <button type='button' name='triangle' onClick={addShape}>
-          Add a Triangle
-      </button>
-        <button type='button' name='rectangle' onClick={addShape}>
-          Add a Rectangle
-      </button>
+      <ButtonGroup 
+        variant="contained" 
+        aria-label="outlined primary button group"
+        size='small'>
+        <Button 
+          key="Square"
+          type='button' 
+          class="navBtn"
+          name='circle' 
+          onClick={addShape}> 원 🟢 </Button>
 
-      <button type = 'button' name='delete' onClick={deleteObject}>
-          delete
-      </button>
+        <Button 
+          key = "Triangle"
+          type='button' 
+          class="navBtn"
+          name='triangle' 
+          onClick={addShape}> 삼각형 🔺</Button>
 
-      <button type = 'button' name='delete' onClick={clearCanvas}>
-          clear
-      </button>
+        <Button 
+          key="Rectangle"
+          type='button' 
+          class="navBtn"
+          name='rectangle' 
+          onClick={addShape}>사각형 🟦 </Button>
+        <Button 
+          key="delete"
+          type='button' 
+          class="navBtn"
+          name='delete' 
+          onClick={deleteObject}> 지우기 </Button>
+        <Button 
+          key="clear"
+          type='button' 
+          class="navBtn"
+          name='clear' 
+          onClick={clearCanvas}>새 도화지 </Button>
+        <Button 
+          key="addTangram"
+          type='button' 
+          class="navBtn"
+          name='addTangram' 
+          onClick={addTangram}>칠교</Button>
+        <Button 
+          key="on/off(draw)"
+          type='button' 
+          class="navBtn"
+          name='on/off(draw)' 
+          onClick={drawmode}> 그리기</Button>      
+     
+        <input 
+          key="color"
+          type='color' 
+          name='color' 
+          onClick={changeColor}
+          defaultValue="#000000" 
+          id="drawing-color"></input>
 
-      <button type = 'button' name='addTangram' onClick={addTangram}>
-      addTangram
-      </button>
-
-      <button type = 'button' name='on/off(draw)' onClick={drawmode}>
-      on/off(draw)
-      </button>
-
-      <input type="color" onChange = {changeColor} defaultValue="#000000" id="drawing-color">
-      </input>
+      
+      </ButtonGroup>
 
       <span className='info'>{widthvalue}</span>
       <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>

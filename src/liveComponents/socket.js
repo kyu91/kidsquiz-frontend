@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import {fabric} from 'fabric'
 
-const socket = io("http://localhost:8080/")
+const socket = io("http://localhost:4000/")
 
 // emitters
 export const emitAdd = (obj) => {
@@ -13,19 +13,15 @@ export const emitAddImage = (data) => {
   console.log("이미지 전송 완료")
   console.log(data)
 }
-
 export const emitAddP = (path) =>{
     socket.emit('path-added', path)
 }
-
 export const emitModify = (obj) => {
   socket.emit('object-modified', obj)
 }
-
 export const emitDelete = (obj) => {
     socket.emit('object-deleted', obj)
 }
-
 export const emitClear = (obj) => {
     socket.emit('object-clear',obj)
 }
@@ -63,7 +59,7 @@ export const addObj = canvas => {
         fill: obj.fill,
       })
     }
-    
+
     object.set({id: id})
     canvas.add(object)
     canvas.renderAll()
@@ -84,7 +80,6 @@ export const addimageObj = canvas => {
     })
   })
 
-
 }
 
 export const addPObj = canvas => {
@@ -93,7 +88,7 @@ export const addPObj = canvas => {
       const {path, id} = data
       var objectpath
       console.log('addPObj의 문제');
-  
+
       objectpath = new fabric.Path(path.path, {
         fill: path.fill,
         stroke: path.color,
@@ -132,7 +127,6 @@ objectpath.set({backgroundColor: path.backgroundColor})
 objectpath.set({fillRule: path.fillRule})
 objectpath.set({paintFirst: path.paintFirst})
 objectpath.set({globalCompositeOperation: path.globalCompositeOperation})
-
 
       console.log('addPObj의 문제3');
       objectpath.setCoords()
