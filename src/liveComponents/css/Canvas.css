@@ -9,13 +9,7 @@ button {
 }
 
 input[type=range] {
-<<<<<<< HEAD:src/liveComponents/css/Canvas.css
-  -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
   width: 100x; /* 슬라이더 길이 */
-=======
-  /* -webkit-appearance: none; 기본 CSS 스타일을 적용하지 않기 위해서 */
-  width: 150px; /* 슬라이더 길이 */
->>>>>>> 9ad0a424336086cf2146cd3cd466c3f09d042185:src/liveComponents/Canvas.css
   height: 8px; /* 슬라이더 두께 */
   border-radius: 5px; /* 슬라이더 모서리를 약간 둥글게 */
   background: powderblue; /* 슬라이더 색상 */
