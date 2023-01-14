@@ -1,39 +1,28 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import useProducerId from '../store';
 import './live_style.css'
 
 
+//컨트롤러 임포트
 import MediasoupController from '../controller/MediasoupController';
-
-
-//
-import {io} from "socket.io-client";
-import * as mediasoupClient from 'mediasoup-client';
-import VideoContainer from '../liveComponents/VideoContainer';
-import RemoteMedia from './RemoteMedia';
-
-
-
 
 const controller = MediasoupController();
 
-const socket = io.connect("http://localhost:4000") 
-
-
 const GuestVideo =  () => {
     const guestName = localStorage.getItem('guestName');
+    //토큰이 있는 비디오는 좌측 아래에 보여야 하고 guestKey가 있는 비디오는 우측 위에 보여야 한다.
+    const token = localStorage.getItem('token');
+    const guestKey = localStorage.getItem('guestKey');
+
+    const [guestNames, setGuestNames] = React.useState([]);
+    const [guestKeys, setGuestKeys] = React.useState([]);
+
+    const videoPositionRef = React.useRef(null);
+
     
-    
-    React.useEffect(() => {
-        console.log('유진아 화이팅');
+    React.useEffect( () => {
+        
         controller.init();
-        // const initCall = async() => {
-        //     controller.init();
-        // };
-        
-        // initCall();
-        
     }, [])
 
   return (
@@ -54,29 +43,28 @@ const GuestVideo =  () => {
 
              
         <div id = 'video'>
-            <table className = "mainTable">
-                <tbody>
-                    <tr>
-                        <td >
-                            <div className='localColumn'>
-                                <video id="localVideo" autoPlay muted>
-                                </video>
-                                <div style={{textAlign: 'center'}}>
-                                    <span id="userName"> {guestName} 👻   </span>
-                                    <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span>
-                                    <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span>
-                                </div>
+            <div className = "mainTable">
+                <div>
+                    <div id = "videoPosition" className='localColumn'>
+                        <div >
+                            <video id="localVideo" autoPlay muted>
+                            </video>
+                            <div>
+                                <span id="userName"> {guestName} 👻   </span>
+                                <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span>
+                                <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span>
                             </div>
-                        </td>
-                        <td className='remotColumn'>
-                            <div id="videoContainer" style={{display: 'flex'}}> 
+                        </div>
+                    </div>
+                    
+                    <div className='remotColumn'>
+                        <div id="videoContainer"> 
+                        
                             
-                                
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>     
+                </div>
+            </div>
         </div>
              
    

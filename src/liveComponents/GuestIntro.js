@@ -56,12 +56,6 @@ const GuestIntro = () => {
       localStorage.setItem('guestKey', guestKey);
       localStorage.setItem('roomName', roomName);
 
-      // controller.init(roomName, e.target.name.value);
-
-      console.log(e.target.name.value); 
-      console.log(updatedUrl);
-      console.log(roomName);
-
     }
     
 
