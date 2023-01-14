@@ -14,15 +14,15 @@ import './component_style.css';
 
 
 
-export default function Material() {
+export default function Materials() {
 
-    const [boards, setBoards] = React.useState([]);
+    const [materials, setMaterials] = React.useState([]);
 
     React.useEffect(() => {
-        const getBoards = async()=>{
+        const getMaterials = async()=>{
             const config = {
                 method: 'get',
-                url: '/api/class',
+                url: '/api/material',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `${localStorage.getItem('token')}`
@@ -34,19 +34,19 @@ export default function Material() {
                 .then(response => {
                     console.log(response.data);
 
-                    setBoards(response.data);
+                    setMaterials(response.data);
                 }).catch(error => {
-                    console.error(error);
+                    console.error(error.toJSON);
                 }
             );
         }
-        getBoards();
+        getMaterials();
     }, []);
 
     const location = useLocation();
     const token = localStorage.getItem('token');
     React.useEffect(() => {
-        if (location.pathname === '/class') {
+        if (location.pathname === '/material') {
           
           if (!token) {
             // Redirect to the /class page
@@ -68,9 +68,23 @@ export default function Material() {
       }}
     >
         <Paper elevation={3} className='createClassButton'>
-            <Button variant="contained" component={Link} to = "/material/new">교구 생성</Button>   
+            <Button variant="contained" component={Link} to = "/material/new">교구 생성</Button>
         </Paper>
-        
+        {
+          materials.map((material, index) => {
+            
+            return (
+              <Paper elevation={3} ke={index} >
+                <Paper variant='outlined' component="img" src ={material.puzzle.image}
+                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
+                <h2> 제목 : {material.puzzle.puzzleId} </h2>
+                <p> 이미지 : {material.puzzle.material}</p>
+                <p>row, column : {material.puzzle.material}</p>
+              </Paper>
+            )
+          })
+        }
+               
     </Box>
   );
 }

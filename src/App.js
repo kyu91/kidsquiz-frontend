@@ -17,7 +17,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useState } from 'react';
-import Material from './components/Material';
+import Materials from './components/Material';
 import CreateMaterial from './components/CreateMaterial';
 
 function App() {
@@ -123,7 +123,7 @@ function App() {
             {
             value == 0 ? <div>
               
-              <Material></Material>
+              <Materials></Materials>
             </div>: null
             }
             {
