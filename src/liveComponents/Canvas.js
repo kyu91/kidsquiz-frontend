@@ -12,7 +12,6 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 
-
 function Canvas() {
   const [canvas, setCanvas] = useState('');
   const [widthvalue,setWidthvalue] = useState(1);
@@ -265,49 +264,58 @@ function Canvas() {
         <Button 
           key="Square"
           type='button' 
+          class="navBtn"
           name='circle' 
-          onClick={addShape}>동그라미</Button>
+          onClick={addShape}> 원 🟢 </Button>
 
         <Button 
           key = "Triangle"
           type='button' 
+          class="navBtn"
           name='triangle' 
-          onClick={addShape}>삼각형</Button>
+          onClick={addShape}> 삼각형 🔺</Button>
 
         <Button 
           key="Rectangle"
           type='button' 
+          class="navBtn"
           name='rectangle' 
-          onClick={addShape}>직사각형</Button>
+          onClick={addShape}>사각형 🟦 </Button>
         <Button 
           key="delete"
           type='button' 
+          class="navBtn"
           name='delete' 
-          onClick={deleteObject}>선택삭제</Button>
+          onClick={deleteObject}> 지우기 </Button>
         <Button 
           key="clear"
           type='button' 
+          class="navBtn"
           name='clear' 
-          onClick={clearCanvas}>전체삭제</Button>
+          onClick={clearCanvas}>새 도화지 </Button>
         <Button 
           key="addTangram"
           type='button' 
+          class="navBtn"
           name='addTangram' 
-          onClick={addTangram}>칠교놀이</Button>
+          onClick={addTangram}>칠교</Button>
         <Button 
           key="on/off(draw)"
           type='button' 
+          class="navBtn"
           name='on/off(draw)' 
-          onClick={drawmode}>on/off(draw)</Button>       
-      
-      </ButtonGroup>
-      <input 
+          onClick={drawmode}> 그리기</Button>      
+     
+        <input 
           key="color"
           type='color' 
           name='color' 
           onClick={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
+
+      
+      </ButtonGroup>
 
       <span className='info'>{widthvalue}</span>
       <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>

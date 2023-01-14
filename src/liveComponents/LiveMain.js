@@ -65,17 +65,13 @@ const LiveMain = () => {
   return (
 
     <div>
-
-        
-
         <Box
             className='canvarsContiner'
             
             sx={{
                 maxWidth: '100%',
                 maxHeight: '100%',
-            }}
-        >
+            }}>
             <div className = "navPosition" ref={useNavStyle} style={navStyle}>
                 <LiveNav></LiveNav>
             </div>
