@@ -31,21 +31,28 @@ function Canvas() {
     }
   }
 
+  // var pencil;
+  // pencil = new fabric.PencilBrush(canvas);
+  // canvas.freeDrawingBrush = pencil;
 
-  const addImage = ()=> {
-    let object
-    fabric.Image.fromURL(imageURL, function(Image){
-      Image.scale(0.4);
-      object = Image
-      object.set({id: uuid()})
-      canvas.add(object);
-      emitAddImage({url: imageURL, id: object.id})
-      canvas.renderAll()
-    })
+  const erasemode = () => {
+      canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
+      canvas.freeDrawingBrush.width = parseInt(widthvalue)
   }
 
-  
-  
+  const pencilmode = () => {
+    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
+    canvas.freeDrawingBrush.width = parseInt(widthvalue);
+  }
+
+
+  const changeWidth = (e) =>{
+    setWidthvalue(e.target.value);
+    canvas.freeDrawingBrush.width = parseInt(widthvalue);
+
+  }
+
+
   const changeColor = (e) =>{
     setColorvalue(e.target.value);
     canvas.freeDrawingBrush.color = colorvalue;
@@ -53,21 +60,12 @@ function Canvas() {
     console.log(canvas.freeDrawingBrush.color);
     console.log(colorvalue);
   }
-  
-  const changeWidth = (e) =>{
-    setWidthvalue(e.target.value);
-    var pencil;
-    pencil = new fabric.PencilBrush(canvas);
-    canvas.freeDrawingBrush = pencil;
-    pencil.width = parseInt(widthvalue);
-  }
-
 
   const initCanvas = () =>
      new fabric.Canvas('canv', {
        isDrawingMode: false,
-       height: 1500,
-       width: 1500,
+       height: 1920,
+       width: 1080,
      })
 
   useEffect(() => {
@@ -126,24 +124,39 @@ function Canvas() {
   )
 
 
+  const addImage = ()=> {
+    let object
+    fabric.Image.fromURL(imageURL, function(Image){
+      Image.scale(0.4);
+      object = Image
+      object.set({id: uuid()})
+      canvas.add(object);
+      emitAddImage({url: imageURL, id: object.id})
+      canvas.renderAll()
+    })
+  }
+
   const addShape = (e) => {
     let type = e.target.name;
     let object
 
     if (type === 'rectangle') {
       object = new fabric.Rect({
+        fill : colorvalue,
         height: 75,
         width: 150,
       });
 
     } else if (type === 'triangle') {
       object = new fabric.Triangle({
+        fill : colorvalue,
         width: 100,
         height: 100,
       })
 
     } else if (type === 'circle') {
       object = new fabric.Circle({
+        fill : colorvalue,
         radius: 50,
       })
     }
@@ -308,20 +321,33 @@ function Canvas() {
           type='button' 
           class="navBtn"
           name='on/off(draw)' 
-          onClick={drawmode}> 그리기</Button>      
+          onClick={drawmode}> 그리기/도형</Button>
+        <Button 
+          key="erase"
+          type='button' 
+          class="navBtn"
+          name='imageadd' 
+          onClick={erasemode}> 지우개</Button>     
+
+        <Button 
+          key="pencil"
+          type='button' 
+          class="navBtn"
+          name='imageadd' 
+          onClick={pencilmode}> 연필</Button> 
      
         <input 
           key="color"
           type='color' 
-          name='color' 
-          onClick={changeColor}
+          class='color' 
+          onChange={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
 
       
       </ButtonGroup>
 
-      <span className='info'>{widthvalue}</span>
+      {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
 
       <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 

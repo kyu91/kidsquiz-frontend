@@ -14,7 +14,7 @@ button {
 }
 
 input[type=range] {
-  -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+  /* -webkit-appearance: none; 기본 CSS 스타일을 적용하지 않기 위해서 */
   width: 150px; /* 슬라이더 길이 */
   height: 8px; /* 슬라이더 두께 */
   border-radius: 5px; /* 슬라이더 모서리를 약간 둥글게 */
