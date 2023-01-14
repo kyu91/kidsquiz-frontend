@@ -6,7 +6,8 @@ import Box from '@mui/material/Box';
 import LiveNav from './LiveNav';
 import Canvas from './Canvas';
 
-import './live_style.css';
+import './css/live_style.css';
+import zIndex from '@mui/material/styles/zIndex';
 
 
 
@@ -34,7 +35,8 @@ const LiveMain = () => {
     const useNavStyle = React.useRef(null);
     //토큰이 없다면 useNavStyle요소를 숨김
     const navStyle = {
-        display: token ? 'block' : 'none'
+        display: token ? 'block' : 'none',
+        zIndex: 20 
     }
 
 
@@ -76,7 +78,7 @@ const LiveMain = () => {
                 <LiveNav></LiveNav>
             </div>
             <div className = "canvarsPosition">
-                <Canvas></Canvas>
+                <Canvas style = {{zIndex :'8'}}></Canvas>
             </div>
             <div className = "hostVideoPosition">
                 <GuestVideo guestNames={guestNames}></GuestVideo>

@@ -1,4 +1,4 @@
-import './Canvas.css';
+import './css/Canvas.css';
 import React, { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
 import { v1 as uuid } from 'uuid'
@@ -6,11 +6,9 @@ import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, 
   ,emitAddImage, addimageObj } from './socket'
 
 //석규
-import './Canvas.css';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-
-
+import Quiz from './Quiz'
 
 function Canvas() {
   const [canvas, setCanvas] = useState('');
@@ -281,45 +279,45 @@ function Canvas() {
         <Button 
           key="Square"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='circle' 
           onClick={addShape}> 원 🟢 </Button>
 
         <Button 
           key = "Triangle"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='triangle' 
           onClick={addShape}> 삼각형 🔺</Button>
 
         <Button 
           key="Rectangle"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='rectangle' 
           onClick={addShape}>사각형 🟦 </Button>
         <Button 
           key="delete"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='delete' 
           onClick={deleteObject}> 지우기 </Button>
         <Button 
           key="clear"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='clear' 
           onClick={clearCanvas}>새 도화지 </Button>
         <Button 
           key="addTangram"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='addTangram' 
           onClick={addTangram}>칠교</Button>
         <Button 
           key="on/off(draw)"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='on/off(draw)' 
           onClick={drawmode}> 그리기/도형</Button>
         <Button 
@@ -355,6 +353,8 @@ function Canvas() {
         <button onClick={addImage}>버튼</button>
 
       </div>
+
+      <Quiz></Quiz>
       <div>
         <canvas id="canv" />
       </div>

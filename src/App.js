@@ -16,6 +16,7 @@ import GuestIntro from './liveComponents/GuestIntro';
 
 //css리셋
 import { Reset } from 'styled-reset'
+import './index.css'
 
 function App() {
 

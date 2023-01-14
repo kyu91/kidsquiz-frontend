@@ -41,9 +41,10 @@ export default function LiveNav() {
         <MenuItem onClick={handleClose}>동물놀이</MenuItem>
         <MenuItem onClick={handleClose}>사물놀이</MenuItem>
         <MenuItem onClick={handleClose}>코딩놀이</MenuItem>
+        <MenuItem onClick={handleClose}>퀴즈놀이</MenuItem>
     </Menu>
 
-
+        
     <BottomNavigation sx={{ width: 400, margin: 1 }} value={value} onChange={handleChange}>
       <BottomNavigationAction
         label="Recents"
@@ -71,7 +72,7 @@ export default function LiveNav() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined} />
     </BottomNavigation>
-
+    
  
   </>
   );

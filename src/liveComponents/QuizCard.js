@@ -1,0 +1,9 @@
+
+function QuizCard () {
+
+    return (
+        <>
+            
+        </>
+    )
+}
