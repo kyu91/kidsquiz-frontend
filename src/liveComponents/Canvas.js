@@ -2,12 +2,28 @@ import './Canvas.css';
 import React, { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
 import { v1 as uuid } from 'uuid'
-import { emitModify, emitAdd, emitAddP, modifyObj, addObj,addPObj, emitDelete, deleteObj, emitClear, clearObj } from './socket'
+import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj,emitClear,clearObj
+  ,emitAddImage, addimageObj } from './socket'
 
 function Canvas() {
   const [canvas, setCanvas] = useState('');
   const [widthvalue,setWidthvalue] = useState(1);
   const [colorvalue,setColorvalue] = useState('#000000');
+  const [imageURL,setimageURL] = useState('');
+
+
+  const addImage = ()=> {
+    let object
+    fabric.Image.fromURL(imageURL, function(Image){
+      Image.scale(0.3);
+      object = Image
+      object.set({id: uuid()})
+      canvas.add(object);
+      emitAddImage({url: imageURL, id: object.id})
+      canvas.renderAll()
+    })
+  }
+
   
   
   const changeColor = (e) =>{
@@ -83,6 +99,7 @@ function Canvas() {
         deleteObj(canvas)
         clearObj(canvas)
         addPObj(canvas)
+        addimageObj(canvas)
       }
     },
     [canvas]
@@ -264,6 +281,10 @@ function Canvas() {
 
       <span className='info'>{widthvalue}</span>
       <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>
+
+      <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 
+        onChange={(e)=>{setimageURL(e.target.value); console.log(e.target.value);}}></input>
+        <button onClick={addImage}>버튼</button>
 
       </div>
       <div>

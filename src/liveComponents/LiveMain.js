@@ -65,7 +65,7 @@ const LiveMain = () => {
                 <LiveNav></LiveNav>
             </div>
             <div className = "canvarsPosition">
-                {/* <Canvas></Canvas> */}
+                <Canvas></Canvas>
             </div>
             <div className = "hostVideoPosition">
                 <HostVideo guestNames={guestNames}></HostVideo>
