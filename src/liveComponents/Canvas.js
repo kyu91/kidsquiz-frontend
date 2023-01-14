@@ -5,6 +5,14 @@ import { v1 as uuid } from 'uuid'
 import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj,emitClear,clearObj
   ,emitAddImage, addimageObj } from './socket'
 
+//석규
+import './Canvas.css';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+
+
+
+
 function Canvas() {
   const [canvas, setCanvas] = useState('');
   const [widthvalue,setWidthvalue] = useState(1);
@@ -250,34 +258,57 @@ function Canvas() {
   return (
     <div className='App'>
       <div>
-        <button type='button' name='circle' onClick={addShape}>
-          Add a Circle
-      </button>
-        <button type='button' name='triangle' onClick={addShape}>
-          Add a Triangle
-      </button>
-        <button type='button' name='rectangle' onClick={addShape}>
-          Add a Rectangle
-      </button>
+      <ButtonGroup 
+        variant="contained" 
+        aria-label="outlined primary button group"
+        size='small'>
+        <Button 
+          key="Square"
+          type='button' 
+          name='circle' 
+          onClick={addShape}>동그라미</Button>
 
-      <button type = 'button' name='delete' onClick={deleteObject}>
-          delete
-      </button>
+        <Button 
+          key = "Triangle"
+          type='button' 
+          name='triangle' 
+          onClick={addShape}>삼각형</Button>
 
-      <button type = 'button' name='delete' onClick={clearCanvas}>
-          clear
-      </button>
-
-      <button type = 'button' name='addTangram' onClick={addTangram}>
-      addTangram
-      </button>
-
-      <button type = 'button' name='on/off(draw)' onClick={drawmode}>
-      on/off(draw)
-      </button>
-
-      <input type="color" onChange = {changeColor} defaultValue="#000000" id="drawing-color">
-      </input>
+        <Button 
+          key="Rectangle"
+          type='button' 
+          name='rectangle' 
+          onClick={addShape}>직사각형</Button>
+        <Button 
+          key="delete"
+          type='button' 
+          name='delete' 
+          onClick={deleteObject}>선택삭제</Button>
+        <Button 
+          key="clear"
+          type='button' 
+          name='clear' 
+          onClick={clearCanvas}>전체삭제</Button>
+        <Button 
+          key="addTangram"
+          type='button' 
+          name='addTangram' 
+          onClick={addTangram}>칠교놀이</Button>
+        <Button 
+          key="on/off(draw)"
+          type='button' 
+          name='on/off(draw)' 
+          onClick={drawmode}>on/off(draw)</Button>
+        <inupt 
+          key="color"
+          type='color' 
+          name='color' 
+          onClick={changeColor}
+          defaultValue="#000000" 
+          id="drawing-color"></inupt>
+        
+      
+      </ButtonGroup>
 
       <span className='info'>{widthvalue}</span>
       <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>

@@ -1,13 +1,6 @@
 import {io} from "socket.io-client";
 import * as mediasoupClient from 'mediasoup-client';
 import React from 'react';
-import useProducerId from '../store';
-import VideoContainer from '../liveComponents/VideoContainer';
-
-
-
- 
-  
 
 const MediasoupController = (producerId) => {
 
@@ -19,12 +12,12 @@ const MediasoupController = (producerId) => {
     let audioProducer
     let videoProducer
 
-    let guestRoducerId = []
-
     const guestName = localStorage.getItem('guestName');
     
     const roomName = localStorage.getItem('roomName');
+    const token = localStorage.getItem('token');
 
+    
     
     let params = {
     // mediasoup params
@@ -53,6 +46,15 @@ const MediasoupController = (producerId) => {
     
     const initCall = async () => {
         const videoContainer = document.getElementById("videoContainer"); 
+
+        //토큰을 갖고 들어온 영상키는 영상이 좌측 하단으로 가야하고
+        //토큰을 갖고 들어온 영상키가 아닌 영상키는 영상이 우측 상단으로 가야한다.
+        // if (token) {
+        //     videoContainer.style.justifyContent = "flex-end";
+        // } else {
+        //     videoContainer.style.justifyContent = "flex-start";
+        // }
+
         
         //! 1.가장 먼저 실행되는 함수 ( io()로 서버에 소켓 연결이 되면 서버의 emit에 의해 가장 먼저 호출된다. )
         socket.on('connection-success', ({ socketId }) => {

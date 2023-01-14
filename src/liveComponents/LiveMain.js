@@ -25,12 +25,27 @@ const LiveMain = () => {
     const name = localStorage.getItem('guestName');
     const key = localStorage.getItem('guestKey');
 
+    //호스트가 링크로 들어갈때 주소 가져오기
+    const updatedUrl = location.pathname.replace('/intro', '');
+    //방이름 추출
+    const roomName = updatedUrl.split('/')[2];
+
+
+    const useNavStyle = React.useRef(null);
+    //토큰이 없다면 useNavStyle요소를 숨김
+    const navStyle = {
+        display: token ? 'block' : 'none'
+    }
+
+
+
     
 
     React.useEffect(() => {
         if (!token && guestKey) {
             return 
         }else if (token && !guestKey) {
+            localStorage.setItem('roomName', roomName);
             return
         }
         else if(!token && !guestKey) {
@@ -51,7 +66,7 @@ const LiveMain = () => {
 
     <div>
 
-        <GuestVideo guestNames={guestNames}></GuestVideo>
+        
 
         <Box
             className='canvarsContiner'
@@ -61,14 +76,14 @@ const LiveMain = () => {
                 maxHeight: '100%',
             }}
         >
-            <div className = "navPosition">
+            <div className = "navPosition" ref={useNavStyle} style={navStyle}>
                 <LiveNav></LiveNav>
             </div>
             <div className = "canvarsPosition">
                 <Canvas></Canvas>
             </div>
             <div className = "hostVideoPosition">
-                <HostVideo guestNames={guestNames}></HostVideo>
+                <GuestVideo guestNames={guestNames}></GuestVideo>
             </div>    
         </Box>
 
