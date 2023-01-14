@@ -1,6 +1,8 @@
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import {fabric} from 'fabric'
-const socket = io("http://localhost:4000/")
+// const socket = io("http://localhost:4000/") // 직접 콜 하지 않고 바로 받아서 사용
+import socket from "./socketExport"
+console.log("패브릭 socket", socket)
 // emitters
 export const emitAdd = (obj) => {
   socket.emit('object-added', obj)

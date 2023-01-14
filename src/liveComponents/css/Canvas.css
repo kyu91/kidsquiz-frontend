@@ -41,11 +41,11 @@ input[type=range]::-moz-range-thumb {
 button[type=button] {
   border:transparent ;
   border-radius: 5px;
-  padding : 10px 15px;
+  padding : 1em 1em;
   margin : 5px 5px;
   background-color: rgba(100,200,200,0.4);
   color: black;
-  font-size: 18px;
+  font-size: 0.7em;
 } 
 
 
