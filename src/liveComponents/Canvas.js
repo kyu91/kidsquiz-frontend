@@ -298,17 +298,16 @@ function Canvas() {
           key="on/off(draw)"
           type='button' 
           name='on/off(draw)' 
-          onClick={drawmode}>on/off(draw)</Button>
-        <inupt 
+          onClick={drawmode}>on/off(draw)</Button>       
+      
+      </ButtonGroup>
+      <input 
           key="color"
           type='color' 
           name='color' 
           onClick={changeColor}
           defaultValue="#000000" 
-          id="drawing-color"></inupt>
-        
-      
-      </ButtonGroup>
+          id="drawing-color"></input>
 
       <span className='info'>{widthvalue}</span>
       <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>
