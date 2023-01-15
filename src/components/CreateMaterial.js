@@ -48,17 +48,22 @@ export default function CreateMaterial() {
         setFiles(event.target.files);
     }
 
-    //서브밋
+    //2줄 추가
+    //const formData = new FormData();
+    //formData.append('imageFile', fileData);
+
+    // 서브밋
     const onhandlePost = async(data)=>{
       const config = {
           method: 'post',
-          url: '/api/material',
+          url: '/api/material/puzzle',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             'Authorization': `${localStorage.getItem('token')}`
           },
-          data: data
-      };
+          data : data
+        };
+        //console.log("🚀🚀🚀🚀", data)
       await axios(config)
           .then(response => {
               alert('교구가 생성되었습니다.');
@@ -72,15 +77,16 @@ export default function CreateMaterial() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      const data = {
-        title: event.target.title.value,
-        thumbnail: files,
-        studentMaxNum: radio
-      };
-      console.log(data);
+      const data = new FormData();
+      data.append("title", event.target.title.value) ;
+      data.append("image", files);
+        //title: event.target.title.value,
+        // thumbnail: files,
+        // studentMaxNum: radio
+      
+      console.log('12312123123123',data);
       onhandlePost(data);
     };
-
   
   return (
     <>
@@ -89,7 +95,7 @@ export default function CreateMaterial() {
       <Typography variant="h4" mt={6}>
         교구 생성
       </Typography>
-      <Grid container spacing={3} component="form" onSubmit={handleSubmit}>
+      <Grid container spacing={3} component="form" encType="multipart/form-data" onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <TextField
             required
@@ -104,13 +110,13 @@ export default function CreateMaterial() {
 
         {/* 입장인원선택 라디오 */}
         <Grid item xs={12}>
-            <Typography variant="p" mt={2}>
+            {/* <Typography variant="p" mt={2}>
                 교구 선택
-            </Typography>
+            </Typography> */}
             <p/>
             <RadioGroup 
                 row 
-                sx={{ my: 1 }} 
+                sx={{ my: 3 }} 
                 name="controlled-radio-buttons-group" 
                 onChange={handleChange}
                 value={radio}
@@ -121,6 +127,7 @@ export default function CreateMaterial() {
                     variant="outlined"
                     label="퍼즐"
                     value={1}
+
                 />
                 <Radio
                     color="info"
@@ -129,6 +136,37 @@ export default function CreateMaterial() {
                     label="객관식"
                     value={2}
                 />
+                {/* {
+                  radio == 1 ? 
+                  <div>
+                  <br/>
+                  <p>
+              <Grid container spacing={3} component="form" encType="multipart/form-data" onSubmit={handleSubmit}>          
+              <TextField
+                required
+                id="title"
+                name="title"
+                label="Title"
+                fullWidth
+                autoComplete="given-name"
+                variant="standard"
+              />
+              </Grid> */}
+                {/*이미지 업로드 */}
+                {/* <Grid item xs={12}>
+                <Stack direction="row" alignItems="center">
+                <Typography variant="p" mt={2}>
+                  {files.length > 0 ? files[0].name : '이미지를 업로드해주세요.'}
+                </Typography>
+                <Button variant="contained" component="label">
+                  Upload File
+                  <input hidden accept="image/*" name="image" type="file" ref={inputRef} onChange={handleChangeFile}/>
+                </Button>
+                </Stack>
+              </Grid>
+              </p>  </div> : null
+                    
+                } */}
 
             </RadioGroup>
         </Grid>
@@ -147,9 +185,9 @@ export default function CreateMaterial() {
 
         <Grid item xs={12}>
           <Stack spacing={2} direction="row">
-            <Button variant="outlined" href='/class'>취소</Button>
+            <Button variant="outlined" href='/material'>취소</Button>
             <Button 
-              href='/class'
+              //href='/material'
               variant="contained" 
               type='submit'
               fullWidth

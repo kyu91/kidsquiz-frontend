@@ -19,6 +19,7 @@ import Box from '@mui/material/Box';
 import { useState } from 'react';
 import Materials from './components/Material';
 import CreateMaterial from './components/CreateMaterial';
+import AddressForm from './components/makeMaterial';
 
 function App() {
     const [value, setValue] = useState(0);
@@ -139,6 +140,14 @@ function App() {
             }/>    
             {/* 교구공장 */}
             <Route path="/material/new" element={<div><Container><CreateMaterial></CreateMaterial></Container></div>}></Route>
+
+
+                        {/* 테스트임! */}
+            <Route path="testpage" element={
+              <Container maxWidth="xl">
+                <AddressForm></AddressForm>
+              </Container>
+            }/>
           </Routes>
         
       </React.Fragment>
