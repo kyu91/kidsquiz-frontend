@@ -28,6 +28,8 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 
+import backEndUri from '../backEndUri';
+
 
 
 export default function CreateClass() {
@@ -74,7 +76,7 @@ export default function CreateClass() {
     const onhandlePost = async(data)=>{
       const config = {
         method: 'post',
-        url: '/api/class/new',
+        url: `${backEndUri}/class/new`,
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `${localStorage.getItem('token')}`

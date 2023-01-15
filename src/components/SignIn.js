@@ -14,6 +14,8 @@ import CardCover from '@mui/material/CardMedia';
 
 import axios from 'axios';
 
+import backEndUri from '../backEndUri';
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -34,7 +36,7 @@ export default function SignIn() {
     const onhandlePost = async(data)=>{
       const config = {
           method: 'post',
-          url: '/api/login',
+          url: `${backEndUri}/login`,
           headers: {
             'Content-Type': 'application/json',
           },

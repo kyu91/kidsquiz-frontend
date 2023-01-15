@@ -2,6 +2,8 @@ import React from 'react';
 import './css/live_style.css'
 import axios from 'axios';
 
+import backEndUri from '../backEndUri';
+
 
 
 
@@ -24,7 +26,7 @@ const GuestVideo =  () => {
     const getHost = async(roomName, hostToken)=>{
         const config = {
             method: 'get',
-            url: `/api/class/host?room=${roomName}`,
+            url: `${backEndUri}/class/host?room=${roomName}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${hostToken}`,

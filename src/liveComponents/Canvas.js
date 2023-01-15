@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Quiz from './Quiz'
 
+import backEndUri from '../backEndUri';
+
 let imagearrayData =[]
 
 function Canvas() {
@@ -45,7 +47,7 @@ const bringimageinhtml = (event) => {
 
     const config = {
       method: 'get',
-      url: '/api/material',
+      url: `${backEndUri}/material`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `${localStorage.getItem('token')}`

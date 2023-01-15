@@ -11,6 +11,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './component_style.css';
 
+import backEndUri from '../backEndUri';
+
 
 
 
@@ -22,7 +24,7 @@ export default function Boards() {
         const getBoards = async()=>{
             const config = {
                 method: 'get',
-                url: '/api/class',
+                url: `${backEndUri}/class`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `${localStorage.getItem('token')}`
