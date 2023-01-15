@@ -21,11 +21,14 @@ const MediasoupController = (producerId) => {
     let audioProducer
     let videoProducer
 
+    //비디오 소스 임시로 담아둘 것 
+    let tempVideoId
     let guestRoducerId = []
 
     const guestName = localStorage.getItem('guestName');
     const roomName = localStorage.getItem('roomName');
 
+    
     let params = {
     // mediasoup params
     encodings: [
@@ -52,6 +55,12 @@ const MediasoupController = (producerId) => {
 
     
     const initCall = async () => {
+        let device
+        let rtpCapabilities
+        let producerTransport
+        let consumerTransports = []
+        let audioProducer
+        let videoProducer
         const videoContainer = document.getElementById("videoContainer"); 
         
         //! 1.가장 먼저 실행되는 함수 ( io()로 서버에 소켓 연결이 되면 서버의 emit에 의해 가장 먼저 호출된다. )
@@ -59,6 +68,7 @@ const MediasoupController = (producerId) => {
             getLocalStream();
         });
         
+    
         // //! 2. 1번에서 호출되어 두번째로 실행되는 함수 
         const getLocalStream = () => {
             
@@ -102,7 +112,7 @@ const MediasoupController = (producerId) => {
         
         //! 4. 3번에서 유저 미디어를 잘 받아서 비디오로 송출한 후에 호출되는 함수. 이 함수를 통해 실제 room에 조인하게 된다.  
         const joinRoom = () => {
-            console.log('99999guestName9999',guestName)
+            
             socket.emit('joinRoom', roomName, guestName , (data) => {
                 console.log(`Router RTP Capabilities... ${data.rtpCapabilities}`)
                 // we assign to local variable and will be used when loading the client Device (see createDevice above)
@@ -125,7 +135,7 @@ const MediasoupController = (producerId) => {
             routerRtpCapabilities: rtpCapabilities
         })
     
-        console.log('Device RTP Capabilities', device.rtpCapabilities)
+        // console.log('Device RTP Capabilities', device.rtpCapabilities)
     
         // once the device loads, create transport
         createSendTransport()
@@ -246,9 +256,12 @@ const MediasoupController = (producerId) => {
     //! 8 6번에서 방에 입장했을 때 이미 다른 참여자들이 있는 경우 실행됨 
     const getProducers = () => {
         socket.emit('getProducers', producerIds => {
-        console.log('00000producerIds000000',producerIds)
+        
         // for each of the producer create a consumer
-        producerIds.forEach(id => signalNewConsumerTransport(id[0], id[1])) 
+        producerIds.forEach(id => {
+            console.log('내소캣, 서버에서 준거',socket.id ,id[2])
+            signalNewConsumerTransport(id[0], id[1], id[2])
+        }) 
     
         // producerIds.forEach(signalNewConsumerTransport)
         })
@@ -256,7 +269,7 @@ const MediasoupController = (producerId) => {
     }
 
     //! 새 참여자 발생시 또는 8번에서 호출됨   1. ** 정해진 순서는 없고, new-producer 이벤트가 발생하면 호출되는 함수  
-    const signalNewConsumerTransport = async (remoteProducerId, socketName) => {
+    const signalNewConsumerTransport = async (remoteProducerId, socketName, newSocketId) => {
         //check if we are already consuming the remoteProducerId
         if (consumingTransports.includes(remoteProducerId)) return;
         consumingTransports.push(remoteProducerId);
@@ -301,17 +314,20 @@ const MediasoupController = (producerId) => {
 
         // //videoContainer id를 가진 요소를 가져온다
         // const videoContainer = document.getElementById('videoContainer');
-        connectRecvTransport(consumerTransport, remoteProducerId, params.id, socketName)
+        
+        connectRecvTransport(consumerTransport, remoteProducerId, params.id, socketName, newSocketId)
         })
     }
 
     // server informs the client of a new producer just joined
     // 새로운 producer가 있다고 서버가 알려주는 경우! 
-    socket.on('new-producer', ({ producerId, socketName }) => 
-        signalNewConsumerTransport(producerId, socketName))
+    socket.on('new-producer', ({producerId, socketName, socketId}) => {
+        
+        signalNewConsumerTransport(producerId, socketName, socketId)
+    })
 
     //!새 참여자 발생시 2. 1번함수에서 호출되는 함수 -> 여기서 실질적으로 새로운 html 요소가 만들어지고 비디오 스트림을 받아옴 
-    const connectRecvTransport = async (consumerTransport, remoteProducerId, serverConsumerTransportId, socketName) => {
+    const connectRecvTransport = async (consumerTransport, remoteProducerId, serverConsumerTransportId, socketName, newSocketId) => {
         // for consumer, we need to tell the server first
         // to create a consumer based on the rtpCapabilities and consume
         // if the router can consume, it will send back a set of params as below
@@ -351,33 +367,71 @@ const MediasoupController = (producerId) => {
             },
         ]
         
+        // const videoTrack = newSocketId.getVideoTracks()[0]
+        // console.log("비디오 끄고싶어", videoTrack)
+        console.log("버튼 아이디로 들어가기 전 소켓: ",newSocketId)
         // create a new div element for the new consumer media
-        const wrapper = document.createElement('div') 
-        const newElem = document.createElement('div') // 비디오 화면
-        const newSpan = document.createElement('span')
+        const wrapper = document.createElement('div') //상위 div
+        const newElem = document.createElement('div') // 비디오, 오디오 화면
         // newElem.setAttribute('id', `td-${remoteProducerId}`)
         wrapper.setAttribute('id', `td-${remoteProducerId}`)
-
         if (params.kind == 'audio') {
         //append to the audio container
-        newElem.innerHTML = '<audio id="' + remoteProducerId + '" autoplay></audio>'
+        wrapper.innerHTML = '<audio id="' + remoteProducerId + '" autoplay></audio>'
         } else {
         //append to the video container
-        newElem.setAttribute('class', 'remoteVideo')
-        newElem.innerHTML = '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>'+ socketName +'</p>'
+        wrapper.innerHTML = 
+            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>'+ 
+            socketName +'</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
+            newSocketId+'-camera">카메라끄기</button>'
         }
-
-
-        videoContainer.appendChild(newElem)
-        videoContainer.appendChild(newSpan)
-
         wrapper.appendChild(newElem)
-        wrapper.appendChild(newSpan)
         videoContainer.appendChild(wrapper)
 
+
+        //!버튼 이벤트리스너
+        let cameraBtn = document.getElementById(newSocketId+'-camera')
+        let muteBtn = document.getElementById(newSocketId+'-mute')
+        
+        if (cameraBtn){
+            cameraBtn.addEventListener('click', async (e) => {
+                if (cameraBtn.innerText === '카메라끄기') {
+                    cameraBtn.innerText = '카메라켜기' 
+                    //e.srcElement.id 뒤에 camera 택스트 제거
+                    let tempSocket = e.target.id.replace('-camera', '');
+                    socket.emit('video-out',{
+                        studentSocketId: tempSocket,
+                        on : false,
+                    })
+                    
+                } else {
+                    cameraBtn.innerText = '카메라끄기' 
+                    //e.srcElement.id 뒤에 camera 택스트 제거
+                    let tempSocket = e.target.id.replace('-camera', '');
+                    
+                    socket.emit('video-out',{
+                        studentSocketId: tempSocket,
+                        on : true,
+                    })
+        
+                }
+            
+                
+            })
+              
+
+        }
+        await socket.on('student-video-controller', ( on ) => {
+            myStream
+            .getVideoTracks()
+            .forEach((track) => {
+                (track.enabled = on.on);                    
+            }); // 카메라 화면 요소를 키고 끄기 
+        })
+        
         // destructure and retrieve the video track from the producer
         const { track } = consumer
-    
+        
         document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
     
     
@@ -386,6 +440,7 @@ const MediasoupController = (producerId) => {
         socket.emit('consumer-resume', { serverConsumerId: params.serverConsumerId })
         })
     }
+
     //! 누군가가 연결 종료될 때 발생 -> 해당 비디오 요소가 제거된다. 
     socket.on('producer-closed', ({ remoteProducerId }) => {
         // server notification is received when a producer is closed
@@ -400,6 +455,8 @@ const MediasoupController = (producerId) => {
         // remove the video div element
         videoContainer.removeChild(document.getElementById(`td-${remoteProducerId}`))
     })
+
+
     }
 
 

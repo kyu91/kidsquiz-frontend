@@ -1,8 +1,6 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import './css/live_style.css'
-import VideocamIcon from '@mui/icons-material/Videocam';
-import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+
 
 
 
@@ -14,13 +12,13 @@ const controller = MediasoupController();
 const GuestVideo =  () => {
     const guestName = localStorage.getItem('guestName');
     //토큰이 있는 비디오는 좌측 아래에 보여야 하고 guestKey가 있는 비디오는 우측 위에 보여야 한다.
-    const token = localStorage.getItem('token');
-    const guestKey = localStorage.getItem('guestKey');
+    // const token = localStorage.getItem('token');
+    // const guestKey = localStorage.getItem('guestKey');
 
-    const [guestNames, setGuestNames] = React.useState([]);
-    const [guestKeys, setGuestKeys] = React.useState([]);
+    // const [guestNames, setGuestNames] = React.useState([]);
+    // const [guestKeys, setGuestKeys] = React.useState([]);
 
-    const videoPositionRef = React.useRef(null);
+    // const videoPositionRef = React.useRef(null);
 
     
     React.useEffect( () => {
@@ -55,17 +53,14 @@ const GuestVideo =  () => {
                             <video id="localVideo" autoPlay muted>
                             </video>
                             <div>
-                                 <span id="userName"> {guestName ? guestName : "🌼 선생님"} </span>
-                                {/* <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span> */}
+                                 <p id="userName"> {guestName ? guestName : "🌼 선생님"} </p>
                                 
                                 <button id="mute">
-                                마이크    
+                                    음소거
                                 </button>
                                 <button id="camera">
-                                <VideocamIcon id="muteIcon"></VideocamIcon> 
+                                    카메라끄기
                                 </button>
-                                
-                                {/* <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span> */}
                             </div>
                         </div>
                     </div>
@@ -75,6 +70,8 @@ const GuestVideo =  () => {
                         
                             
                         </div>
+
+
                     </div>     
                 </div>
             </div>

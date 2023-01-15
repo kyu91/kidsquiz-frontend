@@ -279,6 +279,7 @@ function Canvas() {
         <Button 
           key="Square"
           type='button' 
+          
           className="navBtn"
           name='circle' 
           onClick={addShape}> 원 🟢 </Button>
