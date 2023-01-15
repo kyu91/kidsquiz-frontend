@@ -30,12 +30,12 @@ import axios from 'axios';
 
 
 
-
-
-
 export default function CreateClass() {
     //날짜
-    const [datePickerValue, setDatePickerValue] = React.useState(dayjs('2021-01-01'));
+    let today = new Date()
+    console.log(today)
+    // const [datePickerValue, setDatePickerValue] = React.useState(dayjs('2021-01-01'));
+    const [datePickerValue, setDatePickerValue] = React.useState(dayjs(today));
     const [timePickerValue, setTimePickerValue] = React.useState(dayjs('2021-01-01'));
     const date = datePickerValue.set('hour', timePickerValue.hour())
                             .set('minute', timePickerValue.minute())
