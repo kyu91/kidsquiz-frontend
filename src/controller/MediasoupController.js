@@ -385,51 +385,45 @@ const MediasoupController = () => {
 
 
         //!버튼 이벤트리스너
-        
-        let muteBtn = document.getElementById(newSocketId+'-mute')
         let cameraBtn = document.getElementById(newSocketId+'-camera')
-        // muteBtn.addEventListener('click', (e) => {
-        //     console.log('음소거')  
-        //     if (muteBtn.innerText === '음소거') {
-        //         muteBtn.innerText = '음소거해제'
-        //         // socket.emit('audio-out', {
-        //         //     socketName: e.srcElement.id,
-        //         //     onOff : true,
-        //         // })
+        let muteBtn = document.getElementById(newSocketId+'-mute')
+        
+        if (cameraBtn){
+            cameraBtn.addEventListener('click', async (e) => {
+                if (cameraBtn.innerText === '카메라끄기') {
+                    cameraBtn.innerText = '카메라켜기' 
+                    //e.srcElement.id 뒤에 camera 택스트 제거
+                    let tempSocket = e.target.id.replace('-camera', '');
+                    socket.emit('video-out',{
+                        studentSocketId: tempSocket,
+                        on : false,
+                    })
+                    
+                } else {
+                    cameraBtn.innerText = '카메라끄기' 
+                    //e.srcElement.id 뒤에 camera 택스트 제거
+                    let tempSocket = e.target.id.replace('-camera', '');
+                    
+                    socket.emit('video-out',{
+                        studentSocketId: tempSocket,
+                        on : true,
+                    })
+        
+                }
+            
                 
-        //     } else {
-        //     muteBtn.innerText = '음소거' 
-        //     }
-        // })
+            })
+              
 
-        
-        cameraBtn.addEventListener('click', (e) => {
-        
-            //e.srcElement.id 뒤에 camera 택스트 제거
-            let tempSocket = e.target.id.replace('-camera', '');
-            console.log('내가 누른 아이디(소켓): ',tempSocket)
-            socket.emit('video-out',{
-                studentSocketId: tempSocket,
-                
-            })
-            socket.on('student-video-controller', () => {
-                myStream
-                .getVideoTracks()
-                .forEach((track) => {
-                    console.log('테이크를 보고싶어',track)
-                    track.enabled = !track.enabled
-                }); // 카메라 화면 요소를 키고 끄기 
-            })
-            if (cameraBtn.innerText === '카메라끄기') {
-                cameraBtn.innerText = '카메라켜기'  
-                
-            } else {
-                cameraBtn.innerText = '카메라끄기' 
-                
-            }
+        }
+        await socket.on('student-video-controller', ( on ) => {
+            myStream
+            .getVideoTracks()
+            .forEach((track) => {
+                (track.enabled = on.on);                    
+            }); // 카메라 화면 요소를 키고 끄기 
         })
-
-
+        
         // destructure and retrieve the video track from the producer
         const { track } = consumer
         
