@@ -1,32 +1,37 @@
 import {io} from "socket.io-client";
 import socket from "../liveComponents/socketExport"
 import * as mediasoupClient from 'mediasoup-client';
-console.log("미디어숲 socket", socket)
-// const socket = io.connect("http://localhost:4000")
+// console.log("미디어숲 socket", socket)
+
 
 //익스포트 함수 
 export const getSocket= ()=> {
     return socket
 }
+
 export const getSocketName = () => {
-    const guestName = localStorage.getItem('guestName');
-    return guestName ? guestName : "선생"
+    const guestNameTemp = localStorage.getItem('guestName');
+    return guestNameTemp ? guestNameTemp : "선생"
 }
 
-const MediasoupController = (producerId) => {
-    let device
-    let rtpCapabilities
-    let producerTransport
-    let consumerTransports = []
-    let audioProducer
-    let videoProducer
+const MediasoupController = (hostName, guestName, hostBool) => {
 
     //비디오 소스 임시로 담아둘 것 
     let tempVideoId
     let guestRoducerId = []
 
-    const guestName = localStorage.getItem('guestName');
+    //호스트라면 userName은 호스트 이름, 게스트라면 게스트 이름
+    let userName = guestName
+    if (hostBool){
+        userName = hostName
+    }
+    console.log("userName", userName)
+     
+    
+
+    //방이름
     const roomName = localStorage.getItem('roomName');
+
 
     
     let params = {
@@ -113,7 +118,7 @@ const MediasoupController = (producerId) => {
         //! 4. 3번에서 유저 미디어를 잘 받아서 비디오로 송출한 후에 호출되는 함수. 이 함수를 통해 실제 room에 조인하게 된다.  
         const joinRoom = () => {
             
-            socket.emit('joinRoom', roomName, guestName , (data) => {
+            socket.emit('joinRoom', roomName, userName , (data) => {
                 console.log(`Router RTP Capabilities... ${data.rtpCapabilities}`)
                 // we assign to local variable and will be used when loading the client Device (see createDevice above)
                 rtpCapabilities = data.rtpCapabilities
@@ -128,7 +133,7 @@ const MediasoupController = (producerId) => {
         try {
             device = new mediasoupClient.Device()
             
-        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#device-load
+        
         // Loads the device with RTP capabilities of the Router (server side)
         await device.load({
             // see getRtpCapabilities() below
@@ -166,10 +171,10 @@ const MediasoupController = (producerId) => {
     
         // creates a new WebRTC Transport to send media
         // based on the server's producer transport params
-        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#TransportOptions
+        
         producerTransport = device.createSendTransport(params)
     
-        // https://mediasoup.org/documentation/v3/communication-between-client-and-server/#producing-media
+        
         // this event is raised when a first call to transport.produce() is made
         // see connectSendTransport() below
         producerTransport.on('connect', async ({ dtlsParameters }, callback, errback) => {
@@ -222,7 +227,7 @@ const MediasoupController = (producerId) => {
     const connectSendTransport = async () => {
         // we now call produce() to instruct the producer transport
         // to send media to the Router
-        // https://mediasoup.org/documentation/v3/mediasoup-client/api/#transport-produce
+        
         // this action will trigger the 'connect' and 'produce' events above
         
         audioProducer = await producerTransport.produce(audioParams);
@@ -381,7 +386,7 @@ const MediasoupController = (producerId) => {
         } else {
         //append to the video container
         wrapper.innerHTML = 
-            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>'+ 
+            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ userName +'"</p>'+ 
             socketName +'</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
             newSocketId+'-camera">카메라끄기</button>'
         }
@@ -462,9 +467,9 @@ const MediasoupController = (producerId) => {
 
   return {
     
-    init: () => {
+    init: (hostName, guestName, hostBool) => {
         
-        initCall();
+        initCall(hostName, guestName, hostBool);
         
     },
     
