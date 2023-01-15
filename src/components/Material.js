@@ -18,7 +18,9 @@ export default function Materials() {
 
     //const [materials, setMaterials] = React.useState([]);
     const [Puzzles, setPuzzles] = React.useState([]);
-    console.log('0000000',Puzzles)
+    const [MultipleChoices, setMultipleChoices] = React.useState([]);
+    console.log(Puzzles)
+    
     React.useEffect(() => {
         const getPuzzles = async()=>{
             const config = {
@@ -33,9 +35,9 @@ export default function Materials() {
             await axios(config)
                 
                 .then(response => {
-                    console.log("678678678",response.data.Puzzle);
-
                     setPuzzles(response.data.Puzzle);
+                    setMultipleChoices(response.data.MultipleChoice);
+
                 }).catch(error => {
                     console.error(error.toJSON);
                 }
@@ -82,6 +84,21 @@ export default function Materials() {
                 <h2> 제목 : {Puzzle.title} </h2>
                 <p> 이미지 : {Puzzle.image}</p>
                 <p>row, column : {Puzzle.user}</p>
+              </Paper>
+            )
+          })
+        }
+        {
+          MultipleChoices.map((MultipleChoice, index) => {
+
+            
+            return (
+              <Paper elevation={3} key={index} >
+                <Paper variant='outlined' component="img" src ={MultipleChoice._id}
+                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
+                <h2> 제목 : {MultipleChoice.answer} </h2>
+                <p> 이미지 : {MultipleChoice.secondChoice}</p>
+                <p>row, column : {MultipleChoice.user}</p>
               </Paper>
             )
           })

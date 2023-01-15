@@ -113,8 +113,7 @@ function App() {
             <Route path="/material" element={
               <Container maxWidth="xl">
                 <ResponsiveAppBar></ResponsiveAppBar>
-                            <Box sx={{ width: '100%' }}>
-                              
+                                              
             <Tabs
               value={value}
               onChange={handleChange}
@@ -135,8 +134,7 @@ function App() {
             }
             {
             value == 1 ? <div> 내용2</div>: null
-            }         
-          </Box>             
+            }                 
             </Container>
             }/>    
             {/* 교구공장 */}
