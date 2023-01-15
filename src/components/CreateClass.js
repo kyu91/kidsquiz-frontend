@@ -67,23 +67,26 @@ export default function CreateClass() {
     const [files, setFiles] = React.useState([]);
     const inputRef = React.useRef();
     const handleChangeFile = (event) => {
-      setFiles(event.target.files);
+      setFiles(event.target.files[0]);
     };
 
     //서브밋
     const onhandlePost = async(data)=>{
       const config = {
-          method: 'post',
-          url: '/api/class/new',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${localStorage.getItem('token')}`
-          },
-          data: data
+        method: 'post',
+        url: '/api/class/new',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `${localStorage.getItem('token')}`
+        },
+        data: data
       };
+      
+      console.log("🚀🚀🚀🚀", data)
       await axios(config)
           .then(response => {
               alert('강의가 생성되었습니다.');
+              window.location.href = '/class';
               console.log(response);
           }).catch(error => {
               console.error(error);
@@ -95,14 +98,13 @@ export default function CreateClass() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      const data = {
-        title: event.target.title.value,
-        startDateTime: formattedDate,
-        classKey: password,
-        classMaterial: materials,
-        thumbnail: files,
-        studentMaxNum: radio
-      };
+      const data = new FormData();
+      data.append('title', event.target.title.value);
+      data.append('startDateTime',formattedDate );
+      data.append('classKey',password );
+      data.append('classMaterial',materials );
+      data.append('studentMaxNum',radio );
+      data.append('image', files);
       console.log(data);
       onhandlePost(data);
     };
@@ -114,7 +116,7 @@ export default function CreateClass() {
       <Typography variant="h4" mt={2}>
         라이브 생성
       </Typography>
-      <Grid container spacing={3} component="form" onSubmit={handleSubmit}>
+      <Grid container spacing={3} component="form" encType="multipart/form-data" onSubmit={handleSubmit}>
         <Grid item xs={12}>
           <TextField
             required
@@ -228,10 +230,11 @@ export default function CreateClass() {
           <Stack direction="row" alignItems="center">
           <Typography variant="p" mt={2}>
             {files.length > 0 ? files[0].name : '섬네일 이미지를 업로드해주세요.'}
+            {/* {files.length > 0 ? files[0] : '섬네일 이미지를 업로드해주세요.'} */}
           </Typography>
           <Button variant="contained" component="label">
             Upload File
-            <input hidden accept="image/*" multiple type="file" ref={inputRef} onChange={handleChangeFile}/>
+            <input hidden accept="image/*" name="image" type="file" ref={inputRef} onChange={handleChangeFile}/>
           </Button>
           </Stack>
         </Grid>

@@ -1,0 +1,47 @@
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+  }
+
+.quizWrapper {
+    background-color: white;
+    padding: 20px 40px 10px 40px;
+    margin : 30px auto;
+    width: 70%; 
+    text-align: center;
+}
+#ques {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 24px;
+}
+#imgAnswersWrapper {
+    display: flex;
+    justify-content: center;
+    padding: 10px 20px; 
+}
+
+#imgAnswersWrapper img {
+    width: 20%;
+    margin: 10px 20px;
+}
+
+#resultMsg {
+    padding: 1em 2em ;
+    margin : 1em 0 2em 0;
+    background-color: rgba(255,255,0,0.5);
+    color: blue;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* button {
+    border: 0.5px solid rgba(0,0,0,0.1);
+    border-radius: 10em;
+    padding : 5px 10px;
+    margin-bottom : 5px;
+    margin-left : 10px;
+} */
+
+#finishQuiz {
+    /* padding: 1em 1em; */
+    background-color: rgba(155,205,155,0.5);
+}

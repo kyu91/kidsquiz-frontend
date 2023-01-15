@@ -1,27 +1,33 @@
 import {io} from "socket.io-client";
+import socket from "../liveComponents/socketExport"
 import * as mediasoupClient from 'mediasoup-client';
+console.log("미디어숲 socket", socket)
+// const socket = io.connect("http://localhost:4000")
 
+//익스포트 함수 
+export const getSocket= ()=> {
+    return socket
+}
+export const getSocketName = () => {
+    const guestName = localStorage.getItem('guestName');
+    return guestName ? guestName : "선생"
+}
 
- 
-  
-
-const MediasoupController = () => {
-
-
-    const socket = io.connect("http://localhost:4000")
-   
-    
-    
+const MediasoupController = (producerId) => {
+    let device
+    let rtpCapabilities
+    let producerTransport
+    let consumerTransports = []
+    let audioProducer
+    let videoProducer
 
     //비디오 소스 임시로 담아둘 것 
     let tempVideoId
     let guestRoducerId = []
 
     const guestName = localStorage.getItem('guestName');
-    
     const roomName = localStorage.getItem('roomName');
 
-    
     
     let params = {
     // mediasoup params
@@ -59,10 +65,9 @@ const MediasoupController = () => {
         
         //! 1.가장 먼저 실행되는 함수 ( io()로 서버에 소켓 연결이 되면 서버의 emit에 의해 가장 먼저 호출된다. )
         socket.on('connection-success', ({ socketId }) => {
-            console.log("나 찍혀야해 !!!! 🚀🚀 initCall");
-            console.log(socketId)
             getLocalStream();
         });
+        
     
         // //! 2. 1번에서 호출되어 두번째로 실행되는 함수 
         const getLocalStream = () => {
