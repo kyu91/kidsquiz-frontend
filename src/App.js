@@ -101,6 +101,13 @@ function App() {
                 <GuestIntro></GuestIntro>
               </Container>
             }/>
+
+            {/* 회원가입 */}
+           <Route path="/SignIn" element={
+              <Container maxWidth="xl">
+                <GuestIntro></GuestIntro>
+              </Container>
+            }/>
           
             {/* 교구생성 기본페이지 */}
             <Route path="/material" element={
@@ -130,7 +137,7 @@ function App() {
             value == 1 ? <div> 내용2</div>: null
             }         
           </Box>             
-              </Container>
+            </Container>
             }/>    
             {/* 교구공장 */}
             <Route path="/material/new" element={<div><Container><CreateMaterial></CreateMaterial></Container></div>}></Route>
