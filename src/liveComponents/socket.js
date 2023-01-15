@@ -2,7 +2,7 @@
 import {fabric} from 'fabric'
 
 import socket from "./socketExport"
-console.log("패브릭 socket", socket)
+
 // emitters
 export const emitAdd = (obj) => {
   socket.emit('object-added', obj)
