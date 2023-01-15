@@ -394,28 +394,28 @@ const bringimageinhtml = (event) => {
         <Button 
           key="erase"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='imageadd' 
           onClick={erasemode}> 지우개</Button>     
 
         <Button 
           key="pencil"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='imageadd' 
           onClick={pencilmode}> 연필</Button>
 
         <Button 
           key="imageee"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='imageaddeee' 
           onClick={imageshowlist}> 이미지</Button>  
 
         <input 
           key="color"
           type='color' 
-          class='color' 
+          className='color' 
           onChange={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
