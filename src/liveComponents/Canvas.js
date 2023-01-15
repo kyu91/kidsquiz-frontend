@@ -31,7 +31,6 @@ function Canvas() {
     else {
       canvas.isDrawingMode = true
       setShow(true)
-      console.log(canvas.freeDrawingBrush);
     }
   }
 
@@ -56,13 +55,10 @@ const bringimageinhtml = (event) => {
   await axios(config)
                 
   .then(response => {
-      console.log(response.data.Puzzle);
       let arrayData = response.data.Puzzle
       imagearrayData = arrayData.map((a,i) => {
         return a.image
       });
-      // console.log(imagearrayData);
-      console.log(imagearrayData);
       // settempimageURL(response.data);
   }).catch(error => {
       console.error(error);
@@ -109,8 +105,7 @@ const bringimageinhtml = (event) => {
     setColorvalue(e.target.value);
     canvas.freeDrawingBrush.color = colorvalue;
     canvas.renderAll()
-    console.log(canvas.freeDrawingBrush.color);
-    console.log(colorvalue);
+
   }
 
   const initCanvas = () =>
@@ -139,7 +134,7 @@ const bringimageinhtml = (event) => {
               id: options.target.id,
             }
             emitModify(modifiedObj)
-            console.log(options.target);
+
           }
         })
 
@@ -156,15 +151,13 @@ const bringimageinhtml = (event) => {
         canvas.on('path:created', function (options){
           if (options.path) {
             options.path.set({id: uuid()})
-            console.log('test success');
-            console.log(options.path.id);
-            console.log(options.path.type);
+  
             const addedPath = {
               path: options.path,
               id: options.path.id,
             }
             emitAddP(addedPath)
-            console.log("emit success");
+
           }
         })
 
@@ -239,7 +232,6 @@ const bringimageinhtml = (event) => {
     let object;
     object = canvas.getActiveObject()
     canvas.remove(canvas.getActiveObject());
-    console.log(object);
     emitDelete({obj: object, id: object.id})
   }
   const clearCanvas = () => {

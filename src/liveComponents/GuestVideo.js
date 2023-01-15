@@ -20,7 +20,6 @@ const GuestVideo =  () => {
     const [hostBool, setHostBool] = React.useState(false);
 
     //호스트 이름, 토큰확인 해서 이 방의 호스트인지 확인
-    console.log('호스트 토큰', hostToken);
 
     const getHost = async(roomName, hostToken)=>{
         const config = {
