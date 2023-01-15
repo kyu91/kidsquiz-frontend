@@ -16,7 +16,7 @@ function Quiz () {
     function makeAnsChosenFalse () {
         setansChosen(false)
     }
-    
+
     function finishQuiz() {
         console.log("퀴즈 종료")
         setquizStarted(false)
@@ -58,6 +58,8 @@ function Quiz () {
         setTimeout(makeAnsChosenFalse, 1000)
     })
 
+    console.dir(document.getElementById('btnnn'))
+
     if (quizStarted) return (
         <div className='quizWrapper'>
             <p id="ques"> {question}  </p>
@@ -72,7 +74,7 @@ function Quiz () {
     // if (ansChosed) return ()
     return (
         <>
-            <button onClick={()=>{
+            <button id="btnnn" onClick={()=>{
                 //todo: 아래 quizId는 퀴즈 objectId여야 함 
                 let quizId = 1
                 socket.emit("startQuiz", quizId, socket.id, (q, c1, c2, ans)=>{
