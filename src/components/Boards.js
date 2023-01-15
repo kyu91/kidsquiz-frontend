@@ -24,7 +24,7 @@ export default function Boards() {
         const getBoards = async()=>{
             const config = {
                 method: 'get',
-                url: `${backEndUri}/class`,
+                url: `/api/class`,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `${localStorage.getItem('token')}`
