@@ -2,6 +2,34 @@
   text-align: center;
 }
 
+.list {
+  padding: 1rem 0;
+  width: 100%;
+  display: flex;
+  transform: translate(0, 0);
+}
+
+.item {
+  padding-right: 1rem;
+  list-style: none;
+  user-select: none;
+}
+
+.item:first-child {
+  padding-left: 1rem;
+}
+
+.link {
+  display: block;
+  -webkit-user-drag: none;
+}
+
+.image {
+  display: block;
+  width: 200px;
+  height: 200px;
+  -webkit-user-drag: none;
+}
 /* button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -34,7 +62,7 @@ input[type=range]::-moz-range-thumb {
   width: 10px; /* 슬라이더 핸들 길이 */
   height: 15px; /* 슬라이더 핸들 높이 */
   border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
-  background: # green; /* 슬라이더 핸들 색상 */
+  background:  green; /* 슬라이더 핸들 색상 */
   cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
 }
 
