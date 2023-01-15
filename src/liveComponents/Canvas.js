@@ -4,18 +4,24 @@ import { fabric } from 'fabric';
 import { v1 as uuid } from 'uuid'
 import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj,emitClear,clearObj
   ,emitAddImage, addimageObj } from './socket'
+import axios from 'axios'
+import ScrollContainer from 'react-indiana-drag-scroll'
 
 //석규
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Quiz from './Quiz'
 
+let imagearrayData =[]
+
 function Canvas() {
   const [canvas, setCanvas] = useState('');
   const [widthvalue,setWidthvalue] = useState(1);
   const [colorvalue,setColorvalue] = useState('#000000');
-  const [imageURL,setimageURL] = useState('');
+  // const [imageURL,setimageURL] = useState('');
   const [show,setShow] = useState(false);
+  const [showimage, setShowimage] = useState(false);
+  const [tempimageURL, settempimageURL] = useState('');
 
   const drawmode = () => {
     if (canvas.isDrawingMode === true){
@@ -28,6 +34,54 @@ function Canvas() {
       console.log(canvas.freeDrawingBrush);
     }
   }
+
+const bringimageinhtml = (event) => {
+  let url = event.currentTarget.src;
+  addImage(url)
+}
+
+
+
+   const bringimage = async() =>{
+
+    const config = {
+      method: 'get',
+      url: '/api/material',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('token')}`
+
+      },
+  };
+  await axios(config)
+                
+  .then(response => {
+      console.log(response.data.Puzzle);
+      let arrayData = response.data.Puzzle
+      imagearrayData = arrayData.map((a,i) => {
+        return a.image
+      });
+      // console.log(imagearrayData);
+      console.log(imagearrayData);
+      // settempimageURL(response.data);
+  }).catch(error => {
+      console.error(error);
+  })
+
+   }  
+
+
+   function imageshowlist(){
+
+    if (showimage === false) {
+      setShowimage(true)
+
+    }
+    else {
+      setShowimage(false)
+    }
+   }
+
 
   // var pencil;
   // pencil = new fabric.PencilBrush(canvas);
@@ -66,9 +120,14 @@ function Canvas() {
        width: 1080,
      })
 
+
   useEffect(() => {
     setCanvas(initCanvas());
   }, []);
+
+  useEffect(() => {
+    bringimage()
+  })
 
   useEffect(
     () => {
@@ -122,7 +181,7 @@ function Canvas() {
   )
 
 
-  const addImage = ()=> {
+  const addImage = (imageURL)=> {
     let object
     fabric.Image.fromURL(imageURL, function(Image){
       Image.scale(0.4);
@@ -133,6 +192,18 @@ function Canvas() {
       canvas.renderAll()
     })
   }
+
+  // const addImage = ()=> {
+  //   let object
+  //   fabric.Image.fromURL(imageURL, function(Image){
+  //     Image.scale(0.4);
+  //     object = Image
+  //     object.set({id: uuid()})
+  //     canvas.add(object);
+  //     emitAddImage({url: imageURL, id: object.id})
+  //     canvas.renderAll()
+  //   })
+  // }
 
   const addShape = (e) => {
     let type = e.target.name;
@@ -279,7 +350,6 @@ function Canvas() {
         <Button 
           key="Square"
           type='button' 
-          
           className="navBtn"
           name='circle' 
           onClick={addShape}> 원 🟢 </Button>
@@ -324,21 +394,28 @@ function Canvas() {
         <Button 
           key="erase"
           type='button' 
-          className="navBtn"
+          class="navBtn"
           name='imageadd' 
           onClick={erasemode}> 지우개</Button>     
 
         <Button 
           key="pencil"
           type='button' 
-          className="navBtn"
+          class="navBtn"
           name='imageadd' 
-          onClick={pencilmode}> 연필</Button> 
-     
+          onClick={pencilmode}> 연필</Button>
+
+        <Button 
+          key="imageee"
+          type='button' 
+          class="navBtn"
+          name='imageaddeee' 
+          onClick={imageshowlist}> 이미지</Button>  
+
         <input 
           key="color"
           type='color' 
-          className='color' 
+          class='color' 
           onChange={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
@@ -349,11 +426,27 @@ function Canvas() {
       {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
 
-      <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 
+      {/* <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 
         onChange={(e)=>{setimageURL(e.target.value); console.log(e.target.value);}}></input>
-        <button onClick={addImage}>버튼</button>
+        <button onClick={addImage}>버튼</button> */}
 
       </div>
+
+      {showimage && <div>
+        <ScrollContainer className="scroll-container" activationDistance = "10">
+            <ul className="list">
+        {
+        imagearrayData.map((a) => {
+          return <li className="item">
+          <a className="link" >
+              <img className="image" src={a} onClick = {bringimageinhtml}></img>
+          </a>
+      </li>
+        })}
+        </ul>
+        </ScrollContainer>
+      </div>}
+      
 
       <Quiz></Quiz>
       <div>
