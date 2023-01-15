@@ -240,7 +240,7 @@ export default function CreateClass() {
           <Stack spacing={2} direction="row">
             <Button variant="outlined" href='/class'>취소</Button>
             <Button 
-              href='/class'
+              // href='/class'
               variant="contained" 
               type='submit'
               fullWidth

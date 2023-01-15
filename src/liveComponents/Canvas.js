@@ -264,58 +264,57 @@ function Canvas() {
         <Button 
           key="Square"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='circle' 
           onClick={addShape}> 원 🟢 </Button>
 
         <Button 
           key = "Triangle"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='triangle' 
           onClick={addShape}> 삼각형 🔺</Button>
 
         <Button 
           key="Rectangle"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='rectangle' 
           onClick={addShape}>사각형 🟦 </Button>
         <Button 
           key="delete"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='delete' 
           onClick={deleteObject}> 지우기 </Button>
         <Button 
           key="clear"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='clear' 
           onClick={clearCanvas}>새 도화지 </Button>
         <Button 
           key="addTangram"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='addTangram' 
           onClick={addTangram}>칠교</Button>
         <Button 
           key="on/off(draw)"
           type='button' 
-          class="navBtn"
+          className="navBtn"
           name='on/off(draw)' 
           onClick={drawmode}> 그리기</Button>      
-     
-        <input 
+
+      
+      </ButtonGroup>
+      <input 
           key="color"
           type='color' 
           name='color' 
           onClick={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
-
-      
-      </ButtonGroup>
 
       <span className='info'>{widthvalue}</span>
       <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>
