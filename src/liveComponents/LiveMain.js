@@ -5,6 +5,7 @@ import HostVideo from './HostVideo';
 import Box from '@mui/material/Box';
 import LiveNav from './LiveNav';
 import Canvas from './Canvas';
+// import Cursor from './Cursor'
 
 import './css/live_style.css';
 import zIndex from '@mui/material/styles/zIndex';
@@ -83,6 +84,9 @@ const LiveMain = () => {
             <div className = "hostVideoPosition">
                 <GuestVideo guestNames={guestNames}></GuestVideo>
             </div>    
+            {/* <div className = "multiCursor">
+                <Cursor></Cursor>
+            </div> */}
         </Box>
 
     </div>

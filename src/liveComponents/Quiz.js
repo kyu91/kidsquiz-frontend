@@ -1,52 +1,87 @@
 import React, { useState, useEffect } from "react";
-import { getSocket } from '../controller/MediasoupController'
+import { getSocket, getSocketName } from '../controller/MediasoupController'
 import './css/quiz.css';
 const socket = getSocket()
 
-// let question = "다음 중 ?"
-// let choice1 = "https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/quiz/%E1%84%80%E1%85%A9%E1%84%8B%E1%85%A3%E1%86%BC%E1%84%8B%E1%85%B5.png"
-// let choice2 = "https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/quiz/%E1%84%92%E1%85%A9%E1%84%85%E1%85%A1%E1%86%BC%E1%84%8B%E1%85%B5.png"
-
-// function startQuiz(num,id) {
-//     socket.emit("startQuiz", num, id, (q, c1, c2)=>{
-//         setquestion(q)
-//         setchoice1(c1)
-//         setchoice2(c2)
-//     })
-// }
-
-function finishQuiz() {
-    console.log("퀴즈 종료")
-}
-
 function Quiz () {
     const [quizStarted, setquizStarted] = useState(false);
+    const [ansChosen, setansChosen] = useState(false);
     const [question, setquestion] = useState(null);
     const [choice1, setchoice1] = useState(null);
     const [choice2, setchoice2] = useState(null);
+    const [rightAnswer, setrightAnswer] = useState(null);
+    const [result, setresult] = useState(null);
+    const [name, setname] = useState(getSocketName());
 
-    //todo: 아래 question은 백엔드에서 받아와야 함
+    function makeAnsChosenFalse () {
+        setansChosen(false)
+    }
+
+    function finishQuiz() {
+        console.log("퀴즈 종료")
+        setquizStarted(false)
+    }
+    function checkAnswer(idx, a, name) {
+        console.log("고른 답은 ", idx)
+        console.log("정답은 ", a)
+        if (idx == a) {
+            socket.emit("correct", name)
+            setresult(`${name}님! 정답입니다 🎉`)
+            setansChosen(true)
+            setTimeout(makeAnsChosenFalse, 1000)
+        }
+        else {
+            socket.emit("wrong", name)
+            setresult(`${name}님, 다시 생각해보세요 🤔`)
+            setansChosen(true)
+            setTimeout(makeAnsChosenFalse, 1000)
+        }
+    }
+    socket.on("startQuiz", (q, c1, c2, rightAnswer)=>{
+        setquestion(q)
+        setchoice1(c1)
+        setchoice2(c2)
+        setrightAnswer(rightAnswer)
+        console.log("🚀", rightAnswer)
+        setquizStarted(true)
+    })
+
+    socket.on("correctNotice", (name)=> {
+        setresult(`${name}이(가) 정답을 맞췄어요!  🎉`)
+        setansChosen(true)
+        setTimeout(makeAnsChosenFalse, 1000)
+    })
+
+    socket.on("wrongNotice", (name)=> {
+        setresult(`${name}이(가) 틀렸어요 🥺`)
+        setansChosen(true)
+        setTimeout(makeAnsChosenFalse, 1000)
+    })
+
+    console.dir(document.getElementById('btnnn'))
 
     if (quizStarted) return (
         <div className='quizWrapper'>
             <p id="ques"> {question}  </p>
             <div id="imgAnswersWrapper">
-                <img src= {choice1}></img>
-                <img src= {choice2}></img>
-            </div>            
-        <button onClick={finishQuiz}>퀴즈 종료</button>
+                <img id="answerImg1" onClick={() => {checkAnswer(1, rightAnswer, name)}} src= {choice1}></img>
+                <img id="answerImg2" onClick={() => {checkAnswer(2, rightAnswer, name)}} src= {choice2}></img>
+            </div>         
+        {ansChosen ? (<div id="resultMsg"> {result} </div>) : (<div> </div>)} 
+        <button id="finishQuiz" onClick={finishQuiz}>퀴즈 종료</button>
         </div> 
     )
-    socket.on("startQuiz")
+    // if (ansChosed) return ()
     return (
         <>
-            <button onClick={()=>{
+            <button id="btnnn" onClick={()=>{
                 //todo: 아래 quizId는 퀴즈 objectId여야 함 
                 let quizId = 1
-                socket.emit("startQuiz", quizId, socket.id, (q, c1, c2)=>{
+                socket.emit("startQuiz", quizId, socket.id, (q, c1, c2, ans)=>{
                     setquestion(q)
                     setchoice1(c1)
                     setchoice2(c2)
+                    setrightAnswer(ans)
                 })
                 setquizStarted(true)
             }}> 퀴즈 시작 </button>

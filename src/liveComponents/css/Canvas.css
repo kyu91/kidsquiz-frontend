@@ -2,11 +2,11 @@
   text-align: center;
 }
 
-button {
+/* button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-}
+} */
 
 input[type=range] {
   width: 100x; /* 슬라이더 길이 */
@@ -38,14 +38,15 @@ input[type=range]::-moz-range-thumb {
   cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
 }
 
-button[type=button] {
+/* button[type=button] { */
+.navBtn {
   border:transparent ;
   border-radius: 5px;
-  padding : 10px 15px;
+  padding : 1em 1em;
   margin : 5px 5px;
   background-color: rgba(100,200,200,0.4);
   color: black;
-  font-size: 18px;
+  font-size: 0.7em;
 } 
 
 

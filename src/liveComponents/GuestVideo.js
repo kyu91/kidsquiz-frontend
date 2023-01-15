@@ -59,7 +59,7 @@ const GuestVideo =  () => {
                                 {/* <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span> */}
                                 
                                 <button id="mute">
-                                     
+                                마이크    
                                 </button>
                                 <button id="camera">
                                 <VideocamIcon id="muteIcon"></VideocamIcon> 
