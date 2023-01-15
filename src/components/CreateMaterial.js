@@ -3,31 +3,16 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-
-import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import 'dayjs/locale/ru';
 import 'dayjs/locale/de';
 import 'dayjs/locale/ar-sa';
 import Stack from '@mui/material/Stack';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-
 import Radio from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
-
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { useState } from 'react';
 import ResponsiveAppBar from './ResponsiveAppBar';
 
 
@@ -44,9 +29,9 @@ export default function CreateMaterial() {
     //파일 업로드
     const [files, setFiles] = React.useState([]);
     const inputRef = React.useRef();
-    function handleChangeFile(event) {
-        setFiles(event.target.files);
-    }
+    const handleChangeFile = (event) => {
+        setFiles(event.target.files[0]);
+    };
 
     //2줄 추가
     //const formData = new FormData();
@@ -63,7 +48,7 @@ export default function CreateMaterial() {
           },
           data : data
         };
-        //console.log("🚀🚀🚀🚀", data)
+        console.log("🚀🚀🚀🚀", data)
       await axios(config)
           .then(response => {
               alert('교구가 생성되었습니다.');
@@ -174,11 +159,11 @@ export default function CreateMaterial() {
           <Grid item xs={12}>
           <Stack direction="row" alignItems="center">
           <Typography variant="p" mt={2}>
-            {files.length > 0 ? files[0].name : '이미지를 업로드해주세요.'}
+            {files.length > 0 ? files.name : '이미지를 업로드해주세요.'}
           </Typography>
           <Button variant="contained" component="label">
             Upload File
-            <input hidden accept="image/*" multiple type="file" ref={inputRef} onChange={handleChangeFile}/>
+            <input hidden accept="image/*" type="file" ref={inputRef} onChange={handleChangeFile}/>
           </Button>
           </Stack>
         </Grid>
