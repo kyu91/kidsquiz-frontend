@@ -22,11 +22,12 @@ const GuestVideo =  () => {
     const [hostBool, setHostBool] = React.useState(false);
 
     //호스트 이름, 토큰확인 해서 이 방의 호스트인지 확인
+    const params = {room : roomName}
 
-    const getHost = async(roomName, hostToken)=>{
+    const getHost = async(hostToken)=>{
         const config = {
             method: 'get',
-            url: `${backEndUri}/class/host?room=${roomName}`,
+            url: `/api/class/host`, params,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `${hostToken}`,
@@ -47,7 +48,7 @@ const GuestVideo =  () => {
     
     React.useEffect( () => {
         if (hostToken){
-            getHost(roomName, hostToken);
+            getHost(hostToken);
         }
         
         

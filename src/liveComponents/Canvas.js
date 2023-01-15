@@ -47,7 +47,7 @@ const bringimageinhtml = (event) => {
 
     const config = {
       method: 'get',
-      url: `${backEndUri}/material`,
+      url: `/api/material`,
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `${localStorage.getItem('token')}`
