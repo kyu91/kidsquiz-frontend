@@ -229,8 +229,10 @@ export default function CreateClass() {
         <Grid item xs={12}>
           <Stack direction="row" alignItems="center">
           <Typography variant="p" mt={2}>
-            {files.length > 0 ? files[0].name : '섬네일 이미지를 업로드해주세요.'}
-            {/* {files.length > 0 ? files[0] : '섬네일 이미지를 업로드해주세요.'} */}
+            {
+              
+              files.name ? files.name : '섬네일 이미지를 업로드해주세요.'
+            }
           </Typography>
           <Button variant="contained" component="label">
             Upload File
