@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/live_style.css'
+import axios from 'axios';
 
 
 
@@ -10,39 +11,51 @@ import MediasoupController from '../controller/MediasoupController';
 const controller = MediasoupController();
 
 const GuestVideo =  () => {
+    const hostToken = localStorage.getItem('token');
+    const roomName = localStorage.getItem('roomName');
     const guestName = localStorage.getItem('guestName');
-    //토큰이 있는 비디오는 좌측 아래에 보여야 하고 guestKey가 있는 비디오는 우측 위에 보여야 한다.
-    // const token = localStorage.getItem('token');
-    // const guestKey = localStorage.getItem('guestKey');
 
-    // const [guestNames, setGuestNames] = React.useState([]);
-    // const [guestKeys, setGuestKeys] = React.useState([]);
+    const [hostName, setHostName] = React.useState('');
 
-    // const videoPositionRef = React.useRef(null);
+    const [hostBool, setHostBool] = React.useState(false);
 
+    //호스트 이름, 토큰확인 해서 이 방의 호스트인지 확인
+    console.log('호스트 토큰', hostToken);
+
+    const getHost = async(roomName, hostToken)=>{
+        const config = {
+            method: 'get',
+            url: `/api/class/host?room=${roomName}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${hostToken}`,
+
+            },
+        };
+        await axios(config)
+            
+            .then(response => {
+                console.log(response.data);
+                setHostName(response.data.name);
+                setHostBool(response.data.result);
+            }).catch(error => {
+                console.error(error);
+            }
+        );
+    }
     
     React.useEffect( () => {
+        if (hostToken){
+            getHost(roomName, hostToken);
+        }
         
-        controller.init();
+        
+        controller.init(hostName, guestName, hostBool);
     }, [])
 
 
 
   return (
-    // <Box
-    //     sx={{
-    //         display: 'flex',
-    //         flexWrap: 'wrap',
-    //         justifyContent: 'center', //Paper를 가로로 정렬
-    //         // alignContent: 'center', // Paper 요소를 세로로 정렬
-    //         '& > :not(style)': {
-    //         m: 1,
-    //         mb: 5,
-    //         width: 1/5,
-    //         height: 160,
-    //         },
-    //     }}
-    // >
 <>
              
         <div id = 'video'>
@@ -53,8 +66,8 @@ const GuestVideo =  () => {
                             <video id="localVideo" autoPlay muted>
                             </video>
                             <div>
-                                 <p id="userName"> {guestName ? guestName : "🌼 선생님"} </p>
-                                
+                                <p id="userName"> 선생님 </p>
+                                <p id = "토큰있음"></p>
                                 <button id="mute">
                                     음소거
                                 </button>
@@ -76,9 +89,6 @@ const GuestVideo =  () => {
                 </div>
             </div>
         </div>
-             
-   
-    {/* </Box> */}
     </>
   )
 }
