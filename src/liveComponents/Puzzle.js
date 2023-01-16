@@ -3,12 +3,7 @@ import "./css/Puzzle.css"
 import socket from "./socketExport"
 
 function Puzzle(props) {
-  let [img, setImg] = useState("")
-
-  const emitUrl = imgUrl => {
-    socket.emit("sendPuzzleURL", imgUrl)
-  }
-
+//   let [img, setImg] = useState("")
   socket.on("puzzleStart", function(data) {
     setImg(data)
   })
@@ -378,7 +373,6 @@ function Puzzle(props) {
           if (newState.every(tile => tile.solved)) {
             onSolved()
           }
-          console.log("함수내부 2")
           return newState
         })
       }
@@ -444,25 +438,12 @@ function Puzzle(props) {
 
   return (
     <div style={{ height: "500px", width: "500px" }}>
-      <input
-        type="url"
-        style={{
-          alignItems: "center",
-          margin: "auto",
-          display: "flex",
-          justifyContent: "center"
-        }}
-        onChange={e => {
-          setImg(e.target.value)
-          emitUrl(e.target.value)
-        }}
-      ></input>
 
       <JigsawPuzzle
         imageSrc={props.url}
         rows={2}
         columns={2}
-        onSolved={() => alert("Solved!")}
+        onSolved={() => alert("참 잘했어요")}
       />
     </div>
   )

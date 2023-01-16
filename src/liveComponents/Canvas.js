@@ -2,8 +2,8 @@ import './css/Canvas.css';
 import React, { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
 import { v1 as uuid } from 'uuid'
-import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj,emitClear,clearObj
-  ,emitAddImage, addimageObj } from './socket'
+import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj, emitClear, clearObj
+  ,emitAddImage, addimageObj, emitUrl } from './socket'
 import axios from 'axios'
 import ScrollContainer from 'react-indiana-drag-scroll'
 
@@ -35,14 +35,11 @@ function Canvas() {
       canvas.isDrawingMode = false
       setShow(false)
       setdrawmodeonoff(true)
-      
-
     }
     else {
       canvas.isDrawingMode = true
       setShow(true)
       setdrawmodeonoff(false)
-      
     }
   }
 
@@ -51,9 +48,9 @@ const bringimageinhtml = (event) => {
   addImage(url)
 }
 
-
 const bringimageinhtmlPuzzle = (event) =>{
   puzzleurl = event.currentTarget.src;
+  emitUrl(puzzleurl);
   setShowimagePuzzlediv(true)
   setShowimagePuzzle(false)
 }
@@ -78,7 +75,6 @@ const bringimageinhtmlPuzzle = (event) =>{
       imagearrayData = arrayData.map((a,i) => {
         return a.image
       });
-      // settempimageURL(response.data);
   }).catch(error => {
       console.error(error);
   })
@@ -108,10 +104,7 @@ const bringimageinhtmlPuzzle = (event) =>{
 
    function imageshowlistPuzzledivexit(){
       setShowimagePuzzlediv(false)
-
    }
-
-
   // var pencil;
   // pencil = new fabric.PencilBrush(canvas);
   // canvas.freeDrawingBrush = pencil;
@@ -120,27 +113,19 @@ const bringimageinhtmlPuzzle = (event) =>{
       canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
       canvas.freeDrawingBrush.width = parseInt(widthvalue)
   }
-
   const pencilmode = () => {
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.width = parseInt(widthvalue);
   }
-
-
   const changeWidth = (e) =>{
     setWidthvalue(e.target.value);
     canvas.freeDrawingBrush.width = parseInt(widthvalue);
-
   }
-
-
   const changeColor = (e) =>{
     setColorvalue(e.target.value);
     canvas.freeDrawingBrush.color = colorvalue;
     canvas.renderAll()
-
   }
-
   const initCanvas = () =>
      new fabric.Canvas('canv', {
        isDrawingMode: false,
@@ -193,8 +178,6 @@ const bringimageinhtmlPuzzle = (event) =>{
 
           }
         })
-
-
         modifyObj(canvas)
         addObj(canvas)
         deleteObj(canvas)
