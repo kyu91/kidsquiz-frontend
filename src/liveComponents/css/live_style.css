@@ -33,11 +33,16 @@
     background-color: rgb(245, 245, 200);
 }
 
-#videoPosition, #videoContainer {
+#hostCol, #videoContainer {
     width: 200px;
     background: transparent;
-    background-color: rgba(255,255,255,0.9);
+    background-color: rgba(255,255,255,1);
 }
+#hostCol {
+    background-color: rgba(105,100,250,0.7);
+}
+
+
 
 .remoteColumn{
     width: 200px;
@@ -48,4 +53,4 @@ video{
     width: 100%;
 }
 
-/* localMe */
+/* hostMe */
