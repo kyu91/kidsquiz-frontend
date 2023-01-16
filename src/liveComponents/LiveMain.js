@@ -58,9 +58,9 @@ const LiveMain = () => {
                 maxWidth: '100%',
                 maxHeight: '100%',
             }}>
-            <div className = "navPosition" ref={useNavStyle} style={navStyle}>
+            {/* <div className = "navPosition" ref={useNavStyle} style={navStyle}>
                 <LiveNav></LiveNav>
-            </div>
+            </div> */}
             <div className = "canvarsPosition">
                 <Canvas style = {{zIndex :'8'}}></Canvas>
             </div>
