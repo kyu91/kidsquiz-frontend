@@ -21,16 +21,7 @@ const MediasoupController = (hostName, guestName, hostBool) => {
     let guestRoducerId = []
 
     //호스트라면 userName은 호스트 이름, 게스트라면 게스트 이름
-    let userName = guestName
-    if (hostBool){
-        userName = hostName
-    }
-    console.log("userName", userName)
-     
     
-
-    //방이름
-    const roomName = localStorage.getItem('roomName');
 
 
     
@@ -60,6 +51,16 @@ const MediasoupController = (hostName, guestName, hostBool) => {
 
     
     const initCall = async () => {
+        let userName = guestName
+        if (hostBool){
+            userName = hostName
+        }
+        console.log("userName", userName)
+        
+        
+
+        //방이름
+        const roomName = localStorage.getItem('roomName');
         let device
         let rtpCapabilities
         let producerTransport

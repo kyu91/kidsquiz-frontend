@@ -18,15 +18,6 @@ const LiveMain = () => {
     const token = localStorage.getItem('token');
     const guestKey = localStorage.getItem('guestKey');
 
-
-    //게스트 이름과 고유키를 저장할 배열
-    const [guestNames, setGuestNames] = React.useState([['김석규', '123'], ['김석규2', '1234']]);
-
-    
-    //로컬스토리지에서 name 가져오기
-    const name = localStorage.getItem('guestName');
-    const key = localStorage.getItem('guestKey');
-
     //호스트가 링크로 들어갈때 주소 가져오기
     const updatedUrl = location.pathname.replace('/intro', '');
     //방이름 추출
@@ -41,9 +32,6 @@ const LiveMain = () => {
     }
 
 
-
-    
-
     React.useEffect(() => {
         if (!token && guestKey) {
             return 
@@ -54,13 +42,8 @@ const LiveMain = () => {
         else if(!token && !guestKey) {
             history(`${location.pathname}/intro`);
         }
-
-        // for (let i = 0; i < guestNames.length; i++) {
-        //     if (guestNames[i].key === key) {
-        //         return;
-        //     }
-        // }
         
+        window.location.reload();
     }, []);
 
 
@@ -82,7 +65,7 @@ const LiveMain = () => {
                 <Canvas style = {{zIndex :'8'}}></Canvas>
             </div>
             <div className = "hostVideoPosition">
-                <GuestVideo guestNames={guestNames}></GuestVideo>
+                <GuestVideo></GuestVideo>
             </div>    
             {/* <div className = "multiCursor">
                 <Cursor></Cursor>
