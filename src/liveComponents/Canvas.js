@@ -11,10 +11,12 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Quiz from './Quiz'
+import Puzzle from './Puzzle'
 
 import backEndUri from '../backEndUri';
 
 let imagearrayData =[]
+let puzzleurl
 
 function Canvas() {
   const [canvas, setCanvas] = useState('');
@@ -23,16 +25,24 @@ function Canvas() {
   // const [imageURL,setimageURL] = useState('');
   const [show,setShow] = useState(false);
   const [showimage, setShowimage] = useState(false);
-  const [tempimageURL, settempimageURL] = useState('');
+  const [showimagePuzzle, setShowimagePuzzle] = useState(false);
+  const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
+  const [drawmodeonoff, setdrawmodeonoff] = useState(true);
+  // const [puzzleimageurl,setpuzzleimageurl] = useState('');
 
   const drawmode = () => {
     if (canvas.isDrawingMode === true){
       canvas.isDrawingMode = false
       setShow(false)
+      setdrawmodeonoff(true)
+      
+
     }
     else {
       canvas.isDrawingMode = true
       setShow(true)
+      setdrawmodeonoff(false)
+      
     }
   }
 
@@ -42,6 +52,11 @@ const bringimageinhtml = (event) => {
 }
 
 
+const bringimageinhtmlPuzzle = (event) =>{
+  puzzleurl = event.currentTarget.src;
+  setShowimagePuzzlediv(true)
+  setShowimagePuzzle(false)
+}
 
    const bringimage = async() =>{
 
@@ -57,7 +72,9 @@ const bringimageinhtml = (event) => {
   await axios(config)
                 
   .then(response => {
+    console.log(response.data)
       let arrayData = response.data.Puzzle
+      console.log(arrayData);
       imagearrayData = arrayData.map((a,i) => {
         return a.image
       });
@@ -73,11 +90,25 @@ const bringimageinhtml = (event) => {
 
     if (showimage === false) {
       setShowimage(true)
-
     }
     else {
       setShowimage(false)
     }
+   }
+
+   function imageshowlistPuzzle(){
+
+    if (showimagePuzzle === false) {
+      setShowimagePuzzle(true)
+    }
+    else {
+      setShowimagePuzzle(false)
+    }
+   }
+
+   function imageshowlistPuzzledivexit(){
+      setShowimagePuzzlediv(false)
+
    }
 
 
@@ -187,18 +218,6 @@ const bringimageinhtml = (event) => {
       canvas.renderAll()
     })
   }
-
-  // const addImage = ()=> {
-  //   let object
-  //   fabric.Image.fromURL(imageURL, function(Image){
-  //     Image.scale(0.4);
-  //     object = Image
-  //     object.set({id: uuid()})
-  //     canvas.add(object);
-  //     emitAddImage({url: imageURL, id: object.id})
-  //     canvas.renderAll()
-  //   })
-  // }
 
   const addShape = (e) => {
     let type = e.target.name;
@@ -341,70 +360,90 @@ const bringimageinhtml = (event) => {
         variant="contained" 
         aria-label="outlined primary button group"
         size='small'>
-        <Button 
-          key="Square"
-          type='button' 
-          className="navBtn"
-          name='circle' 
-          onClick={addShape}> 원 🟢 </Button>
 
-        <Button 
-          key = "Triangle"
-          type='button' 
-          className="navBtn"
-          name='triangle' 
-          onClick={addShape}> 삼각형 🔺</Button>
-
-        <Button 
-          key="Rectangle"
-          type='button' 
-          className="navBtn"
-          name='rectangle' 
-          onClick={addShape}>사각형 🟦 </Button>
-        <Button 
-          key="delete"
-          type='button' 
-          className="navBtn"
-          name='delete' 
-          onClick={deleteObject}> 지우기 </Button>
-        <Button 
-          key="clear"
-          type='button' 
-          className="navBtn"
-          name='clear' 
-          onClick={clearCanvas}>새 도화지 </Button>
-        <Button 
-          key="addTangram"
-          type='button' 
-          className="navBtn"
-          name='addTangram' 
-          onClick={addTangram}>칠교</Button>
         <Button 
           key="on/off(draw)"
           type='button' 
           className="navBtn"
           name='on/off(draw)' 
           onClick={drawmode}> 그리기/도형</Button>
-        <Button 
-          key="erase"
-          type='button' 
-          className="navBtn"
-          name='imageadd' 
-          onClick={erasemode}> 지우개</Button>     
 
         <Button 
+          key="clear"
+          type='button' 
+          className="navBtn"
+          name='clear' 
+          onClick={clearCanvas}>새 도화지 </Button>
+
+        {drawmodeonoff && <Button 
+          key="Square"
+          type='button' 
+          className="navBtn"
+          name='circle' 
+          onClick={addShape}> 원 🟢 </Button>}
+
+        {drawmodeonoff && <Button  
+          key = "Triangle"
+          type='button' 
+          className="navBtn"
+          name='triangle' 
+          onClick={addShape}> 삼각형 🔺</Button>}
+
+        {drawmodeonoff && <Button 
+          key="Rectangle"
+          type='button' 
+          className="navBtn"
+          name='rectangle' 
+          onClick={addShape}>사각형 🟦 </Button>}
+
+        {drawmodeonoff && <Button 
+          key="addTangram"
+          type='button' 
+          className="navBtn"
+          name='addTangram' 
+          onClick={addTangram}>칠교</Button>}
+
+        {drawmodeonoff && <Button 
+          key="delete"
+          type='button' 
+          className="navBtn"
+          name='delete' 
+          onClick={deleteObject}> 지우기 </Button>}
+
+        {!drawmodeonoff &&<Button 
           key="pencil"
           type='button' 
           className="navBtn"
           name='imageadd' 
-          onClick={pencilmode}> 연필</Button>
+          onClick={pencilmode}> 연필</Button>}
+
+        {!drawmodeonoff &&<Button 
+          key="erase"
+          type='button' 
+          className="navBtn"
+          name='imageadd' 
+          onClick={erasemode}> 지우개</Button>}  
 
         <Button 
-          key="imageee"
+          key="image"
           type='button' 
           className="navBtn"
           name='imageaddeee' 
-          onClick={imageshowlist}> 이미지</Button>  
+          onClick={imageshowlist}> 이미지</Button>
+
+        <Button 
+          key="imagepuzzle"
+          type='button' 
+          className="navBtn"
+          name='imageaddeee2' 
+          onClick={imageshowlistPuzzle}> 퍼즐 놀이</Button>
+
+        <Button 
+          key="imagepuzzledd"
+          type='button' 
+          className="navBtn"
+          name='imageaddeee2ddd' 
+          onClick={imageshowlistPuzzledivexit}> 퍼즐 종료</Button> 
 
         <input 
           key="color"
@@ -441,8 +480,23 @@ const bringimageinhtml = (event) => {
         </ScrollContainer>
       </div>}
       
+      {showimagePuzzle && <div>
+        <ScrollContainer className="scroll-container" activationDistance = "10">
+            <ul className="list">
+        {
+        imagearrayData.map((a) => {
+          return <li className="item">
+          <a className="link" >
+              <img className="image" src={a} onClick = {bringimageinhtmlPuzzle}></img>
+          </a>
+      </li>
+        })}
+        </ul>
+        </ScrollContainer>
+      </div>}
 
       <Quiz></Quiz>
+      {showimagePuzzlediv && <Puzzle url = {puzzleurl}></Puzzle>}
       <div>
         <canvas id="canv" />
       </div>

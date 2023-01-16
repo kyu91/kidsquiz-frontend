@@ -2,14 +2,12 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 
 import dayjs from 'dayjs';
-import 'dayjs/locale/fr';
-import 'dayjs/locale/ru';
-import 'dayjs/locale/de';
-import 'dayjs/locale/ar-sa';
+// import 'dayjs/locale/fr';
+// import 'dayjs/locale/ru';
+// import 'dayjs/locale/de';
+// import 'dayjs/locale/ar-sa';
 import Stack from '@mui/material/Stack';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -27,9 +25,6 @@ import Select from '@mui/material/Select';
 
 import Button from '@mui/material/Button';
 import axios from 'axios';
-
-import backEndUri from '../backEndUri';
-
 
 
 export default function CreateClass() {
@@ -70,7 +65,41 @@ export default function CreateClass() {
     const inputRef = React.useRef();
     const handleChangeFile = (event) => {
       setFiles(event.target.files[0]);
+
     };
+
+    //교구선택 데이터 get
+    const materialChoice = React.useRef();
+    const [materialList, setMaterialList] = React.useState([]); //데이터 받아오기
+    const [materiallistId, setMaterialListId] = React.useState([]); //교구 objectId
+    const getMaterialList = async () => {
+      const config = {
+        method: 'get',
+        url: `/api/classMaterial`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `${localStorage.getItem('token')}`
+        }
+      };
+      await axios(config)
+          .then(response => {
+            setMaterialList(response.data.ClassMaterial);
+            setMaterialListId(response.data.ClassMaterial);
+          }).catch(error => {
+            console.error(error);
+          }
+          );
+        };
+        
+    React.useEffect(() => {
+      getMaterialList();
+    }, []);
+
+    
+    console.log('데이터 잘 받아왔니?1',materialList);
+    console.log('데이터 잘 받아왔니?2',materiallistId);
+    // console.log('초이스 잘 되니?', materiallistId[materials]['_id']);
+
 
     //서브밋
     const onhandlePost = async(data)=>{
@@ -84,7 +113,6 @@ export default function CreateClass() {
         data: data
       };
       
-      console.log("🚀🚀🚀🚀", data)
       await axios(config)
           .then(response => {
               alert('강의가 생성되었습니다.');
@@ -104,10 +132,10 @@ export default function CreateClass() {
       data.append('title', event.target.title.value);
       data.append('startDateTime',formattedDate );
       data.append('classKey',password );
-      data.append('classMaterial',materials );
+      data.append('classMaterial',materiallistId[materials]['_id'] );
       data.append('studentMaxNum',radio );
       data.append('image', files);
-      console.log(data);
+      
       onhandlePost(data);
     };
 
@@ -219,9 +247,19 @@ export default function CreateClass() {
                 label="Age"
                 onChange={handleChangeMaterial}
               >
-                <MenuItem value={10}>호랑이 이야기</MenuItem>
-                <MenuItem value={20}>햇님달님</MenuItem>
-                <MenuItem value={30}>이미지 묶음</MenuItem>
+
+                {
+                  materialList.map((material, index) => {
+                    return (
+                      <MenuItem 
+                        key = {index} 
+                        ref={materialChoice} 
+                        value={index}>{material.title}
+                      </MenuItem>
+                    )
+                  }
+                  )
+                }
               </Select>
             </FormControl>
           </Box>
