@@ -76,7 +76,7 @@ export default function CreateClass() {
     const onhandlePost = async(data)=>{
       const config = {
         method: 'post',
-        url: `/class/new`,
+        url: `/api/class/new`,
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `${localStorage.getItem('token')}`
