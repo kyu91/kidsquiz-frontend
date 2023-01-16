@@ -397,6 +397,7 @@ const MediasoupController = () => {
 
         // destructure and retrieve the video track from the producer
         const { track } = consumer
+        let muteBtn = document.getElementById(newSocketId+'-mute')
         console.log("새 소켓은 선생님인가!!", isNewSocketHost)
 
         //! 새 소켓이 선생님인 경우 -> 선생님 칸으로 srcObject 넣어주기 
@@ -511,12 +512,6 @@ const MediasoupController = () => {
             }); // 카메라 화면 요소를 키고 끄기 
         })
         
-        // destructure and retrieve the video track from the producer
-        const { track } = consumer
-
-        
-    
-    
         // the server consumer started with media paused
         // so we need to inform the server to resume
         socket.emit('consumer-resume', { serverConsumerId: params.serverConsumerId })
