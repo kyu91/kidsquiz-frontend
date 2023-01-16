@@ -427,11 +427,13 @@ const MediasoupController = () => {
               producerId: remoteProducerId,
               consumer,
             },
-          ];
+        ]
+        
 
-          // destructure and retrieve the video track from the producer
-          const { track } = consumer;
-          console.log("새 소켓은 선생님인가!!", isNewSocketHost);
+        // destructure and retrieve the video track from the producer
+        const { track } = consumer
+        let muteBtn = document.getElementById(newSocketId+'-mute')
+        console.log("새 소켓은 선생님인가!!", isNewSocketHost)
 
           //! 새 소켓이 선생님인 경우 -> 선생님 칸으로 srcObject 넣어주기
           if (isNewSocketHost === true) {
@@ -493,26 +495,30 @@ const MediasoupController = () => {
                     on: true,
                   });
                 }
-              });
-            }
-            await socket.on("student-video-controller", (on) => {
-              myStream.getVideoTracks().forEach((track) => {
-                track.enabled = on.on;
-              }); // 카메라 화면 요소를 키고 끄기
-            });
-
-            document.getElementById(remoteProducerId).srcObject =
-              new MediaStream([track]);
-          }
-
-          // the server consumer started with media paused
-          // so we need to inform the server to resume
-          socket.emit("consumer-resume", {
-            serverConsumerId: params.serverConsumerId,
-          });
+            })
         }
-      );
-    };
+        
+        await socket.on('student-video-controller', ( on ) => {
+            myStream
+            .getVideoTracks()
+            .forEach((track) => {
+                (track.enabled = on.on);                    
+            }); // 카메라 화면 요소를 키고 끄기 
+        })
+
+        await socket.on('student-audio-controller', ( on ) => {
+            myStream
+            .getAudioTracks()
+            .forEach((track) => {
+                (track.enabled = on.on);                    
+            }); // 카메라 화면 요소를 키고 끄기 
+        })
+        
+        // the server consumer started with media paused
+        // so we need to inform the server to resume
+        socket.emit('consumer-resume', { serverConsumerId: params.serverConsumerId })
+        })
+    }
 
     //! 누군가가 연결 종료될 때 발생 -> 해당 비디오 요소가 제거된다.
     socket.on("producer-closed", ({ remoteProducerId }) => {
