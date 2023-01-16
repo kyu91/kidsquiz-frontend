@@ -19,7 +19,6 @@ const MediasoupController = () => {
     //비디오 소스 임시로 담아둘 것 
     let tempVideoId
     let guestRoducerId = []
-
     //호스트라면 userName은 호스트 이름, 게스트라면 게스트 이름
     
     let params = {
@@ -46,19 +45,21 @@ const MediasoupController = () => {
     }
     }
 
-    
 
     const initCall = async () => {
         //로컬에서 hostName, guestName hostBool을 가져온다.
         const hostName = localStorage.getItem('name');
         const guestName = localStorage.getItem('guestName');
-        const hostBool = localStorage.getItem('hostBool');
+        let hostBool = localStorage.getItem('hostBool');
 
         let userName = guestName
         if (hostBool){
             userName = hostName
         }
-        // console.log("userName", userName)
+        else {
+            hostBool = false
+        }
+        console.log("userName", userName, "hostBool", hostBool)
         
         //석규추가
         const hostNameLine = document.getElementById('localUserName');
@@ -112,10 +113,21 @@ const MediasoupController = () => {
         // 성공적으로 미디어를 가져온 경우에 실행됨 
         //!3. 2번에서 성공적으로 미디어를 가져오면 실행되는 함수 
         const streamSuccess = (stream) => {
-            //id가 localMe인 태그를 가져온다.
-            const localMe = document.getElementById('localMe');//추가한거
+            //id가 hostMe인 태그를 가져온다.
+            const hostMe = document.getElementById('hostMe');//추가한거
+            const guestMeWrap = document.getElementById('guestMeWrap');//추가한거
+            const guestMe = document.getElementById('guestMe');//추가한거
+            const hostName = document.getElementById('hostName');//추가한거
             
-            localMe.srcObject = stream
+            if (hostBool) {
+                hostMe.srcObject = stream
+                guestMeWrap.setAttribute('visibility', 'none')
+                guestMeWrap.style.display = 'none'
+                // hostName.innerText = `${userName} 선생님`
+            }
+            else {
+                guestMe.srcObject = stream
+            }
             myStream = stream;
             //! ... 문법은 audioParams, videoParams의 주소가 아닌 '값'만 가져온다는 의미! 
             audioParams = { track: stream.getAudioTracks()[0], ...audioParams };
@@ -127,7 +139,7 @@ const MediasoupController = () => {
         //! 4. 3번에서 유저 미디어를 잘 받아서 비디오로 송출한 후에 호출되는 함수. 이 함수를 통해 실제 room에 조인하게 된다.  
         const joinRoom = () => {
             
-            socket.emit('joinRoom', roomName, userName , (data) => {
+            socket.emit('joinRoom', roomName, userName ,hostBool, (data) => {
                 console.log(`Router RTP Capabilities... ${data.rtpCapabilities}`)
                 // we assign to local variable and will be used when loading the client Device (see createDevice above)
                 rtpCapabilities = data.rtpCapabilities
@@ -274,7 +286,7 @@ const MediasoupController = () => {
         // for each of the producer create a consumer
         producerIds.forEach(id => {
             console.log('내소캣, 서버에서 준거',socket.id ,id[2])
-            signalNewConsumerTransport(id[0], id[1], id[2])
+            signalNewConsumerTransport(id[0], id[1], id[2], id[3])
         }) 
     
         // producerIds.forEach(signalNewConsumerTransport)
@@ -283,11 +295,11 @@ const MediasoupController = () => {
     }
 
     //! 새 참여자 발생시 또는 8번에서 호출됨   1. ** 정해진 순서는 없고, new-producer 이벤트가 발생하면 호출되는 함수  
-    const signalNewConsumerTransport = async (remoteProducerId, socketName, newSocketId) => {
+    const signalNewConsumerTransport = async (remoteProducerId, socketName, newSocketId, isNewSocketHost) => {
         //check if we are already consuming the remoteProducerId
         if (consumingTransports.includes(remoteProducerId)) return;
         consumingTransports.push(remoteProducerId);
-
+        console.log("🚀🚀🚀🚀",isNewSocketHost)
         
         await socket.emit('createWebRtcTransport', { consumer: true }, ({ params }) => {
         // The server sends back params needed 
@@ -329,19 +341,18 @@ const MediasoupController = () => {
         // //videoContainer id를 가진 요소를 가져온다
         // const videoContainer = document.getElementById('videoContainer');
         
-        connectRecvTransport(consumerTransport, remoteProducerId, params.id, socketName, newSocketId)
+        connectRecvTransport(consumerTransport, remoteProducerId, params.id, socketName, newSocketId, isNewSocketHost)
         })
     }
 
     // server informs the client of a new producer just joined
     // 새로운 producer가 있다고 서버가 알려주는 경우! 
-    socket.on('new-producer', ({producerId, socketName, socketId}) => {
-        
-        signalNewConsumerTransport(producerId, socketName, socketId)
+    socket.on('new-producer', ({producerId, socketName, socketId, isNewSocketHost}) => {
+        signalNewConsumerTransport(producerId, socketName, socketId, isNewSocketHost)
     })
 
     //!새 참여자 발생시 2. 1번함수에서 호출되는 함수 -> 여기서 실질적으로 새로운 html 요소가 만들어지고 비디오 스트림을 받아옴 
-    const connectRecvTransport = async (consumerTransport, remoteProducerId, serverConsumerTransportId, socketName, newSocketId) => {
+    const connectRecvTransport = async (consumerTransport, remoteProducerId, serverConsumerTransportId, socketName, newSocketId, isNewSocketHost) => {
         // for consumer, we need to tell the server first
         // to create a consumer based on the rtpCapabilities and consume
         // if the router can consume, it will send back a set of params as below
@@ -383,66 +394,78 @@ const MediasoupController = () => {
             },
         ]
         
-        // const videoTrack = newSocketId.getVideoTracks()[0]
-        // console.log("비디오 끄고싶어", videoTrack)
-        console.log("버튼 아이디로 들어가기 전 소켓: ",newSocketId)
-        // create a new div element for the new consumer media
-        const wrapper = document.createElement('div') //상위 div
-        const newElem = document.createElement('div') // 비디오, 오디오 화면
-        // newElem.setAttribute('id', `td-${remoteProducerId}`)
-        wrapper.setAttribute('id', `td-${remoteProducerId}`)
-        if (params.kind === 'audio') {
-        //append to the audio container
-        wrapper.innerHTML = '<audio id="' + remoteProducerId + '" autoplay></audio>'
-        } else {
-        //append to the video container
-        wrapper.innerHTML = 
-            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ socketName +'"</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
-            newSocketId+'-camera">카메라끄기</button>'
-        }
-        wrapper.appendChild(newElem)
-        videoContainer.appendChild(wrapper)
-
-
-        //!버튼 이벤트리스너
-        let cameraBtn = document.getElementById(newSocketId+'-camera')
-        let muteBtn = document.getElementById(newSocketId+'-mute')
-        
-        if (cameraBtn){
-            cameraBtn.addEventListener('click', async (e) => {
-                if (cameraBtn.innerText === '카메라끄기') {
-                    cameraBtn.innerText = '카메라켜기' 
-                    //e.srcElement.id 뒤에 camera 택스트 제거
-                    let tempSocket = e.target.id.replace('-camera', '');
-                    socket.emit('video-out',{
-                        studentSocketId: tempSocket,
-                        on : false,
-                    })
-                    
-                } else {
-                    cameraBtn.innerText = '카메라끄기' 
-                    //e.srcElement.id 뒤에 camera 택스트 제거
-                    let tempSocket = e.target.id.replace('-camera', '');
-                    
-                    socket.emit('video-out',{
-                        studentSocketId: tempSocket,
-                        on : true,
-                    })
-                }
-            })
-        }
-        await socket.on('student-video-controller', ( on ) => {
-            myStream
-            .getVideoTracks()
-            .forEach((track) => {
-                (track.enabled = on.on);                    
-            }); // 카메라 화면 요소를 키고 끄기 
-        })
-        
         // destructure and retrieve the video track from the producer
         const { track } = consumer
+        console.log("새 소켓은 선생님인가!!", isNewSocketHost)
+
+        //! 새 소켓이 선생님인 경우 -> 선생님 칸으로 srcObject 넣어주기 
+        if (isNewSocketHost) {
+            // 선생님에게 들어가야해
+            const hostMe = document.getElementById('hostMe');//추가한거
+            const hostName = document.getElementById('hostName');//추가한거
+            hostMe.srcObject =  new MediaStream([track])
+            hostName.innerText = `${socketName} 선생님`
+
+        }
+        //! 그렇지 않은 경우 학생 요소로 넣어주기! 
+        else {
+            // const videoTrack = newSocketId.getVideoTracks()[0]
+
+            // create a new div element for the new consumer media
+            const wrapper = document.createElement('div') //상위 div
+            const newElem = document.createElement('div') // 비디오, 오디오 화면
+            wrapper.setAttribute('id', `td-${remoteProducerId}`)
+            if (params.kind === 'audio') {
+            //append to the audio container
+            wrapper.innerHTML = '<audio id="' + remoteProducerId + '" autoplay></audio>'
+            } else {
+            //append to the video container
+            wrapper.innerHTML = 
+                '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ socketName +'"</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
+                newSocketId+'-camera">카메라끄기</button>'
+            }
+            wrapper.appendChild(newElem)
+            videoContainer.appendChild(wrapper)
+    
+            //!버튼 이벤트리스너
+            let cameraBtn = document.getElementById(newSocketId+'-camera')
+            let muteBtn = document.getElementById(newSocketId+'-mute')
+            
+            if (cameraBtn){
+                cameraBtn.addEventListener('click', async (e) => {
+                    if (cameraBtn.innerText === '카메라끄기') {
+                        cameraBtn.innerText = '카메라켜기' 
+                        //e.srcElement.id 뒤에 camera 택스트 제거
+                        let tempSocket = e.target.id.replace('-camera', '');
+                        socket.emit('video-out',{
+                            studentSocketId: tempSocket,
+                            on : false,
+                        })
+                        
+                    } else {
+                        cameraBtn.innerText = '카메라끄기' 
+                        //e.srcElement.id 뒤에 camera 택스트 제거
+                        let tempSocket = e.target.id.replace('-camera', '');
+                        
+                        socket.emit('video-out',{
+                            studentSocketId: tempSocket,
+                            on : true,
+                        })
+                    }
+                })
+            }
+            await socket.on('student-video-controller', ( on ) => {
+                myStream
+                .getVideoTracks()
+                .forEach((track) => {
+                    (track.enabled = on.on);                    
+                }); // 카메라 화면 요소를 키고 끄기 
+            })
+
+            document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
+
+        }
         
-        document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
     
     
         // the server consumer started with media paused

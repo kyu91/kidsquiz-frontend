@@ -14,6 +14,17 @@ function Quiz () {
     const [rightAnswer, setrightAnswer] = useState(null);
     const [result, setresult] = useState(null);
     const [name, setname] = useState(getSocketName());
+    const [hostSocket, sethostSocket] = useState(null);
+
+    // 이 방의 호스트 인가 아닌가 확인 -> isHost 변수 설정 (근데 어차피 퀴즈 시작은 선생님만 할 수 있으니까 꼭 안해도 될듯..?)
+    const hostBool = localStorage.getItem('hostBool');
+    let isHost ; 
+    if (hostBool) { // 
+        isHost = true ;
+    }
+    else {
+        isHost = false ;
+    }
 
     function makeAnsChosenFalse () {
         setansChosen(false)
@@ -22,29 +33,33 @@ function Quiz () {
     function finishQuiz() {
         console.log("퀴즈 종료")
         setquizStarted(false)
+        //!todo: 해당 퀴즈에 대해서만! 종료할 수 있도록..! 
+        socket.emit("finishQuiz")
     }
     function checkAnswer(idx, a, name) {
         console.log("고른 답은 ", idx)
         console.log("정답은 ", a)
         if (idx == a) {
-            socket.emit("correct", name)
+            socket.emit("correct", name, hostSocket)
             setresult(`${name}님! 정답입니다 🎉`)
             setansChosen(true)
             setTimeout(makeAnsChosenFalse, 1000)
         }
         else {
-            socket.emit("wrong", name)
+            socket.emit("wrong", name, hostSocket)
             setresult(`${name}님, 다시 생각해보세요 🤔`)
             setansChosen(true)
             setTimeout(makeAnsChosenFalse, 1000)
         }
     }
-    socket.on("startQuiz", (q, c1, c2, rightAnswer)=>{
+    socket.on("startQuiz", (q, c1, c2, rightAnswer, hostSocket)=>{
         setquestion(q)
         setchoice1(c1)
         setchoice2(c2)
         setrightAnswer(rightAnswer)
         console.log("🚀", rightAnswer)
+        console.log("선생님 socket", hostSocket)
+        sethostSocket(hostSocket)
         setquizStarted(true)
     })
 
@@ -59,8 +74,12 @@ function Quiz () {
         setansChosen(true)
         setTimeout(makeAnsChosenFalse, 1000)
     })
+    socket.on("finishQuiz", ()=> {
+        setquizStarted(false)
+    })
+    
+    localStorage.getItem('guestName');
 
-    console.dir(document.getElementById('btnnn'))
 
     if (quizStarted) return (
         <div className='quizWrapper'>
