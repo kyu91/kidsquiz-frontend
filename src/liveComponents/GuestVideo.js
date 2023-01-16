@@ -37,7 +37,7 @@ const GuestVideo =  () => {
         await axios(config)
             
             .then(response => {
-                console.log('처음에 겟에서 잘 가져오니',response.data.name);
+                // console.log('처음에 겟에서 잘 가져오니',response.data.name);
                 setHostName(response.data.name);
                 setHostBool(response.data.result);
             }).catch(error => {
@@ -64,25 +64,28 @@ const GuestVideo =  () => {
             <div className = "mainTable">
                 <div>
                     <div id = "videoPosition" className='localColumn'>
-                        <div >
-                            <video id="localVideo" autoPlay muted>
+                        <div>
+                            <video id="localMe" autoPlay muted>
                             </video>
                             <div>
                                 <p id = "localUserName"> 선생님 </p>
-                                
-                                <button id="mute">
-                                    음소거
-                                </button>
-                                <button id="camera">
-                                    카메라끄기
-                                </button>
+                                <button id="mute">음소거</button>
+                                <button id="camera">카메라끄기</button>
                             </div>
                         </div>
                     </div>
                     
                     <div className='remoteColumn'>
                         <div id="videoContainer"> 
-                        
+                        <div>
+                            <video id="guestMe" autoPlay muted>
+                            </video>
+                            <div>
+                                <p id = "localUserName"> 선생님 </p>
+                                <button id="mute">음소거</button>
+                                <button id="camera">카메라끄기</button>
+                            </div>
+                        </div>
                             
                         </div>
 

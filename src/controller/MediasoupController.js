@@ -15,15 +15,11 @@ export const getSocketName = () => {
 }
 
 const MediasoupController = (hostName, guestName, hostBool) => {
-
     //비디오 소스 임시로 담아둘 것 
     let tempVideoId
     let guestRoducerId = []
 
     //호스트라면 userName은 호스트 이름, 게스트라면 게스트 이름
-    
-
-
     
     let params = {
     // mediasoup params
@@ -51,16 +47,16 @@ const MediasoupController = (hostName, guestName, hostBool) => {
 
     
     const initCall = async (hostName, guestName, hostBool) => {
-        console.log("hostBool 잘 들어오니****", hostBool)
+        // console.log("hostBool 잘 들어오니****", hostBool)
         let userName = guestName
         if (hostBool){
             userName = hostName
         }
-        console.log("userName", userName)
+        // console.log("userName", userName)
         
         //석규추가
         const hostNameLine = document.getElementById('localUserName');
-        console.log("userName*******넣기전", userName)
+        // console.log("userName*******넣기전", userName)
         hostNameLine.innerHTML = userName;
         //석규추가 끝
 
@@ -110,10 +106,10 @@ const MediasoupController = (hostName, guestName, hostBool) => {
         // 성공적으로 미디어를 가져온 경우에 실행됨 
         //!3. 2번에서 성공적으로 미디어를 가져오면 실행되는 함수 
         const streamSuccess = (stream) => {
-            //id가 localVideo인 태그를 가져온다.
-            const localVideo = document.getElementById('localVideo');//추가한거
+            //id가 localMe인 태그를 가져온다.
+            const localMe = document.getElementById('localMe');//추가한거
             
-            localVideo.srcObject = stream
+            localMe.srcObject = stream
             myStream = stream;
             //! ... 문법은 audioParams, videoParams의 주소가 아닌 '값'만 가져온다는 의미! 
             audioParams = { track: stream.getAudioTracks()[0], ...audioParams };
