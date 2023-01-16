@@ -398,6 +398,9 @@ const MediasoupController = () => {
         // destructure and retrieve the video track from the producer
         const { track } = consumer
         console.log("새 소켓은 선생님인가!!", isNewSocketHost)
+        //!버튼 이벤트리스너
+        let cameraBtn = document.getElementById(newSocketId+'-camera')
+        let muteBtn = document.getElementById(newSocketId+'-mute')
 
         //! 새 소켓이 선생님인 경우 -> 선생님 칸으로 srcObject 넣어주기 
         if (isNewSocketHost) {
@@ -428,10 +431,6 @@ const MediasoupController = () => {
             }
             wrapper.appendChild(newElem)
             videoContainer.appendChild(wrapper)
-    
-            //!버튼 이벤트리스너
-            let cameraBtn = document.getElementById(newSocketId+'-camera')
-            let muteBtn = document.getElementById(newSocketId+'-mute')
             
             if (cameraBtn){
                 cameraBtn.addEventListener('click', async (e) => {
@@ -510,9 +509,6 @@ const MediasoupController = () => {
                 (track.enabled = on.on);                    
             }); // 카메라 화면 요소를 키고 끄기 
         })
-        
-        // destructure and retrieve the video track from the producer
-        const { track } = consumer
 
         
     
