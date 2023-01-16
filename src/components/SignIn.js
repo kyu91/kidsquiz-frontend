@@ -14,8 +14,6 @@ import CardCover from '@mui/material/CardMedia';
 
 import axios from 'axios';
 
-import backEndUri from '../backEndUri';
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -105,7 +103,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="이메일 입력"
               name="email"
               autoComplete="email"
               autoFocus
@@ -115,14 +113,14 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="비밀번호 입력"
               type="password"
               id="password"
               autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="계정 기억하기"
             />
             <Button
               type="submit"
@@ -130,17 +128,12 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              로그인
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"회원이 아니신가요? 회원가입"}
                 </Link>
               </Grid>
             </Grid>
