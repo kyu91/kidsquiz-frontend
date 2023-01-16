@@ -81,7 +81,7 @@ export default function CreateMaterial() {
         교구 생성
       </Typography>
       <Grid container spacing={3} component="form" encType="multipart/form-data" onSubmit={handleSubmit}>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <TextField
             required
             id="title"
@@ -91,7 +91,7 @@ export default function CreateMaterial() {
             autoComplete="given-name"
             variant="standard"
           />
-        </Grid>
+        </Grid> */}
 
         {/* 입장인원선택 라디오 */}
         <Grid item xs={12}>
@@ -121,7 +121,7 @@ export default function CreateMaterial() {
                     label="객관식"
                     value={2}
                 />
-                {/* {
+                {
                   radio == 1 ? 
                   <div>
                   <br/>
@@ -136,9 +136,9 @@ export default function CreateMaterial() {
                 autoComplete="given-name"
                 variant="standard"
               />
-              </Grid> */}
+              </Grid>
                 {/*이미지 업로드 */}
-                {/* <Grid item xs={12}>
+                <Grid item xs={12}>
                 <Stack direction="row" alignItems="center">
                 <Typography variant="p" mt={2}>
                   {files.length > 0 ? files[0].name : '이미지를 업로드해주세요.'}
@@ -151,12 +151,12 @@ export default function CreateMaterial() {
               </Grid>
               </p>  </div> : null
                     
-                } */}
+                }
 
             </RadioGroup>
         </Grid>
           {/*이미지 업로드 */}
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
           <Stack direction="row" alignItems="center">
           <Typography variant="p" mt={2}>
             {files.length > 0 ? files.name : '이미지를 업로드해주세요.'}
@@ -166,7 +166,7 @@ export default function CreateMaterial() {
             <input hidden accept="image/*" type="file" ref={inputRef} onChange={handleChangeFile}/>
           </Button>
           </Stack>
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12}>
           <Stack spacing={2} direction="row">
