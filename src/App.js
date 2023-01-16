@@ -14,9 +14,23 @@ import CreateClass from './components/CreateClass';
 import LiveMain from './liveComponents/LiveMain';
 import GuestIntro from './liveComponents/GuestIntro';
 
+//메인페이지
+import Hero from './mainComponents/Hero';
+import Footer from './mainComponents/Footer';
+import Section from './mainComponents/Section';
+import AboutUs from './mainComponents/AboutUs';
+import Testimonial from './mainComponents/Testimonial';
+import ContactUs from './mainComponents/ContactUs';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+
 //css리셋
 import { Reset } from 'styled-reset'
 import './index.css'
+import Header from './mainComponents/Header';
 
 function App() {
 
@@ -28,9 +42,6 @@ function App() {
       if (token) {
         // Redirect to the /class page
         window.location.href = '/class';
-      } else {
-        // Redirect to the /login page
-        window.location.href = '/login';
       }
     }
   }, [location.pathname]);
@@ -38,11 +49,25 @@ function App() {
 
   return (
     <>
-      <React.Fragment>
+      {/* <React.Fragment> */}
         <Reset />
         <CssBaseline />
         
           <Routes>
+
+            {/* 메인페이지 라우터 */}
+            <Route path="/" element={
+              <>
+                <CssBaseline />
+                <Header />
+                <Hero />
+                <Section />
+                <AboutUs />
+                <Testimonial />
+                <ContactUs />
+                <Footer />
+                </>
+            }/>
 
 
             {/* /class로 갔을때 토큰이 있다면 그냥 있고 없다면 로그인 페이지로 보내줘 */}
@@ -98,7 +123,7 @@ function App() {
           
           </Routes>
         
-      </React.Fragment>
+      {/* </React.Fragment> */}
     </>
   );
 }

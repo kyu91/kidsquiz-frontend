@@ -11,10 +11,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './component_style.css';
 
-import backEndUri from '../backEndUri';
-
-
-
 
 export default function Boards() {
 
@@ -35,7 +31,6 @@ export default function Boards() {
                 
                 .then(response => {
                     console.log(response.data);
-
                     setBoards(response.data);
                 }).catch(error => {
                     console.error(error);

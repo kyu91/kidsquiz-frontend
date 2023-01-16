@@ -140,6 +140,7 @@ const MediasoupController = () => {
         const joinRoom = () => {
             
             socket.emit('joinRoom', roomName, userName ,hostBool, (data) => {
+                console.log('이거 때문인가?',hostBool)
                 console.log(`Router RTP Capabilities... ${data.rtpCapabilities}`)
                 // we assign to local variable and will be used when loading the client Device (see createDevice above)
                 rtpCapabilities = data.rtpCapabilities
@@ -415,6 +416,7 @@ const MediasoupController = () => {
         //! 그렇지 않은 경우 학생 요소로 넣어주기! 
         else {
             // const videoTrack = newSocketId.getVideoTracks()[0]
+            
 
             // create a new div element for the new consumer media
             const wrapper = document.createElement('div') //상위 div
@@ -509,6 +511,7 @@ const MediasoupController = () => {
                 (track.enabled = on.on);                    
             }); // 카메라 화면 요소를 키고 끄기 
         })
+        
 
         
     
