@@ -70,6 +70,51 @@ export default function CreateMaterial() {
     };
 
 
+    // 이미지 객관식 입니다. 꼭 해야합니다 그래야만 합니다.
+    const handleSubmitImg = (event) => {
+      event.preventDefault();
+      const data = new FormData()
+      data.append("question", event.target.question.value) ;
+      data.append("category", radio);
+      data.append("image", files);
+      data.append("image", files);
+      data.append("answer", event.target.answer.value);
+        //title: event.target.title.value,
+        // thumbnail: files,
+        // studentMaxNum: radio
+        console.log({
+          question: data.get('question'),
+          category: data.get('category'),
+          image: data.get('image'),
+          answer: data.get('answer'),
+          
+        });
+      console.log('12312123123123',data);
+      onhandlePostImg(data);
+    };
+
+    const onhandlePostImg = async(data)=>{
+      const config = {
+          method: 'post',
+          url: '/api/material/multipleChoice',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `${localStorage.getItem('token')}`
+          },
+          data : data
+        };
+        console.log("🚀🚀🚀🚀", data)
+      await axios(config)
+          .then(response => {
+              alert('이미지 퀴즈가 생성되었습니다.');
+              console.log(response);
+          }).catch(error => {
+              console.error(error);
+          }
+      );
+    };
+
+
 
 
     //라디오 버튼
@@ -80,11 +125,29 @@ export default function CreateMaterial() {
 
 
     //파일 업로드
+  
     const [files, setFiles] = React.useState([]);
     const inputRef = React.useRef();
     const handleChangeFile = (event) => {
         setFiles(event.target.files[0]);
-    };
+        images.append(files)
+      };
+    // const images = files
+    const images = {};
+    
+
+
+
+    ///추가요;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    // const imageRef = React.useRef();
+    // const handleChangeImg = (event) => {
+    //   images.push(event.target.value)
+    // }
+    console.log("들어오라고오오오오오",images)
+
+    //여기까지
+
+
 
     //2줄 추가
     //const formData = new FormData();
@@ -189,7 +252,7 @@ export default function CreateMaterial() {
                 <Grid item xs={12} >
                 <Stack direction="row" alignItems="center">
                 <Typography variant="p" mt={2}>
-                  {files.length > 0 ? files.name : '이미지를 업로드해주세요.'}
+                  {files.name  ? files.name : '이미지를 업로드해주세요.'}
                 </Typography>
                 <Button variant="contained" component="label">
                   Upload File
@@ -197,7 +260,6 @@ export default function CreateMaterial() {
                 </Button>
                 </Stack>
               </Grid>
-
                    
         { <Grid item xs={12}>
           <Stack spacing={2} direction="row">
@@ -221,7 +283,7 @@ export default function CreateMaterial() {
                   <div>
                   <br/>
                   <p>
-              <Grid container spacing={1}  component="form" multiple encType="multipart/form-data" onSubmit={handleSubmit}>          
+              <Grid container spacing={0}  component="form" multiple encType="multipart/form-data" onSubmit={handleSubmitImg}>          
               <TextField
                 required
                 id="question"
@@ -231,33 +293,34 @@ export default function CreateMaterial() {
                 autoComplete="given-name"
                 variant="standard"
               />
-              </Grid>         
+                  
               <div/>
 
-              <Grid container spacing={1} component="form"style={{display:'none'}} encType="multipart/form-data" onSubmit={handleSubmit}>          
+                   
               <TextField
-                required
-                id="firstChoice"
-                name="firstChoice"
-                label="firstChoice"
+                // required
+                id="image"
+                name="image"
+                label="image"
                 fullWidth
                 autoComplete="given-name"
                 variant="standard"
               />
-              </Grid>
+          
 
-              <Grid container spacing={1} component="form"style={{display:'none'}} encType="multipart/form-data" onSubmit={handleSubmit}>          
+                       
               <TextField
-                required
-                id="secondChoice"
-                name="secondChoice"
-                label="secondChoice"
+              // style={{display:'none'}}
+              //   required
+                id="image"
+                name="image"
+                label="image"
                 fullWidth
                 autoComplete="given-name"
                 variant="standard"
               />
-              </Grid>
-              <Grid container spacing={1} component="form" encType="multipart/form-data" onSubmit={handleSubmit}>          
+       
+                 
               <TextField
                 required
                 id="answer"
@@ -267,20 +330,35 @@ export default function CreateMaterial() {
                 autoComplete="given-name"
                 variant="standard"
               />
-              </Grid>  
 
                 {/*이미지 업로드 */}
                 <Grid item xs={12} >
                 <Stack direction="row" alignItems="center">
-                <Typography variant="p" mt={2}>
-                  {files.length > 0 ? files.name : '이미지를 업로드해주세요.'}
+                <Typography variant="p" mt={3}>
+                     
+                  {files.name  ? files.name : '이미지를 업로드해주세요.'}
                 </Typography>
                 <Button variant="contained" component="label">
                   Upload File
-                  <input hidden accept="image/*" name="image" type="file" ref={inputRef} onChange={handleChangeFile}/>
+                  <input hidden accept="image/*" multiple name="image" type="file" ref={inputRef} onChange={handleChangeFile}/>
                 </Button>
+              
                 </Stack>
+
+                { <Grid item xs={12}>
+          <Stack spacing={2} direction="row">
+            <Button variant="outlined" href='/material'>취소</Button>
+            <Button 
+              //href='/material'
+              variant="contained" 
+              type='submit'
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+              >등록</Button>
+          </Stack>
+        </Grid> }
               </Grid>
+            </Grid>  
               </p>  </div> : null       
               }
                               {
