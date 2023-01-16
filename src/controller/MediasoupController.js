@@ -145,7 +145,7 @@ const MediasoupController = () => {
                 // we assign to local variable and will be used when loading the client Device (see createDevice above)
                 rtpCapabilities = data.rtpCapabilities
                 // once we have rtpCapabilities from the Router, create Device
-                createDevice()
+                createDevice();
             })
         }
         
