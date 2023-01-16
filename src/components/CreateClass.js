@@ -71,7 +71,8 @@ export default function CreateClass() {
     //교구선택 데이터 get
     const materialChoice = React.useRef();
     const [materialList, setMaterialList] = React.useState([]); //데이터 받아오기
-    const [materiallistId, setMaterialListId] = React.useState([]); //교구 objectId
+    const [materiallistId, setMaterialListId] = React.useState([]); //데이터 받아오기
+   
     const getMaterialList = async () => {
       const config = {
         method: 'get',
@@ -91,14 +92,12 @@ export default function CreateClass() {
           );
         };
         
+    // const onhandleMaterialList = () => {
+    // };
     React.useEffect(() => {
       getMaterialList();
     }, []);
-
     
-    console.log('데이터 잘 받아왔니?1',materialList);
-    console.log('데이터 잘 받아왔니?2',materiallistId);
-    // console.log('초이스 잘 되니?', materiallistId[materials]['_id']);
 
 
     //서브밋
@@ -132,7 +131,11 @@ export default function CreateClass() {
       data.append('title', event.target.title.value);
       data.append('startDateTime',formattedDate );
       data.append('classKey',password );
-      data.append('classMaterial',materiallistId[materials]['_id'] );
+      if (materiallistId[materials]){
+        data.append('classMaterial',materiallistId[materials]['id']);
+      }else{
+        data.append('classMaterial',null);
+      }
       data.append('studentMaxNum',radio );
       data.append('image', files);
       
@@ -239,12 +242,15 @@ export default function CreateClass() {
         <Grid item xs={12}>
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">교구선택</InputLabel>
+              <InputLabel 
+                id="demo-simple-select-label"
+                >교구선택</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={materials}
                 label="Age"
+                // onClick={onhandleMaterialList}
                 onChange={handleChangeMaterial}
               >
 

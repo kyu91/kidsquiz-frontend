@@ -3,7 +3,7 @@ import "./css/Puzzle.css"
 import socket from "./socketExport"
 
 function Puzzle(props) {
-//   let [img, setImg] = useState("")
+  let [img, setImg] = useState("")
   socket.on("puzzleStart", function(data) {
     setImg(data)
   })
