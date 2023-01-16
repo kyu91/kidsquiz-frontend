@@ -153,7 +153,7 @@ const MediasoupController = () => {
     //! 5. 4번에서 room에 조인하고 router rtpCapabilities를 받아온 후 실행되는 함수. Device 객체를 생성한다. 
     const createDevice = async () => {
         try {
-            device = new mediasoupClient.Device()
+            device = new mediasoupClient.Device();
             
         
         // Loads the device with RTP capabilities of the Router (server side)
