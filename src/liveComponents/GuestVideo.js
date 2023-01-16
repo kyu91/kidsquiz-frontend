@@ -38,8 +38,9 @@ const GuestVideo =  () => {
             
             .then(response => {
                 console.log('처음에 겟에서 잘 가져오니',response.data.name);
-                setHostName(response.data.name);
+                // setHostName(response.data.name);
                 setHostBool(response.data.result);
+                localStorage.setItem('hostBool', response.data.result);
             }).catch(error => {
                 console.error(error);
             }
@@ -50,10 +51,11 @@ const GuestVideo =  () => {
         if (hostToken){
             getHost(hostToken);
         }
+
         
         
-        controller.init(hostName, guestName, hostBool);
-    }, [hostName])
+        controller.init();
+    },[hostBool])
 
 
 
