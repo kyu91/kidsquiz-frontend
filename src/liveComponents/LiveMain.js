@@ -42,8 +42,6 @@ const LiveMain = () => {
         else if(!token && !guestKey) {
             history(`${location.pathname}/intro`);
         }
-        
-        window.location.reload();
     }, []);
 
 
