@@ -11,10 +11,12 @@ import ScrollContainer from 'react-indiana-drag-scroll'
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Quiz from './Quiz'
+import Puzzle from './Puzzle'
 
 import backEndUri from '../backEndUri';
 
 let imagearrayData =[]
+let puzzleurl
 
 function Canvas() {
   const [canvas, setCanvas] = useState('');
@@ -23,7 +25,9 @@ function Canvas() {
   // const [imageURL,setimageURL] = useState('');
   const [show,setShow] = useState(false);
   const [showimage, setShowimage] = useState(false);
-  const [tempimageURL, settempimageURL] = useState('');
+  const [showimagePuzzle, setShowimagePuzzle] = useState(false);
+  const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
+  // const [puzzleimageurl,setpuzzleimageurl] = useState('');
 
   const drawmode = () => {
     if (canvas.isDrawingMode === true){
@@ -42,6 +46,11 @@ const bringimageinhtml = (event) => {
 }
 
 
+const bringimageinhtmlPuzzle = (event) =>{
+  puzzleurl = event.currentTarget.src;
+  setShowimagePuzzlediv(true)
+  setShowimagePuzzle(false)
+}
 
    const bringimage = async() =>{
 
@@ -57,7 +66,9 @@ const bringimageinhtml = (event) => {
   await axios(config)
                 
   .then(response => {
+    console.log(response.data)
       let arrayData = response.data.Puzzle
+      console.log(arrayData);
       imagearrayData = arrayData.map((a,i) => {
         return a.image
       });
@@ -73,11 +84,25 @@ const bringimageinhtml = (event) => {
 
     if (showimage === false) {
       setShowimage(true)
-
     }
     else {
       setShowimage(false)
     }
+   }
+
+   function imageshowlistPuzzle(){
+
+    if (showimagePuzzle === false) {
+      setShowimagePuzzle(true)
+    }
+    else {
+      setShowimagePuzzle(false)
+    }
+   }
+
+   function imageshowlistPuzzledivexit(){
+      setShowimagePuzzlediv(false)
+
    }
 
 
@@ -400,11 +425,25 @@ const bringimageinhtml = (event) => {
           onClick={pencilmode}> 연필</Button>
 
         <Button 
-          key="imageee"
+          key="image"
           type='button' 
           className="navBtn"
           name='imageaddeee' 
-          onClick={imageshowlist}> 이미지</Button>  
+          onClick={imageshowlist}> 이미지</Button>
+
+        <Button 
+          key="imagepuzzle"
+          type='button' 
+          className="navBtn"
+          name='imageaddeee2' 
+          onClick={imageshowlistPuzzle}> 퍼즐 놀이</Button>
+
+        <Button 
+          key="imagepuzzledd"
+          type='button' 
+          className="navBtn"
+          name='imageaddeee2ddd' 
+          onClick={imageshowlistPuzzledivexit}> 퍼즐 종료</Button> 
 
         <input 
           key="color"
@@ -441,8 +480,23 @@ const bringimageinhtml = (event) => {
         </ScrollContainer>
       </div>}
       
+      {showimagePuzzle && <div>
+        <ScrollContainer className="scroll-container" activationDistance = "10">
+            <ul className="list">
+        {
+        imagearrayData.map((a) => {
+          return <li className="item">
+          <a className="link" >
+              <img className="image" src={a} onClick = {bringimageinhtmlPuzzle}></img>
+          </a>
+      </li>
+        })}
+        </ul>
+        </ScrollContainer>
+      </div>}
 
       <Quiz></Quiz>
+      {showimagePuzzlediv && <Puzzle url = {puzzleurl}></Puzzle>}
       <div>
         <canvas id="canv" />
       </div>
