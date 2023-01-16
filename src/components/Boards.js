@@ -88,7 +88,7 @@ export default function Boards() {
                         <h2>제목 : {board.title}</h2>
                         <p>시작시간 : {board.startDateTime}</p>
                         <p>참여 학생 : {board.studentMaxNum} 명</p>
-                        <Link to={`/live/${board._id}`}>강의실 바로 가기 </Link>
+                        <Button href={`/live/${board._id}`}>강의실 바로 가기 </Button>
                         
                         
                     </Paper>

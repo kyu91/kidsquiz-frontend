@@ -32,7 +32,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  console.log('3333333333',typeof(`${backEndUri}ddd/ddd`));
+  
 
     const onhandlePost = async(data)=>{
       const config = {
