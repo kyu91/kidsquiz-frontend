@@ -432,8 +432,10 @@ const MediasoupController = () => {
 
         // destructure and retrieve the video track from the producer
         const { track } = consumer
-        let muteBtn = document.getElementById(newSocketId+'-mute')
         console.log("새 소켓은 선생님인가!!", isNewSocketHost)
+        //!버튼 이벤트리스너
+        let cameraBtn = document.getElementById(newSocketId+'-camera')
+        let muteBtn = document.getElementById(newSocketId+'-mute')
 
           //! 새 소켓이 선생님인 경우 -> 선생님 칸으로 srcObject 넣어주기
           if (isNewSocketHost === true) {
@@ -446,6 +448,7 @@ const MediasoupController = () => {
           //! 그렇지 않은 경우 학생 요소로 넣어주기!
           else {
             // const videoTrack = newSocketId.getVideoTracks()[0]
+            
 
             // create a new div element for the new consumer media
             const wrapper = document.createElement("div"); //상위 div
@@ -468,23 +471,58 @@ const MediasoupController = () => {
                 newSocketId +
                 '-camera">카메라끄기</button>';
             }
-            wrapper.appendChild(newElem);
-            videoContainer.appendChild(wrapper);
+            wrapper.appendChild(newElem)
+            videoContainer.appendChild(wrapper)
+            
+            if (cameraBtn){
+                cameraBtn.addEventListener('click', async (e) => {
+                    if (cameraBtn.innerText === '카메라끄기') {
+                        cameraBtn.innerText = '카메라켜기' 
+                        //e.srcElement.id 뒤에 camera 택스트 제거
+                        let tempSocket = e.target.id.replace('-camera', '');
+                        socket.emit('video-out',{
+                            studentSocketId: tempSocket,
+                            on : false,
+                        })
+                        
+                    } else {
+                        cameraBtn.innerText = '카메라끄기' 
+                        //e.srcElement.id 뒤에 camera 택스트 제거
+                        let tempSocket = e.target.id.replace('-camera', '');
+                        
+                        socket.emit('video-out',{
+                            studentSocketId: tempSocket,
+                            on : true,
+                        })
+                    }
+                })
+            }
+            await socket.on('student-video-controller', ( on ) => {
+                myStream
+                .getVideoTracks()
+                .forEach((track) => {
+                    (track.enabled = on.on);                    
+                }); // 카메라 화면 요소를 키고 끄기 
 
-            //!버튼 이벤트리스너
-            let cameraBtn = document.getElementById(newSocketId + "-camera");
-            let muteBtn = document.getElementById(newSocketId + "-mute");
+            })
 
-            if (cameraBtn) {
-              cameraBtn.addEventListener("click", async (e) => {
-                if (cameraBtn.innerText === "카메라끄기") {
-                  cameraBtn.innerText = "카메라켜기";
-                  //e.srcElement.id 뒤에 camera 택스트 제거
-                  let tempSocket = e.target.id.replace("-camera", "");
-                  socket.emit("video-out", {
-                    studentSocketId: tempSocket,
-                    on: false,
-                  });
+            document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
+
+        }
+
+
+                
+        if (muteBtn){
+            muteBtn.addEventListener('click', async (e) => {
+                if (muteBtn.innerText === '마이크끄기') {
+                    muteBtn.innerText = '마이크켜기' 
+                    //e.srcElement.id 뒤에 camera 택스트 제거
+                    let tempSocket = e.target.id.replace('-audio', '');
+                    socket.emit('audio-out',{
+                        studentSocketId: tempSocket,
+                        on : false,
+                    })
+                    
                 } else {
                   cameraBtn.innerText = "카메라끄기";
                   //e.srcElement.id 뒤에 camera 택스트 제거
