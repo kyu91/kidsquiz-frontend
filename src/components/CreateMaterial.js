@@ -125,15 +125,52 @@ export default function CreateMaterial() {
 
 
     //파일 업로드
-  
+    
     const [files, setFiles] = React.useState([]);
     const inputRef = React.useRef();
     const handleChangeFile = (event) => {
         setFiles(event.target.files[0]);
-        images.append(files)
       };
     // const images = files
-    const images = {};
+    //추가추가
+
+    ///그냥 이미지 넣는거임 
+
+      const onhandlePostImages = async(data)=>{
+        const config = {
+            method: 'post',
+            url: '/api/material/image',
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `${localStorage.getItem('token')}`
+            },
+            data : data
+          };
+          console.log("🚀🚀🚀🚀", data)
+        await axios(config)
+            .then(response => {
+                alert('이미지가 생성되었습니다.');
+                console.log(response);
+            }).catch(error => {
+                console.error(error);
+            }
+        );
+      };
+  
+  
+      const handleSubmitJustImage = (event) => {
+        event.preventDefault();
+        const data = new FormData();
+        data.append("image", files);
+          //title: event.target.title.value,
+          // thumbnail: files,
+          // studentMaxNum: radio
+        
+        console.log('12312123123123',files);
+        onhandlePostImages(data);
+      };
+    
+  
     
 
 
@@ -143,7 +180,7 @@ export default function CreateMaterial() {
     // const handleChangeImg = (event) => {
     //   images.push(event.target.value)
     // }
-    console.log("들어오라고오오오오오",images)
+    console.log("들어오라고오오오오오")
 
     //여기까지
 
@@ -233,6 +270,48 @@ export default function CreateMaterial() {
                     value={3}
 
                 />
+                  <Radio
+                    color="info"
+                    size="md"
+                    variant="outlined"
+                    label="이미지"
+                    value={4}
+
+                />
+                {
+                  radio == 4 ?
+                  <div>
+                   <Grid container spacing={3} component="form" encType="multipart/form-data" onSubmit={handleSubmitJustImage}>          
+
+                {/*이미지 업로드 */}
+                <Grid item xs={12} >
+                <Stack direction="row" alignItems="center">
+                <Typography variant="p" mt={2}>
+                  {files.name  ? files.name : '이미지를 업로드해주세요.'}
+                </Typography>
+                <Button variant="contained" component="label">
+                  Upload File
+                  <input hidden accept="image/*" name="image" type="file" ref={inputRef} onChange={handleChangeFile}/>
+                </Button>
+                </Stack>
+              </Grid>
+                   
+        { <Grid item xs={12}>
+          <Stack spacing={2} direction="row">
+            <Button variant="outlined" href='/material'>취소</Button>
+            <Button 
+              //href='/material'
+              variant="contained" 
+              type='submit'
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+              >등록</Button>
+          </Stack>
+        </Grid> }
+              </Grid> 
+                  </div>       
+                  :null 
+                }
                 {
                   radio == 3 ? 
                   <div>
@@ -331,7 +410,7 @@ export default function CreateMaterial() {
                 variant="standard"
               />
 
-                {/*이미지 업로드 */}
+                {/*이미지 업로드*/}
                 <Grid item xs={12} >
                 <Stack direction="row" alignItems="center">
                 <Typography variant="p" mt={3}>
@@ -342,7 +421,7 @@ export default function CreateMaterial() {
                   Upload File
                   <input hidden accept="image/*" multiple name="image" type="file" ref={inputRef} onChange={handleChangeFile}/>
                 </Button>
-              
+                  
                 </Stack>
 
                 { <Grid item xs={12}>
