@@ -27,6 +27,7 @@ function Copyright(props) {
   );
 }
 
+
 const theme = createTheme();
 
 export default function SignIn() {
@@ -95,7 +96,7 @@ export default function SignIn() {
           />
         </CardCover>
           <Typography component="h1" variant="h5">
-            로그인 해주세요
+            
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField

@@ -27,16 +27,22 @@ function Canvas() {
   const [showimage, setShowimage] = useState(false);
   const [showimagePuzzle, setShowimagePuzzle] = useState(false);
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
+  const [drawmodeonoff, setdrawmodeonoff] = useState(true);
   // const [puzzleimageurl,setpuzzleimageurl] = useState('');
 
   const drawmode = () => {
     if (canvas.isDrawingMode === true){
       canvas.isDrawingMode = false
       setShow(false)
+      setdrawmodeonoff(true)
+      
+
     }
     else {
       canvas.isDrawingMode = true
       setShow(true)
+      setdrawmodeonoff(false)
+      
     }
   }
 
@@ -213,18 +219,6 @@ const bringimageinhtmlPuzzle = (event) =>{
     })
   }
 
-  // const addImage = ()=> {
-  //   let object
-  //   fabric.Image.fromURL(imageURL, function(Image){
-  //     Image.scale(0.4);
-  //     object = Image
-  //     object.set({id: uuid()})
-  //     canvas.add(object);
-  //     emitAddImage({url: imageURL, id: object.id})
-  //     canvas.renderAll()
-  //   })
-  // }
-
   const addShape = (e) => {
     let type = e.target.name;
     let object
@@ -366,63 +360,69 @@ const bringimageinhtmlPuzzle = (event) =>{
         variant="contained" 
         aria-label="outlined primary button group"
         size='small'>
-        <Button 
-          key="Square"
-          type='button' 
-          className="navBtn"
-          name='circle' 
-          onClick={addShape}> 원 🟢 </Button>
 
-        <Button 
-          key = "Triangle"
-          type='button' 
-          className="navBtn"
-          name='triangle' 
-          onClick={addShape}> 삼각형 🔺</Button>
-
-        <Button 
-          key="Rectangle"
-          type='button' 
-          className="navBtn"
-          name='rectangle' 
-          onClick={addShape}>사각형 🟦 </Button>
-        <Button 
-          key="delete"
-          type='button' 
-          className="navBtn"
-          name='delete' 
-          onClick={deleteObject}> 지우기 </Button>
-        <Button 
-          key="clear"
-          type='button' 
-          className="navBtn"
-          name='clear' 
-          onClick={clearCanvas}>새 도화지 </Button>
-        <Button 
-          key="addTangram"
-          type='button' 
-          className="navBtn"
-          name='addTangram' 
-          onClick={addTangram}>칠교</Button>
         <Button 
           key="on/off(draw)"
           type='button' 
           className="navBtn"
           name='on/off(draw)' 
           onClick={drawmode}> 그리기/도형</Button>
-        <Button 
-          key="erase"
-          type='button' 
-          className="navBtn"
-          name='imageadd' 
-          onClick={erasemode}> 지우개</Button>     
 
         <Button 
+          key="clear"
+          type='button' 
+          className="navBtn"
+          name='clear' 
+          onClick={clearCanvas}>새 도화지 </Button>
+
+        {drawmodeonoff && <Button 
+          key="Square"
+          type='button' 
+          className="navBtn"
+          name='circle' 
+          onClick={addShape}> 원 🟢 </Button>}
+
+        {drawmodeonoff && <Button  
+          key = "Triangle"
+          type='button' 
+          className="navBtn"
+          name='triangle' 
+          onClick={addShape}> 삼각형 🔺</Button>}
+
+        {drawmodeonoff && <Button 
+          key="Rectangle"
+          type='button' 
+          className="navBtn"
+          name='rectangle' 
+          onClick={addShape}>사각형 🟦 </Button>}
+
+        {drawmodeonoff && <Button 
+          key="addTangram"
+          type='button' 
+          className="navBtn"
+          name='addTangram' 
+          onClick={addTangram}>칠교</Button>}
+
+        {drawmodeonoff && <Button 
+          key="delete"
+          type='button' 
+          className="navBtn"
+          name='delete' 
+          onClick={deleteObject}> 지우기 </Button>}
+
+        {!drawmodeonoff &&<Button 
           key="pencil"
           type='button' 
           className="navBtn"
           name='imageadd' 
-          onClick={pencilmode}> 연필</Button>
+          onClick={pencilmode}> 연필</Button>}
+
+        {!drawmodeonoff &&<Button 
+          key="erase"
+          type='button' 
+          className="navBtn"
+          name='imageadd' 
+          onClick={erasemode}> 지우개</Button>}  
 
         <Button 
           key="image"
