@@ -14,7 +14,8 @@ export const getSocketName = () => {
     return guestNameTemp ? guestNameTemp : "선생"
 }
 
-const MediasoupController = (hostName, guestName, hostBool) => {
+
+const MediasoupController = () => {
     //비디오 소스 임시로 담아둘 것 
     let tempVideoId
     let guestRoducerId = []
@@ -46,8 +47,13 @@ const MediasoupController = (hostName, guestName, hostBool) => {
     }
 
     
-    const initCall = async (hostName, guestName, hostBool) => {
-        // console.log("hostBool 잘 들어오니****", hostBool)
+
+    const initCall = async () => {
+        //로컬에서 hostName, guestName hostBool을 가져온다.
+        const hostName = localStorage.getItem('name');
+        const guestName = localStorage.getItem('guestName');
+        const hostBool = localStorage.getItem('hostBool');
+
         let userName = guestName
         if (hostBool){
             userName = hostName
@@ -56,7 +62,7 @@ const MediasoupController = (hostName, guestName, hostBool) => {
         
         //석규추가
         const hostNameLine = document.getElementById('localUserName');
-        // console.log("userName*******넣기전", userName)
+        
         hostNameLine.innerHTML = userName;
         //석규추가 끝
 
@@ -342,7 +348,6 @@ const MediasoupController = (hostName, guestName, hostBool) => {
         
 
         //소켓내임이 있으면 소켓 네임으로 없으면 유저네임
-        const newUserName = hostBool ? userName : socketName
 
         await socket.emit('consume', {
             rtpCapabilities: device.rtpCapabilities,
@@ -392,7 +397,7 @@ const MediasoupController = (hostName, guestName, hostBool) => {
         } else {
         //append to the video container
         wrapper.innerHTML = 
-            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ newUserName +'"</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
+            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ socketName +'"</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
             newSocketId+'-camera">카메라끄기</button>'
         }
         wrapper.appendChild(newElem)
@@ -467,9 +472,9 @@ const MediasoupController = (hostName, guestName, hostBool) => {
 
   return {
     
-    init: (hostName, guestName, hostBool) => {
+    init: () => {
         
-        initCall(hostName, guestName, hostBool);
+        initCall();
         
     },
     

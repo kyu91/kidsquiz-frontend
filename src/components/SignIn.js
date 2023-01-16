@@ -46,11 +46,12 @@ export default function SignIn() {
         
         await axios(config)
           .then(response => {
-              console.log(response.data);
               alert('로그인 성공');
               //토큰 저장
               localStorage.setItem('token', response.data.token);
+              localStorage.setItem('name', response.data.name);
               window.location.href = '/class';
+              
               }
           ).catch(error => {
               console.error(error);
