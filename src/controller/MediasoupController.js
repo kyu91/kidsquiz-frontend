@@ -50,14 +50,19 @@ const MediasoupController = (hostName, guestName, hostBool) => {
     }
 
     
-    const initCall = async () => {
+    const initCall = async (hostName, guestName, hostBool) => {
+        console.log("hostBool 잘 들어오니****", hostBool)
         let userName = guestName
         if (hostBool){
             userName = hostName
         }
         console.log("userName", userName)
         
-        
+        //석규추가
+        const hostNameLine = document.getElementById('localUserName');
+        console.log("userName*******넣기전", userName)
+        hostNameLine.innerHTML = userName;
+        //석규추가 끝
 
         //방이름
         const roomName = localStorage.getItem('roomName');
@@ -107,6 +112,7 @@ const MediasoupController = (hostName, guestName, hostBool) => {
         const streamSuccess = (stream) => {
             //id가 localVideo인 태그를 가져온다.
             const localVideo = document.getElementById('localVideo');//추가한거
+            
             localVideo.srcObject = stream
             myStream = stream;
             //! ... 문법은 audioParams, videoParams의 주소가 아닌 '값'만 가져온다는 의미! 
@@ -339,6 +345,9 @@ const MediasoupController = (hostName, guestName, hostBool) => {
         // if the router can consume, it will send back a set of params as below
         
 
+        //소켓내임이 있으면 소켓 네임으로 없으면 유저네임
+        const newUserName = hostBool ? userName : socketName
+
         await socket.emit('consume', {
             rtpCapabilities: device.rtpCapabilities,
             remoteProducerId,
@@ -381,14 +390,13 @@ const MediasoupController = (hostName, guestName, hostBool) => {
         const newElem = document.createElement('div') // 비디오, 오디오 화면
         // newElem.setAttribute('id', `td-${remoteProducerId}`)
         wrapper.setAttribute('id', `td-${remoteProducerId}`)
-        if (params.kind == 'audio') {
+        if (params.kind === 'audio') {
         //append to the audio container
         wrapper.innerHTML = '<audio id="' + remoteProducerId + '" autoplay></audio>'
         } else {
         //append to the video container
         wrapper.innerHTML = 
-            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ userName +'"</p>'+ 
-            socketName +'</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
+            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ newUserName +'"</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
             newSocketId+'-camera">카메라끄기</button>'
         }
         wrapper.appendChild(newElem)
@@ -419,13 +427,8 @@ const MediasoupController = (hostName, guestName, hostBool) => {
                         studentSocketId: tempSocket,
                         on : true,
                     })
-        
                 }
-            
-                
             })
-              
-
         }
         await socket.on('student-video-controller', ( on ) => {
             myStream

@@ -37,7 +37,7 @@ const GuestVideo =  () => {
         await axios(config)
             
             .then(response => {
-                console.log(response.data);
+                console.log('처음에 겟에서 잘 가져오니',response.data.name);
                 setHostName(response.data.name);
                 setHostBool(response.data.result);
             }).catch(error => {
@@ -53,7 +53,7 @@ const GuestVideo =  () => {
         
         
         controller.init(hostName, guestName, hostBool);
-    }, [])
+    }, [hostName])
 
 
 
@@ -68,8 +68,8 @@ const GuestVideo =  () => {
                             <video id="localVideo" autoPlay muted>
                             </video>
                             <div>
-                                <p id="userName"> 선생님 </p>
-                                <p id = "토큰있음"></p>
+                                <p id = "localUserName"> 선생님 </p>
+                                
                                 <button id="mute">
                                     음소거
                                 </button>
