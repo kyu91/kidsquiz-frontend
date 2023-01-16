@@ -4,6 +4,10 @@ import {fabric} from 'fabric'
 import socket from "./socketExport"
 
 // emitters
+
+export const emitUrl = (obj) => {
+  socket.emit("sendPuzzleURL", obj)
+}
 export const emitAdd = (obj) => {
   socket.emit('object-added', obj)
 }
