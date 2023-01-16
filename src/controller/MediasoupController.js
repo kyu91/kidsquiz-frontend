@@ -351,6 +351,7 @@ const MediasoupController = () => {
         signalNewConsumerTransport(producerId, socketName, socketId, isNewSocketHost)
     })
 
+  
     //!새 참여자 발생시 2. 1번함수에서 호출되는 함수 -> 여기서 실질적으로 새로운 html 요소가 만들어지고 비디오 스트림을 받아옴 
     const connectRecvTransport = async (consumerTransport, remoteProducerId, serverConsumerTransportId, socketName, newSocketId, isNewSocketHost) => {
         // for consumer, we need to tell the server first
@@ -394,7 +395,6 @@ const MediasoupController = () => {
             },
         ]
         
-
         // destructure and retrieve the video track from the producer
         const { track } = consumer
         console.log("새 소켓은 선생님인가!!", isNewSocketHost)
@@ -409,7 +409,6 @@ const MediasoupController = () => {
             const hostName = document.getElementById('hostName');//추가한거
             hostMe.srcObject =  new MediaStream([track])
             hostName.innerText = `${socketName} 선생님`
-
 
         }
         //! 그렇지 않은 경우 학생 요소로 넣어주기! 
@@ -461,7 +460,6 @@ const MediasoupController = () => {
                 .forEach((track) => {
                     (track.enabled = on.on);                    
                 }); // 카메라 화면 요소를 키고 끄기 
-
             })
 
             document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
