@@ -14,16 +14,13 @@ export const getSocketName = () => {
     return guestNameTemp ? guestNameTemp : "선생"
 }
 
-const MediasoupController = () => {
 
+const MediasoupController = () => {
     //비디오 소스 임시로 담아둘 것 
     let tempVideoId
     let guestRoducerId = []
 
     //호스트라면 userName은 호스트 이름, 게스트라면 게스트 이름
-    
-
-
     
     let params = {
     // mediasoup params
@@ -50,6 +47,7 @@ const MediasoupController = () => {
     }
 
     
+
     const initCall = async () => {
         //로컬에서 hostName, guestName hostBool을 가져온다.
         const hostName = localStorage.getItem('name');
@@ -60,7 +58,7 @@ const MediasoupController = () => {
         if (hostBool){
             userName = hostName
         }
-        console.log("userName", userName)
+        // console.log("userName", userName)
         
         //석규추가
         const hostNameLine = document.getElementById('localUserName');
@@ -114,10 +112,10 @@ const MediasoupController = () => {
         // 성공적으로 미디어를 가져온 경우에 실행됨 
         //!3. 2번에서 성공적으로 미디어를 가져오면 실행되는 함수 
         const streamSuccess = (stream) => {
-            //id가 localVideo인 태그를 가져온다.
-            const localVideo = document.getElementById('localVideo');//추가한거
+            //id가 localMe인 태그를 가져온다.
+            const localMe = document.getElementById('localMe');//추가한거
             
-            localVideo.srcObject = stream
+            localMe.srcObject = stream
             myStream = stream;
             //! ... 문법은 audioParams, videoParams의 주소가 아닌 '값'만 가져온다는 의미! 
             audioParams = { track: stream.getAudioTracks()[0], ...audioParams };
@@ -399,7 +397,7 @@ const MediasoupController = () => {
         } else {
         //append to the video container
         wrapper.innerHTML = 
-            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ socketName +'"</p> <button id="'+ newSocketId+'-mute">음소거</button> <button id="'+ 
+            '<video id="'+ remoteProducerId+ '" autoplay class="video" ></video> <p>"'+ socketName +'"</p> <button id="'+ newSocketId+'-audio">음소거</button> <button id="'+ 
             newSocketId+'-camera">카메라끄기</button>'
         }
         wrapper.appendChild(newElem)
@@ -408,7 +406,7 @@ const MediasoupController = () => {
 
         //!버튼 이벤트리스너
         let cameraBtn = document.getElementById(newSocketId+'-camera')
-        let muteBtn = document.getElementById(newSocketId+'-mute')
+        let muteBtn = document.getElementById(newSocketId+'-audio')
         
         if (cameraBtn){
             cameraBtn.addEventListener('click', async (e) => {
@@ -433,9 +431,43 @@ const MediasoupController = () => {
                 }
             })
         }
+
+                
+        if (muteBtn){
+            muteBtn.addEventListener('click', async (e) => {
+                if (muteBtn.innerText === '마이크끄기') {
+                    muteBtn.innerText = '마이크켜기' 
+                    //e.srcElement.id 뒤에 camera 택스트 제거
+                    let tempSocket = e.target.id.replace('-audio', '');
+                    socket.emit('audio-out',{
+                        studentSocketId: tempSocket,
+                        on : false,
+                    })
+                    
+                } else {
+                    muteBtn.innerText = '마이크끄기' 
+                    //e.srcElement.id 뒤에 camera 택스트 제거
+                    let tempSocket = e.target.id.replace('-audio', '');
+                    
+                    socket.emit('audio-out',{
+                        studentSocketId: tempSocket,
+                        on : true,
+                    })
+                }
+            })
+        }
+        
         await socket.on('student-video-controller', ( on ) => {
             myStream
             .getVideoTracks()
+            .forEach((track) => {
+                (track.enabled = on.on);                    
+            }); // 카메라 화면 요소를 키고 끄기 
+        })
+
+        await socket.on('student-audio-controller', ( on ) => {
+            myStream
+            .getAudioTracks()
             .forEach((track) => {
                 (track.enabled = on.on);                    
             }); // 카메라 화면 요소를 키고 끄기 
