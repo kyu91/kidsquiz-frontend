@@ -19,6 +19,7 @@ export default function Materials() {
     //const [materials, setMaterials] = React.useState([]);
     const [Puzzles, setPuzzles] = React.useState([]);
     const [MultipleChoices, setMultipleChoices] = React.useState([]);
+    const [justImages, setJustImages] = React.useState([]);
     console.log(Puzzles)
     
     React.useEffect(() => {
@@ -35,8 +36,10 @@ export default function Materials() {
             await axios(config)
                 
                 .then(response => {
-                    setPuzzles(response.data.Puzzle);
-                    setMultipleChoices(response.data.MultipleChoice);
+                    setPuzzles(response.data.puzzle);
+                    setMultipleChoices(response.data.multipleChoice);
+                    setJustImages(response.data.image);
+                    console.log("걍 이미지임", justImages);
 
                 }).catch(error => {
                     console.error(error.toJSON);
@@ -96,9 +99,22 @@ export default function Materials() {
               <Paper elevation={3} key={index} >
                 <Paper variant='outlined' component="img" src ={MultipleChoice._id}
                 sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
-                <h2> 제목 : {MultipleChoice.answer} </h2>
-                <p> 이미지 : {MultipleChoice.secondChoice}</p>
-                <p>row, column : {MultipleChoice.user}</p>
+                <h2> 제목 : {MultipleChoice.question} </h2>
+                <p> 퀴즈1 : {MultipleChoice.secondChoice}</p>
+                <p> 퀴즈2 : {MultipleChoice.secondChoice}</p>
+              </Paper>
+            )
+          })
+        }
+          {
+          justImages.map((Image, index) => {
+
+            
+            return (
+              <Paper elevation={3} key={index} >
+                <Paper variant='outlined' component="img" src ={Image}
+                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
+                <h2> 이미지 : {Image.image} </h2>
               </Paper>
             )
           })

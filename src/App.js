@@ -132,7 +132,7 @@ function App() {
             </div>: null
             }
             {
-            value == 1 ? <div> 내용2</div>: null
+            value == 1 ? <div> 교구 모음집</div>: null
             }                 
             </Container>
             }/>    
