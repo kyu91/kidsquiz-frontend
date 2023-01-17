@@ -23,6 +23,8 @@ import ImageBundle from './canvasComponents/ImageBundle';
 import PuzzleBundle from './canvasComponents/PuzzleBundle';
 import PermDataSettingIcon from '@mui/icons-material/PermDataSetting';
 import CategoryIcon from '@mui/icons-material/Category';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import Crop32Icon from '@mui/icons-material/Crop32';
 
 // let puzzleurl
 
@@ -231,7 +233,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
   return (
     //!리턴
     <div className='App'>
-      <div>
+      <div id="buttonGroup">
 
 
         {/* 팬/도형 토글 */}
@@ -240,6 +242,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           canvas={canvas}
           setShow={setShow}
           setdrawmodeonoff={setdrawmodeonoff}
+          size ="small"
         ></DrawToggle>
 
         {/* 리셋 */}
@@ -289,25 +292,19 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           canvas={canvas}
           ></Chilgyo>
 
-        {/* ------------------------------------- */}
-        <ButtonGroup 
-          variant="contained" 
-          aria-label="outlined primary button group"
-          size='small'>
-
         {!drawmodeonoff &&<Button 
           key="pencil"
           type='button' 
           className="navBtn"
           name='imageadd' 
-          onClick={pencilmode}> 연필</Button>}
+          onClick={pencilmode}><BorderColorIcon/></Button>}
 
         {!drawmodeonoff &&<Button 
           key="erase"
           type='button' 
           className="navBtn"
           name='imageadd' 
-          onClick={erasemode}> 지우개</Button>}  
+          onClick={erasemode}><Crop32Icon/></Button>}  
 
         <ImageBundle
           showimage={showimage}
@@ -330,7 +327,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           id="drawing-color"></input>
 
       
-      </ButtonGroup>
+      
 
       {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}

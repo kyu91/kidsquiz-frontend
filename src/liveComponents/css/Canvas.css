@@ -76,10 +76,22 @@ input[type=range]::-moz-range-thumb {
   color: black;
   font-size: 0.7em;
 } 
-
 #canv{
   width: 100%;
 }
+#buttonGroup {
+  display: flex;
+}
+#buttonGroup button {
+  font-size: 1em;
+  margin: 0;
+}
+#buttonGroup button:hover {
+  color: rgba(255,0,0,0.9);
+  transform: scale( 1.5, 1.5 );
+  background: none;
+}
+
 
 
 /* @media (prefers-reduced-motion: no-preference) {
