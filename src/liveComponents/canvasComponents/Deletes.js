@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Deletes = ({ drawmodeonoff, canvas, emitDelete }) => {
   const deleteObject = () => {
@@ -15,7 +16,7 @@ const Deletes = ({ drawmodeonoff, canvas, emitDelete }) => {
         type='button' 
         className="navBtn"
         name='delete' 
-        onClick={deleteObject}> 지우기 </Button>}
+        onClick={deleteObject}> <DeleteIcon/></Button>}
     </div>
   )
 }

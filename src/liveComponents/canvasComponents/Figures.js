@@ -2,6 +2,9 @@ import React from 'react'
 import { fabric } from 'fabric';
 import { v1 as uuid } from 'uuid'
 import { Button } from '@mui/material';
+import SquareIcon from '@mui/icons-material/Square';
+import CircleIcon from '@mui/icons-material/Circle';
+import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 
 const Figures = ({canvas, colorvalue, emitAdd, drawmodeonoff}) => {
     const addShape = (e) => {
@@ -41,21 +44,21 @@ const Figures = ({canvas, colorvalue, emitAdd, drawmodeonoff}) => {
           type='button' 
           className="navBtn"
           name='circle' 
-          onClick={addShape}> 원 🟢 </Button>}
+          onClick={addShape}><CircleIcon/></Button>}
 
         {drawmodeonoff && <Button  
           key = "Triangle"
           type='button' 
           className="navBtn"
           name='triangle' 
-          onClick={addShape}> 삼각형 🔺</Button>}
+          onClick={addShape}><ChangeHistoryIcon/></Button>}
 
         {drawmodeonoff && <Button 
           key="Rectangle"
           type='button' 
           className="navBtn"
           name='rectangle' 
-          onClick={addShape}>사각형 🟦 </Button>}
+          onClick={addShape}><SquareIcon/></Button>}
     </div>
   )
 }

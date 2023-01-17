@@ -20,6 +20,8 @@ import Chilgyo from './canvasComponents/Chilgyo';
 import Deletes from './canvasComponents/Deletes';
 import ImageBundle from './canvasComponents/ImageBundle';
 import PuzzleBundle from './canvasComponents/PuzzleBundle';
+import PermDataSettingIcon from '@mui/icons-material/PermDataSetting';
+import CategoryIcon from '@mui/icons-material/Category';
 
 let puzzleurl
 
@@ -210,33 +212,67 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
     <div className='App'>
       <div>
 
+
+        {/* 팬/도형 토글 */}
+
         <DrawToggle
           canvas={canvas}
           setShow={setShow}
           setdrawmodeonoff={setdrawmodeonoff}
         ></DrawToggle>
 
+        {/* 리셋 */}
+        <NewCanvas
+          canvas={canvas}
+          emitClear={emitClear}
+        ></NewCanvas>
+        
+        {/* 선택 삭제 */}
+        <Deletes
+          drawmodeonoff={drawmodeonoff}
+          canvas={canvas}
+          emitDelete={emitDelete}
+        ></Deletes>
+
+        {/* 도형 묶음 */}
+        <div>
+          <Button
+            onClick={showFigureBundleHandler}
+          >
+            <CategoryIcon/>
+            {
+              showFigureBundle ? 
+              <Figures
+                canvas={canvas}
+                colorvalue={colorvalue}
+                emitAdd={emitAdd}
+                drawmodeonoff={drawmodeonoff}
+              ></Figures> : <div></div>
+            }
+          </Button>
+        </div>
+        <PuzzleBundle
+          showimagePuzzle={showimagePuzzle}
+          setShowimagePuzzle={setShowimagePuzzle}
+          setShowimagePuzzlediv={setShowimagePuzzlediv}
+        ></PuzzleBundle>
+
+        <Chilgyo
+          drawmodeonoff={drawmodeonoff}
+          emitAdd={emitAdd}
+          canvas={canvas}
+          ></Chilgyo>
         
         <ButtonGroup 
           variant="contained" 
           aria-label="outlined primary button group"
           size='small'>
 
-
         <NewCanvas
           canvas={canvas}
           emitClear={emitClear}
         ></NewCanvas>
-      
         
-        <Figures
-        canvas={canvas}
-        colorvalue={colorvalue}
-        emitAdd={emitAdd}
-        drawmodeonoff={drawmodeonoff}
-          ></Figures>
-        
-
 
         <Chilgyo
           drawmodeonoff={drawmodeonoff}
