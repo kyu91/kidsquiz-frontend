@@ -13,6 +13,12 @@ import CreateClass from './components/CreateClass';
 
 import LiveMain from './liveComponents/LiveMain';
 import GuestIntro from './liveComponents/GuestIntro';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { useState } from 'react';
+import Materials from './components/Material';
+import CreateMaterial from './components/CreateMaterial';
 
 //메인페이지
 import Hero from './mainComponents/Hero';
@@ -32,6 +38,11 @@ import './index.css'
 import Header from './mainComponents/Header';
 
 function App() {
+    const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const location = useLocation();
   const token = localStorage.getItem('token');
@@ -123,7 +134,49 @@ function App() {
                 <GuestIntro></GuestIntro>
               </Container>
             }/>
+
+            {/* 회원가입 */}
+           <Route path="/SignIn" element={
+              <Container maxWidth="xl">
+                <GuestIntro></GuestIntro>
+              </Container>
+            }/>
           
+            {/* 교구생성 기본페이지 */}
+            <Route path="/material" element={
+              <Container maxWidth="xl">
+                <ResponsiveAppBar></ResponsiveAppBar>
+                                              
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              textColor="secondary"
+              indicatorColor="secondary"
+              aria-label="secondary tabs example"
+            >
+              <Tab value="0" label="교구생성" />
+              <Tab value="1" label="교구관리" />
+            </Tabs>
+
+
+            {
+            value == 0 ? <div>
+              <Materials/>
+            </div>: null
+            }
+            {
+            value == 1 ? <div> 교구 모음집</div>: null
+            }                 
+            </Container>
+            }/>    
+            {/* 교구공장 */}
+            <Route path="/material/new" element={
+            <div><Container>
+              <CreateMaterial/>
+              </Container>
+              </div>}>
+              </Route>
+
           </Routes>
         
       {/* </React.Fragment> */}
