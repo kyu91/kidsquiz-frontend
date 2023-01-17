@@ -23,7 +23,6 @@ import PuzzleBundle from './canvasComponents/PuzzleBundle';
 import PermDataSettingIcon from '@mui/icons-material/PermDataSetting';
 import CategoryIcon from '@mui/icons-material/Category';
 
-let imagearrayData =[]
 let puzzleurl
 
 function Canvas() {
@@ -36,6 +35,9 @@ function Canvas() {
   const [showimagePuzzle, setShowimagePuzzle] = useState(false);
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
+  const [imagearraydata,setimagearraydata] = useState([])
+  const [puzzlearraydata,setpuzzlearraydata] = useState([])
+
 
 const bringimageinhtml = (event) => {
   let url = event.currentTarget.src;
@@ -54,71 +56,53 @@ const bringimageinhtmlPuzzle = (event) =>{
 
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
-   const bringimage = async() =>{
+const data = new FormData();
+data.append("_id","63c6ce283ee52629a2b63b39")
 
+  const bringimage = async()=>{
     const config = {
-      method: 'get',
-      url: `/api/material`,
+      method: 'post',
+      url: `/api/live/image`,
       headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${localStorage.getItem('token')}`
-
+        'Content-Type': 'application/json',
+        'Authorization': `${localStorage.getItem('token')}`
       },
+      data : data
+    };
+    
+    await axios(config)
+        .then(response => {
+            // console.log(response.data.image);
+            setimagearraydata(response.data.image)
+        }).catch(error => {
+            console.error(error);
+        }
+    );
   };
-  await axios(config)
-                
-  .then(response => {
-    console.log(response.data)
-      let arrayData = response.data.Puzzle
-      console.log(arrayData);
-      imagearrayData = arrayData.map((a,i) => {
-        return a.image
-      });
-  }).catch(error => {
-      console.error(error);
-  })
-   }
 
 
+  const data2 = new FormData();
+data2.append("_id","63c6ce283ee52629a2b63b39")
 
-  //  const bringimagepost = async() =>{
-
-  //   const config = {
-  //     method: 'post',
-  //     url: `/api/material`,
-  //     headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `${localStorage.getItem('token')}`
-
-  //     },
-  // };
-  // await axios(config)
-                
-  // .then(response => {
-  //   console.log(response.data)
-  //     let arrayData = response.data.Puzzle
-  //     console.log(arrayData);
-  //     imagearrayData = arrayData.map((a,i) => {
-  //       return a.image
-  //     });
-  // }).catch(error => {
-  //     console.error(error);
-  // })
-
-  //  }
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const bringpuzzleimage = async()=>{
+    const config = {
+      method: 'post',
+      url: `/api/live/puzzle`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${localStorage.getItem('token')}`
+      },
+      data : data2
+    };
+    
+    await axios(config)
+        .then(response => {
+          setpuzzlearraydata(response.data.puzzle);
+        }).catch(error => {
+            console.error(error);
+        }
+    );
+  };
 
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -158,7 +142,8 @@ const bringimageinhtmlPuzzle = (event) =>{
 
   useEffect(() => {
     bringimage()
-  })
+    bringpuzzleimage()
+  }, [])
 
   useEffect(
     () => {
@@ -226,6 +211,7 @@ const bringimageinhtmlPuzzle = (event) =>{
     //!리턴
     <div className='App'>
       <div>
+
 
         {/* 팬/도형 토글 */}
 
@@ -325,6 +311,8 @@ const bringimageinhtmlPuzzle = (event) =>{
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
 
+        <button onClick={bringpuzzleimage}>버튼</button>
+
         <input 
           key="color"
           type='color' 
@@ -346,10 +334,10 @@ const bringimageinhtmlPuzzle = (event) =>{
         <ScrollContainer className="scroll-container" activationDistance = "10">
             <ul className="list">
         {
-        imagearrayData.map((a) => {
+        imagearraydata.map((a,i) => {
           return <li className="item">
-          <a className="link" >
-              <img className="image" src={a} onClick = {bringimageinhtml}></img>
+          <a className="link" key = {i} >
+              <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
           </a>
       </li>
         })}
@@ -361,10 +349,10 @@ const bringimageinhtmlPuzzle = (event) =>{
         <ScrollContainer className="scroll-container" activationDistance = "10">
             <ul className="list">
         {
-        imagearrayData.map((a) => {
+        puzzlearraydata.map((b,i) => {
           return <li className="item">
-          <a className="link" >
-              <img className="image" src={a} onClick = {bringimageinhtmlPuzzle}></img>
+          <a className="link" key = {i} >
+              <img className="image" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
           </a>
       </li>
         })}
