@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '@mui/material/Button';
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 
 const ImageBundle = ({ showimage, setShowimage }) => {
     function imageshowlist(){
@@ -17,7 +18,7 @@ const ImageBundle = ({ showimage, setShowimage }) => {
         type='button' 
         className="navBtn"
         name='imageaddeee' 
-        onClick={imageshowlist}> 이미지</Button>
+        onClick={imageshowlist}><ImageSearchIcon/></Button>
   )
 }
 

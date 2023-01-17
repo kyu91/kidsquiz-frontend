@@ -464,7 +464,7 @@ const MediasoupController = () => {
               wrapper.innerHTML =
                 '<video id="' +
                 remoteProducerId +
-                '" autoplay class="video" ></video> <div class="controllers"><p class="guesNameDisplay">"' +
+                '" autoplay class="video" ></video> <div class="controllers"><p class="guestNameDisplay">"' +
                 socketName +
                 '"</p> <div class="micAndVid"> <button id="' +
                 newSocketId +
