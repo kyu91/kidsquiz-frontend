@@ -13,7 +13,7 @@ const Section = () => {
       id: 1,
       icon: <EngineeringOutlinedIcon sx={{ fontSize: 100 }} color="primary" />,
       sentence:
-        '생생한 화상교육을 통해 선생님의 입모양, 목소리, 표정 등을 통해 아이들의 학습을 돕습니다.',
+        '생생한 화상교육에서 선생님의 입모양, 목소리, 표정 등을 통해 아이들의 학습을 돕습니다.',
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ const Section = () => {
     },
   ];
   return (
-    <Box sx={{ flexGrow: 1, minHeight: '400px' }}>
+    <Box sx={{ flexGrow: 1, minHeight: '400px', width:'85%', margin: '0 auto' }}>
       <Grid container className={classes.sectionGridContainer}>
         {sectionItems.map((item) => (
           <Grid
@@ -40,7 +40,7 @@ const Section = () => {
             className={classes.sectionGridItem}
           >
             {item.icon}
-            <Typography>{item.sentence}</Typography>
+            <Typography style={ { fontSize: '1.4em' } }>{item.sentence}</Typography>
           </Grid>
         ))}
       </Grid>

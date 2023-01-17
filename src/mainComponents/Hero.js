@@ -1,7 +1,9 @@
 import React from 'react';
 import { Grid, Typography, Button, Box } from '@mui/material';
-import myteam from '../images/myteam.jpg';
+
 import useStyles from '../styles/styles';
+import { Link } from 'react-router-dom';
+
 
 const Hero = () => {
   const classes = useStyles();
@@ -17,9 +19,11 @@ const Hero = () => {
             키즈퀴즈는 유아 교육에 필요한 다양한 교구를 선생님이 직접 만들고, 아이들과 상호작용하며 교육 할수 있는 온라인 교육 플랫폼입니다.  
           </Typography>
           <Button
+            component={Link}
             variant="contained"
             color="primary"
-            sx={{ width: '200px', fontSize: '16px' }}
+            sx={{ width: '300px', fontSize: '25px' }}
+            to={'/login'}
           >
             로그인 후 이용하기
           </Button>

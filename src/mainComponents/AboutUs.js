@@ -10,25 +10,23 @@ const AboutUs = () => {
     <Box className={classes.aboutUsContainer}>
       <Grid container spacing={6} className={classes.gridContainer}>
         <Grid item xs={12} md={5}>
-          <img src={bestTeams} alt="My Team" className={classes.largeImage} />
+          <img src='https://www.nhis.or.kr/static/alim/paper/oldpaper/202111/assets/images/sub/sub10_03.gif' 
+          alt="My Team" className={classes.largeImage} />
         </Grid>
 
         <Grid item xs={12} md={6}>
           <Typography variant="h3" fontWeight={700} className={classes.title}>
-            We build, We revive
+            키즈퀴즈의 회원이 아닌가요?
           </Typography>
           <Typography className={classes.aboutUsSubtitle}>
-            Your business needs to be in safe hands at all times. We ensure you
-            never run out of customers and not run at loss. We are trusted by
-            over 500+ companies to deliver quality marketing campaigns using
-            Digital marketing & Offline marketing channels.
+            키즈퀴즈의 라이브 강의를 만들기 위해선 회원가입이 필수 입니다. <br/>지금 무료로 회원가입 하고 이용해 보세요. 
           </Typography>
           <Button
             variant="contained"
             color="primary"
-            sx={{ width: '200px', fontSize: '16px' }}
+            sx={{ width: '300px', fontSize: '25px' }}
           >
-            CONTACT US
+            회원가입
           </Button>
         </Grid>
       </Grid>

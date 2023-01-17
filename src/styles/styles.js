@@ -3,16 +3,19 @@ import { makeStyles } from '@mui/styles';
 const styles = (theme) => {
   return {
     toolBar: {
+      width: '100%',
+      margin: '0 auto',
       height: '10vh',
       display: 'flex',
       justifyContent: 'space-between',
       padding: '20px',
       backgroundColor: 'white',
-      paddingRight: '10%',
+      paddingRight: '15%',
+      paddingLeft: '15%',
+      borderBottom: '1px solid #dcdcdc',
     },
     logo: {
       cursor: 'pointer',
-      paddingLeft: '10%',
     },
     link: {
       color: "#000",
@@ -106,6 +109,7 @@ const styles = (theme) => {
       justifyContent: 'center',
       backgroundColor: '#f2f0f1',
       flexDirection: 'column',
+      marginTop: '50px',
     },
     footerText: {
       paddingBottom: '10px',
@@ -124,7 +128,7 @@ const styles = (theme) => {
       paddingBottom: '25px',
     },
     avatar: {
-      marginRight: '10px',
+      marginRight: '20px',
     },
     testimonialPosition: {
       fontSize: '14px',

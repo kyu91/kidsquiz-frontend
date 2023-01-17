@@ -74,8 +74,8 @@ const Header = (props) => {
     >
       <List>
         {links.map((link) => (
-          <ListItem button key={link.id}>
-            <ListItemText primary={link.route} />
+          <ListItem key={link.id}>
+            <ListItemText primary={link.route}/>
           </ListItem>
         ))}
       </List>
@@ -86,7 +86,7 @@ const Header = (props) => {
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <Box sx={{ marginBottom: '70px', marginLeft: '100px' }}>
+    <Box sx={{ marginBottom: '70px'}}>
       <ElevationScroll {...props}>
         <AppBar>
           <Toolbar className={classes.toolBar}>
@@ -97,7 +97,7 @@ const Header = (props) => {
                 loading="lazy"
                 alt=""
                 style={{
-                  width: '50%',
+                  width: '30%',
                   height: '100%',
                   objectFit: 'cover',
                 }}
@@ -114,7 +114,7 @@ const Header = (props) => {
                 aria-label="menu"
                 onClick={toggleDrawer('right', true)}
               >
-                <MenuIcon className={classes.menuIcon} fontSize="" />
+                <MenuIcon className={classes.menuIcon} />
               </IconButton>
 
               <Drawer
@@ -129,12 +129,13 @@ const Header = (props) => {
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
+                
                 flexGrow: '0.1',
               }}
             >
               {links.map((link) => (
-                <Link href={link.url} target="_blank" underline="none" key={link.id}>
-                  <Typography className={classes.link}>{link.route}</Typography>
+                <Link href={link.url} underline="none" key={link.id}>
+                  <Typography  style={ { fontSize: '1.2em' } } className={classes.link}>{link.route}</Typography>
                 </Link>
               ))}
             </Box>}

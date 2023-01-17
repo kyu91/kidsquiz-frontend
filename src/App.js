@@ -20,7 +20,6 @@ import Footer from './mainComponents/Footer';
 import Section from './mainComponents/Section';
 import AboutUs from './mainComponents/AboutUs';
 import Testimonial from './mainComponents/Testimonial';
-import ContactUs from './mainComponents/ContactUs';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -64,7 +63,6 @@ function App() {
                 <Section />
                 <AboutUs />
                 <Testimonial />
-                <ContactUs />
                 <Footer />
                 </>
             }/>
@@ -72,9 +70,13 @@ function App() {
 
             {/* /class로 갔을때 토큰이 있다면 그냥 있고 없다면 로그인 페이지로 보내줘 */}
             <Route path="/class" element={
-              <Container maxWidth="sm">
+              <Container maxWidth="lg"
+              style={{
+                margin: '0 auto',
+              }}>
               <ResponsiveAppBar></ResponsiveAppBar>
               <Boards></Boards>
+              <Footer />
               </Container> 
             }/>
 
@@ -92,31 +94,32 @@ function App() {
         
               {/* 로그인 페이지 라우터 */}
               <Route path="/login" element={
-                <Container maxWidth="sm">
-                <SignIn></SignIn>
+                <Container maxWidth="lg" >
+                  <SignIn></SignIn>
                 </Container>
               }/>
             
 
               {/* 강의 생성 페이지 라우터 */}
               <Route path="/class/new" element={
-                <Container maxWidth="sm">
+                <Container maxWidth="lg">
                   <ResponsiveAppBar></ResponsiveAppBar>
                   <CreateClass></CreateClass>
+                  <Footer />
                 </Container>
               }/>
               
 
             {/* 라이브 페이지 라우터 */}
             <Route path="/live/:id" element={
-              <Container maxWidth="xl">
+              <Container fixed maxWidth="xl">
                 <LiveMain></LiveMain>
               </Container>
             }/>
 
             {/* 게스트 입장 인트로 페이지 라우터 */}
             <Route path="/live/:id/intro" element={
-              <Container maxWidth="xl">
+              <Container fixed maxWidth="xl">
                 <GuestIntro></GuestIntro>
               </Container>
             }/>

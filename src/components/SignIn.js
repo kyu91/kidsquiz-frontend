@@ -18,8 +18,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        SnowBall
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -72,7 +72,7 @@ export default function SignIn() {
   return (
 
       <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      
         <CssBaseline />
         <Box
           sx={{
@@ -82,7 +82,7 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-        <CardCover sx={{ width: 320 }}>
+        <CardCover sx={{ width: 400 }}>
           <img
             src="https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/kidsquiz_logo.png"
             loading="lazy"
@@ -94,7 +94,7 @@ export default function SignIn() {
             }}
           />
         </CardCover>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" style={{marginBottom: "30px"}}>
             
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -127,6 +127,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              style={{fontSize: "20px"}}
             >
               로그인
             </Button>
@@ -140,7 +141,7 @@ export default function SignIn() {
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+      
     </ThemeProvider>
 
   );

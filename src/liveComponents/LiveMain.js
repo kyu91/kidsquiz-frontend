@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GuestVideo from './GuestVideo';
-import HostVideo from './HostVideo';
 import Box from '@mui/material/Box';
-import LiveNav from './LiveNav';
 import Canvas from './Canvas';
 // import Cursor from './Cursor'
-
 import './css/live_style.css';
-import zIndex from '@mui/material/styles/zIndex';
+
 
 
 
@@ -56,9 +53,6 @@ const LiveMain = () => {
                 maxWidth: '100%',
                 maxHeight: '100%',
             }}>
-            {/* <div className = "navPosition" ref={useNavStyle} style={navStyle}>
-                <LiveNav></LiveNav>
-            </div> */}
             <div className = "canvarsPosition">
                 <Canvas style = {{zIndex :'8'}}></Canvas>
             </div>

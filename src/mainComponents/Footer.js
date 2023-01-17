@@ -9,12 +9,9 @@ const Footer = () => {
   return (
     <Box sx={{ flexGrow: 1 }} className={classes.footerContainer}>
       <Typography className={classes.footerText}>
-        Provided by{' '}
-        <Link href="https://appseed.us" target="_blank" underline="none">
-          AppSeed
-        </Link>
+        대표이사 오유진
       </Typography>
-      <Typography className={classes.footerDate}>Open-Source Sample - Buit with MUI</Typography>
+      <Typography className={classes.footerDate}>&copy; SnowBall</Typography>
     </Box>
   );
 };
