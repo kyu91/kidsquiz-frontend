@@ -38,9 +38,6 @@ const DrawToggle = ({canvas, setShow, setdrawmodeonoff}) => {
               <><CreateIcon/> <ArrowRightAltIcon/> <CropRotateIcon/></> 
               : <>  <CropRotateIcon/><ArrowRightAltIcon/><CreateIcon/></> 
           }
-
-          onClick={drawmode}>
-          <CreateIcon></CreateIcon>
     </Button>
     
     </>

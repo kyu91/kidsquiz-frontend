@@ -15,4 +15,5 @@ const socket = io.connect("wss://kidsquiz.kr/sock", {reconnect: true,transports:
 // const socket = io("https://live.kidsquiz.kr/sock")
 
 
+
 export default socket;

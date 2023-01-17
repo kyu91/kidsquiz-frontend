@@ -39,6 +39,19 @@ function Canvas() {
   const [puzzlearraydata,setpuzzlearraydata] = useState([])
 
 
+  //석규 도형 묶음 on/off 상태값
+  const [showFigureBundle, setShowFigureBundle] = useState(false);
+
+  //석규 이미지 묶음 on/off 함수
+  const showFigureBundleHandler = () => {
+    if(showFigureBundle === false){
+      setShowFigureBundle(true);
+    }
+    else{
+      setShowFigureBundle(false);
+    }
+  }
+
 const bringimageinhtml = (event) => {
   let url = event.currentTarget.src;
   addImage(url)
@@ -240,51 +253,36 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
             onClick={showFigureBundleHandler}
           >
             <CategoryIcon/>
-            {
+          </Button>
+          {
               showFigureBundle ? 
               <Figures
                 canvas={canvas}
                 colorvalue={colorvalue}
                 emitAdd={emitAdd}
                 drawmodeonoff={drawmodeonoff}
+                uuid={uuid}
               ></Figures> : <div></div>
             }
-          </Button>
         </div>
+        
         <PuzzleBundle
           showimagePuzzle={showimagePuzzle}
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
-        ></PuzzleBundle>
+        >퍼즐</PuzzleBundle>
 
         <Chilgyo
           drawmodeonoff={drawmodeonoff}
           emitAdd={emitAdd}
           canvas={canvas}
           ></Chilgyo>
-        
+
+        {/* ------------------------------------- */}
         <ButtonGroup 
           variant="contained" 
           aria-label="outlined primary button group"
           size='small'>
-
-        <NewCanvas
-          canvas={canvas}
-          emitClear={emitClear}
-        ></NewCanvas>
-        
-
-        <Chilgyo
-          drawmodeonoff={drawmodeonoff}
-          emitAdd={emitAdd}
-          canvas={canvas}
-          ></Chilgyo>
-
-        <Deletes
-          drawmodeonoff={drawmodeonoff}
-          canvas={canvas}
-          emitDelete={emitDelete}
-        ></Deletes>
 
         {!drawmodeonoff &&<Button 
           key="pencil"
@@ -312,6 +310,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
         ></PuzzleBundle>
 
         <button onClick={bringpuzzleimage}>버튼</button>
+
 
         <input 
           key="color"
