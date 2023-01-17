@@ -6,7 +6,7 @@ import SquareIcon from '@mui/icons-material/Square';
 import CircleIcon from '@mui/icons-material/Circle';
 import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 
-const Figures = ({canvas, colorvalue, emitAdd, drawmodeonoff, uuid}) => {
+const Figures = ({canvas, colorvalue, emitAdd}) => {
     const addShape = (e) => {
         let type = e.target.name;
         let object
@@ -39,26 +39,26 @@ const Figures = ({canvas, colorvalue, emitAdd, drawmodeonoff, uuid}) => {
       };
   return (
     <div>
-        {drawmodeonoff && <Button 
-          key="Square"
+        <Button 
+          key="Circle"
           type='button' 
           className="navBtn"
           name='circle' 
-          onClick={addShape}><CircleIcon/></Button>}
+          onClick={addShape}>원</Button>
 
-        {drawmodeonoff && <Button  
+        <Button  
           key = "Triangle"
           type='button' 
           className="navBtn"
           name='triangle' 
-          onClick={addShape}><ChangeHistoryIcon/></Button>}
+          onClick={addShape}>삼각형</Button>
 
-        {drawmodeonoff && <Button 
+        <Button 
           key="Rectangle"
           type='button' 
           className="navBtn"
           name='rectangle' 
-          onClick={addShape}><SquareIcon/></Button>}
+          onClick={addShape}>사각형</Button>
     </div>
   )
 }

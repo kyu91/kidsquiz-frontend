@@ -1,12 +1,13 @@
 import './css/Canvas.css';
 import React, { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
+// import { uuid } from 'uuidv4'
 import { v1 as uuid } from 'uuid'
 import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj, emitClear, clearObj
   ,emitAddImage, addimageObj, emitUrl } from './socket'
 import axios from 'axios'
 import ScrollContainer from 'react-indiana-drag-scroll'
-import './css/Canvas.css';
+import socket from "./socketExport"
 
 //석규
 import Button from '@mui/material/Button';
@@ -23,7 +24,7 @@ import PuzzleBundle from './canvasComponents/PuzzleBundle';
 import PermDataSettingIcon from '@mui/icons-material/PermDataSetting';
 import CategoryIcon from '@mui/icons-material/Category';
 
-let puzzleurl
+// let puzzleurl
 
 function Canvas() {
   const [canvas, setCanvas] = useState('');
@@ -37,7 +38,8 @@ function Canvas() {
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
   const [imagearraydata,setimagearraydata] = useState([])
   const [puzzlearraydata,setpuzzlearraydata] = useState([])
-
+  const [puzzleurl, setpuzzleurl] = useState('')
+  
 
   //석규 도형 묶음 on/off 상태값
   const [showFigureBundle, setShowFigureBundle] = useState(false);
@@ -55,11 +57,12 @@ function Canvas() {
 const bringimageinhtml = (event) => {
   let url = event.currentTarget.src;
   addImage(url)
+  setShowimage(false)
 }
 
 const bringimageinhtmlPuzzle = (event) =>{
-  puzzleurl = event.currentTarget.src;
-  emitUrl(puzzleurl);
+  setpuzzleurl(event.currentTarget.src);
+  emitUrl(event.currentTarget.src);
   setShowimagePuzzlediv(true)
   setShowimagePuzzle(false)
 }
@@ -218,6 +221,11 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
     })
   }
 
+  socket.on("puzzleStart", function(data) {
+    setShowimagePuzzlediv(true)
+    setpuzzleurl(data)
+  })
+
 
 
   return (
@@ -248,23 +256,26 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
         ></Deletes>
 
         {/* 도형 묶음 */}
-        <div>
-          <Button
-            onClick={showFigureBundleHandler}
-          >
+
+          <Button onClick={showFigureBundleHandler}>
             <CategoryIcon/>
           </Button>
           {
-              showFigureBundle ? 
-              <Figures
+              showFigureBundle && <Figures
+                canvas={canvas}
+                colorvalue={colorvalue}
+                emitAdd={emitAdd}
+                // drawmodeonoff={drawmodeonoff}
+              ></Figures>
+            }
+
+              {/* <Figures
                 canvas={canvas}
                 colorvalue={colorvalue}
                 emitAdd={emitAdd}
                 drawmodeonoff={drawmodeonoff}
-                uuid={uuid}
-              ></Figures> : <div></div>
-            }
-        </div>
+                // uuid = {uuid}
+              ></Figures> */}
         
         <PuzzleBundle
           showimagePuzzle={showimagePuzzle}
@@ -309,8 +320,6 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
 
-        <button onClick={bringpuzzleimage}>버튼</button>
-
 
         <input 
           key="color"
@@ -335,7 +344,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
         {
         imagearraydata.map((a,i) => {
           return <li className="item">
-          <a className="link" key = {i} >
+          <a className="link" key = {i+6546} >
               <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
           </a>
       </li>
@@ -360,7 +369,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
       </div>}
 
       <Quiz></Quiz>
-      {showimagePuzzlediv && <Puzzle url = {puzzleurl}></Puzzle>}
+      {showimagePuzzlediv && <Puzzle puzzleurl = {puzzleurl} setpuzzleurl ={setpuzzleurl} ></Puzzle>}
       {/* <Puzzle url = {puzzleurl}></Puzzle> */}
       {/* <Puzzle></Puzzle> */}
       <div>

@@ -3,10 +3,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import "./css/Puzzle.css"
 import socket from "./socketExport"
 
-function Puzzle(props) {
-  let [img, setImg] = useState("")
+function Puzzle({puzzleurl,setpuzzleurl}) {
+
   socket.on("puzzleStart", function(data) {
-    setImg(data)
+    setpuzzleurl(data)
   })
 
   // props.url
@@ -380,13 +380,9 @@ function Puzzle(props) {
 
   return (
     <div style={{ margin : 'auto', height: "580px", width: "580px" }}>
-      <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 
-        onChange={(e)=>{setImg(e.target.value);}}></input>
-      
-      {/* <div style={{width : `${rootSize.width}px`, height : `${rootSize.height}px`, borderColor: 'black'}}></div> */}
 
       <JigsawPuzzle
-        imageSrc={img}
+        imageSrc={puzzleurl}
         rows={2}
         columns={2}
         onSolved={() => alert("참 잘했어요")}
