@@ -14,7 +14,6 @@ const socket = io.connect("wss://kidsquiz.kr/sock", {reconnect: true,transports:
 
 // const socket = io("https://live.kidsquiz.kr/sock")
 
-// const socket = io.connect("http://localhost:4000/sock")
 
 
 export default socket;
