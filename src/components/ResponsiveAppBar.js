@@ -33,8 +33,16 @@ function ResponsiveAppBar() {
   };
 
   const handleCloseUserMenu = () => {
+
+
     setAnchorElUser(null);
   };
+
+  const logout = () => {
+    localStorage.removeItem("name")
+    localStorage.removeItem("token")
+    window.location.reload()
+  }
 
   return (
     <AppBar position="static" style={{backgroundColor: 'white', marginBottom: "30px"}}>
@@ -166,7 +174,7 @@ function ResponsiveAppBar() {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Typography textAlign="center" onClick ={logout}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>

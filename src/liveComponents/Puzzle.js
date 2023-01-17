@@ -5,9 +5,9 @@ import socket from "./socketExport"
 
 function Puzzle({puzzleurl,setpuzzleurl}) {
 
-  socket.on("puzzleStart", function(data) {
-    setpuzzleurl(data)
-  })
+  // socket.on("puzzleStart", function(data) {
+  //   setpuzzleurl(data)
+  // })
 
   // props.url
 

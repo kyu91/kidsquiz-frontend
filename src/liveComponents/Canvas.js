@@ -367,8 +367,6 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
 
       <Quiz></Quiz>
       {showimagePuzzlediv && <Puzzle puzzleurl = {puzzleurl} setpuzzleurl ={setpuzzleurl} ></Puzzle>}
-      {/* <Puzzle url = {puzzleurl}></Puzzle> */}
-      {/* <Puzzle></Puzzle> */}
       <div>
         <canvas id="canv" />
       </div>
