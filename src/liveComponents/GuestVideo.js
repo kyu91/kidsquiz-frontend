@@ -20,7 +20,7 @@ const GuestVideo =  () => {
     const [guest, setguest] = React.useState(null);
 
 
-    console.log('처음에 겟에서 잘 가져오니',hostBool);
+    console.log('처음에 겟에서 잘 가져오니', hostBool);
 
 
     //호스트 이름, 토큰확인 해서 이 방의 호스트인지 확인
@@ -60,18 +60,14 @@ const GuestVideo =  () => {
     React.useEffect( () => {
         if (hostToken){
             getHost(hostToken);
-
         }
         localStorage.setItem('hostBool', hostBool);
 
         controller.init();
     },[])
 
-
-
-  return (
+    return (
 <>
-             
         <div id = 'videos'>
             <div id = 'videoColumn' className = "mainTable">
                 {/* <div id = "videoPosition" className='localColumn'> */}
