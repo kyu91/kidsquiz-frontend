@@ -123,9 +123,7 @@ function App() {
 
             {/* 라이브 페이지 라우터 */}
             <Route path="/live/:id" element={
-              <Container fixed maxWidth="xl">
                 <LiveMain></LiveMain>
-              </Container>
             }/>
 
             {/* 게스트 입장 인트로 페이지 라우터 */}

@@ -1,57 +1,105 @@
 * {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 16px;
+    padding: 0; 
+    margin : 0;
   }
 
 .canvarsContiner{
     position: relative;
     overflow: hidden;
-    width: 100%;
-    height: 100%;
-    /* background-color: blue; */
+    width: 100vw;
+    height: 100vh;
+    z-index: 3; 
+    padding: 20px ;
+}
+
+.canvarsContiner:after {
+    background-image: url("https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/%E1%84%85%E1%85%A1%E1%84%8B%E1%85%B5%E1%84%87%E1%85%B3+%E1%84%87%E1%85%A2%E1%84%80%E1%85%A7%E1%86%BC.png");
+    /* background-image: url("https://cdn.pixabay.com/photo/2019/03/20/22/01/zig-zag-border-4069657_960_720.png"); */
+    background-repeat: no-repeat;
+    background-size: contain;
+    top:0;
+    left:0;
+    position:absolute;
+    background-size:100%;
+    opacity: 0.9;
+    filter:alpha(opacity=100);
+    z-index:-1;
+    content:"";
+    width:100%;
+    height:100%;
 }
 
 .hostVideoPosition{
     position: absolute;
-    top: 5px;
-    right: 5px;
+    bottom: 3%;
+    left: 50px;
+}
+
+.guestVideoPosition{
+    position: absolute;
+    top: 50px;
+    right: 50px;
 }
 
 .canvarsPosition{
     width: 100%;
-    height: 100vh;
-    /* height: auto;
-    overflow: hidden; */
-    margin-bottom: 10px;
-    background-color: rgb(245, 245, 245);
-    border: 2px solid rgb(0, 0, 0);
-}
-
-.navPosition{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-} 
-
-.mainTable{
-    background-color: rgb(245, 245, 200);
+    height: 100%;
 }
 
 #hostCol, #videoContainer {
     width: 200px;
     background: transparent;
-    background-color: rgba(255,255,255,1);
+    /* background-color: rgba(255,255,255,0.4); */
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 20px;
+    
 }
+
 #hostCol {
-    background-color: rgba(105,100,250,0.7);
+    /* background-color: rgba(105,100,250,0.7); */
+    border-radius: 20%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
+#hostName {
+    margin: 5px;
+}
+video{
+    border-radius: 20%;
+}
+.controllers {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.controllers button {
+    padding: 3px 10px;
+    margin: 7px;
+    background-color: rgba(191, 239, 0.4);
+    border-radius: 20px;
+    border: none
+}
+.controllers button:hover {
+    background-color: rgba(255,0,0,0.7);
+    transform: scale( 1.1, 1.1 )
+} 
 
-
+.micAndVid {
+    display: flex;
+    justify-content: space-between;
+}
+#localUserName, .guesNameDisplay {
+    margin: 8px;
+}
 
 .remoteColumn{
     width: 200px;
     background: transparent;
-    background-color: rgba(255,255,255,0.9);
 }
 video{
     width: 100%;
