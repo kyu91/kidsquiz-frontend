@@ -77,6 +77,9 @@ input[type=range]::-moz-range-thumb {
   font-size: 0.7em;
 } 
 
+#canv{
+  width: 100%;
+}
 
 
 /* @media (prefers-reduced-motion: no-preference) {
