@@ -20,6 +20,8 @@ import Chilgyo from './canvasComponents/Chilgyo';
 import Deletes from './canvasComponents/Deletes';
 import ImageBundle from './canvasComponents/ImageBundle';
 import PuzzleBundle from './canvasComponents/PuzzleBundle';
+import PermDataSettingIcon from '@mui/icons-material/PermDataSetting';
+import CategoryIcon from '@mui/icons-material/Category';
 
 let imagearrayData =[]
 let puzzleurl
@@ -34,6 +36,16 @@ function Canvas() {
   const [showimagePuzzle, setShowimagePuzzle] = useState(false);
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
+
+  //석규 도형 묶음 on/off 상태값
+  const [showFigureBundle, setShowFigureBundle] = useState(false);
+
+  //석규 이미지 묶음 on/off 함수
+  const showFigureBundleHandler = () => {
+    setShowFigureBundle(!showFigureBundle);
+  }
+  
+
   // const [puzzleimageurl,setpuzzleimageurl] = useState('');
 
   // const drawmode = () => {
@@ -355,12 +367,55 @@ const bringimageinhtmlPuzzle = (event) =>{
           className="navBtn"
           name='on/off(draw)' 
           onClick={drawmode}> 그리기/도형</Button> */}
+
+        {/* 팬/도형 토글 */}
         <DrawToggle
           canvas={canvas}
           setShow={setShow}
           setdrawmodeonoff={setdrawmodeonoff}
         ></DrawToggle>
 
+        {/* 리셋 */}
+        <NewCanvas
+          canvas={canvas}
+          emitClear={emitClear}
+        ></NewCanvas>
+        
+        {/* 선택 삭제 */}
+        <Deletes
+          drawmodeonoff={drawmodeonoff}
+          canvas={canvas}
+          emitDelete={emitDelete}
+        ></Deletes>
+
+        {/* 도형 묶음 */}
+        <div>
+          <Button
+            onClick={showFigureBundleHandler}
+          >
+            <CategoryIcon/>
+            {
+              showFigureBundle ? 
+              <Figures
+                canvas={canvas}
+                colorvalue={colorvalue}
+                emitAdd={emitAdd}
+                drawmodeonoff={drawmodeonoff}
+              ></Figures> : <div></div>
+            }
+          </Button>
+        </div>
+        <PuzzleBundle
+          showimagePuzzle={showimagePuzzle}
+          setShowimagePuzzle={setShowimagePuzzle}
+          setShowimagePuzzlediv={setShowimagePuzzlediv}
+        ></PuzzleBundle>
+
+        <Chilgyo
+          drawmodeonoff={drawmodeonoff}
+          emitAdd={emitAdd}
+          canvas={canvas}
+          ></Chilgyo>
         
         <ButtonGroup 
           variant="contained" 
@@ -372,10 +427,7 @@ const bringimageinhtmlPuzzle = (event) =>{
           className="navBtn"
           name='clear' 
           onClick={clearCanvas}>새 도화지 </Button> */}
-        <NewCanvas
-          canvas={canvas}
-          emitClear={emitClear}
-        ></NewCanvas>
+        
         
 
         {/* {drawmodeonoff && <Button 
@@ -400,12 +452,7 @@ const bringimageinhtmlPuzzle = (event) =>{
           onClick={addShape}>사각형 🟦 </Button>} */}
 
         
-        <Figures
-        canvas={canvas}
-        colorvalue={colorvalue}
-        emitAdd={emitAdd}
-        drawmodeonoff={drawmodeonoff}
-          ></Figures>
+        
         
 
         {/* {drawmodeonoff && <Button 
@@ -414,11 +461,7 @@ const bringimageinhtmlPuzzle = (event) =>{
           className="navBtn"
           name='addTangram' 
           onClick={addTangram}>칠교</Button>} */}
-        <Chilgyo
-          drawmodeonoff={drawmodeonoff}
-          emitAdd={emitAdd}
-          canvas={canvas}
-          ></Chilgyo>
+        
 
         {/* {drawmodeonoff && <Button 
           key="delete"
@@ -426,11 +469,7 @@ const bringimageinhtmlPuzzle = (event) =>{
           className="navBtn"
           name='delete' 
           onClick={deleteObject}> 지우기 </Button>} */}
-        <Deletes
-          drawmodeonoff={drawmodeonoff}
-          canvas={canvas}
-          emitDelete={emitDelete}
-        ></Deletes>
+        
 
         {!drawmodeonoff &&<Button 
           key="pencil"
@@ -471,11 +510,7 @@ const bringimageinhtmlPuzzle = (event) =>{
           name='imageaddeee2ddd' 
           onClick={imageshowlistPuzzledivexit}> 퍼즐 종료</Button>  */}
         
-        <PuzzleBundle
-          showimagePuzzle={showimagePuzzle}
-          setShowimagePuzzle={setShowimagePuzzle}
-          setShowimagePuzzlediv={setShowimagePuzzlediv}
-        ></PuzzleBundle>
+        
 
         <input 
           key="color"
