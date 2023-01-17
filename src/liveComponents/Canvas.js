@@ -34,20 +34,6 @@ function Canvas() {
   const [showimagePuzzle, setShowimagePuzzle] = useState(false);
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
-  // const [puzzleimageurl,setpuzzleimageurl] = useState('');
-
-  // const drawmode = () => {
-  //   if (canvas.isDrawingMode === true){
-  //     canvas.isDrawingMode = false
-  //     setShow(false)
-  //     setdrawmodeonoff(true)
-  //   }
-  //   else {
-  //     canvas.isDrawingMode = true
-  //     setShow(true)
-  //     setdrawmodeonoff(false)
-  //   }
-  // }
 
 const bringimageinhtml = (event) => {
   let url = event.currentTarget.src;
@@ -60,6 +46,11 @@ const bringimageinhtmlPuzzle = (event) =>{
   setShowimagePuzzlediv(true)
   setShowimagePuzzle(false)
 }
+
+
+
+
+////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
    const bringimage = async() =>{
 
@@ -84,36 +75,53 @@ const bringimageinhtmlPuzzle = (event) =>{
   }).catch(error => {
       console.error(error);
   })
+   }
 
-   }  
 
 
-  //  function imageshowlist(){
+  //  const bringimagepost = async() =>{
 
-  //   if (showimage === false) {
-  //     setShowimage(true)
-  //   }
-  //   else {
-  //     setShowimage(false)
-  //   }
+  //   const config = {
+  //     method: 'post',
+  //     url: `/api/material`,
+  //     headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `${localStorage.getItem('token')}`
+
+  //     },
+  // };
+  // await axios(config)
+                
+  // .then(response => {
+  //   console.log(response.data)
+  //     let arrayData = response.data.Puzzle
+  //     console.log(arrayData);
+  //     imagearrayData = arrayData.map((a,i) => {
+  //       return a.image
+  //     });
+  // }).catch(error => {
+  //     console.error(error);
+  // })
+
   //  }
 
-  //  function imageshowlistPuzzle(){
 
-  //   if (showimagePuzzle === false) {
-  //     setShowimagePuzzle(true)
-  //   }
-  //   else {
-  //     setShowimagePuzzle(false)
-  //   }
-  //  }
 
-  //  function imageshowlistPuzzledivexit(){
-  //     setShowimagePuzzlediv(false)
-  //  }
-  // var pencil;
-  // pencil = new fabric.PencilBrush(canvas);
-  // canvas.freeDrawingBrush = pencil;
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
+
+
+
 
   const erasemode = () => {
       canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
@@ -122,6 +130,8 @@ const bringimageinhtmlPuzzle = (event) =>{
   const pencilmode = () => {
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.width = parseInt(widthvalue);
+    canvas.freeDrawingBrush.color = colorvalue;
+    canvas.renderAll()
   }
   const changeWidth = (e) =>{
     setWidthvalue(e.target.value);
@@ -208,140 +218,7 @@ const bringimageinhtmlPuzzle = (event) =>{
     })
   }
 
-  // const addShape = (e) => {
-  //   let type = e.target.name;
-  //   let object
 
-  //   if (type === 'rectangle') {
-  //     object = new fabric.Rect({
-  //       fill : colorvalue,
-  //       height: 75,
-  //       width: 150,
-  //     });
-
-  //   } else if (type === 'triangle') {
-  //     object = new fabric.Triangle({
-  //       fill : colorvalue,
-  //       width: 100,
-  //       height: 100,
-  //     })
-
-  //   } else if (type === 'circle') {
-  //     object = new fabric.Circle({
-  //       fill : colorvalue,
-  //       radius: 50,
-  //     })
-  //   }
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-  //   canvas.renderAll()
-  //   emitAdd({obj: object, id: object.id})
-
-  // };
-
-  // const deleteObject = () => {
-  //   let object;
-  //   object = canvas.getActiveObject()
-  //   canvas.remove(canvas.getActiveObject());
-  //   emitDelete({obj: object, id: object.id})
-  // }
-  // const clearCanvas = () => {
-  //   canvas.clear();
-  //   emitClear(1);
-  // }
-
-  // const addTangram = () => {
-    
-  //   let object
-
-  //   object = new fabric.Triangle({
-  //     width : 300,
-  //     height : 150,
-  //     fill : 'red',
-  //     angle : 90,
-  //     left : 300,
-  //     top :200,
-  //   })
-
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-  //   emitAdd({obj: object, id: object.id})
-
-  //   object = new fabric.Triangle({
-  //     width : 300,
-  //     height : 150,
-  //     fill : 'green',
-  //     left : 150,
-  //     top : 350,
-  //   })
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-
-  //   emitAdd({obj: object, id: object.id})
-
-  //   object = new fabric.Triangle({
-  //     width : 150,
-  //     height : 75,
-  //     fill : 'yellow',
-  //     left : 375,
-  //     top : 500,
-  //     angle : -90,
-  //   })
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-
-  //   emitAdd({obj: object, id: object.id})
-
-  //   object = new fabric.Triangle({
-  //     width : 150,
-  //     height : 75,
-  //     fill : 'orange',
-  //     left : 375,
-  //     top : 350,
-  //     angle : 180,
-  //   })
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-  
-  //   emitAdd({obj: object, id: object.id})
-
-  //   object = new fabric.Triangle({
-  //     width : 212,
-  //     height : 106,
-  //     fill : 'orange',
-  //     left : 375,
-  //     top : 123,
-  //     angle : 45,
-  //   })
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-  //   emitAdd({obj: object, id: object.id})
-
-  //   object = new fabric.Rect({
-  //     width : 106,
-  //     height : 106,
-  //     fill : 'purple',
-  //     left : 375,
-  //     top : 275,
-  //     angle : 45,
-  //   })
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-  //   emitAdd({obj: object, id: object.id})
-
-  //   object = new fabric.Rect({
-  //     width : 150,
-  //     height : 75,
-  //     fill : 'blue',
-  //     skewX : 45,
-  //     left : 150,
-  //     top : 200,
-  //     angle : 0,
-  //   })
-  //   object.set({id: uuid()})
-  //   canvas.add(object)
-  //   emitAdd({obj: object, id: object.id})
-  // }
 
   return (
     //!리턴
@@ -349,12 +226,6 @@ const bringimageinhtmlPuzzle = (event) =>{
       <div>
       
 
-        {/* <Button 
-          key="on/off(draw)"
-          type='button' 
-          className="navBtn"
-          name='on/off(draw)' 
-          onClick={drawmode}> 그리기/도형</Button> */}
         <DrawToggle
           canvas={canvas}
           setShow={setShow}
@@ -366,39 +237,13 @@ const bringimageinhtmlPuzzle = (event) =>{
           variant="contained" 
           aria-label="outlined primary button group"
           size='small'>
-        {/* <Button 
-          key="clear"
-          type='button' 
-          className="navBtn"
-          name='clear' 
-          onClick={clearCanvas}>새 도화지 </Button> */}
+
+
         <NewCanvas
           canvas={canvas}
           emitClear={emitClear}
         ></NewCanvas>
-        
-
-        {/* {drawmodeonoff && <Button 
-          key="Square"
-          type='button' 
-          className="navBtn"
-          name='circle' 
-          onClick={addShape}> 원 🟢 </Button>}
-
-        {drawmodeonoff && <Button  
-          key = "Triangle"
-          type='button' 
-          className="navBtn"
-          name='triangle' 
-          onClick={addShape}> 삼각형 🔺</Button>}
-
-        {drawmodeonoff && <Button 
-          key="Rectangle"
-          type='button' 
-          className="navBtn"
-          name='rectangle' 
-          onClick={addShape}>사각형 🟦 </Button>} */}
-
+      
         
         <Figures
         canvas={canvas}
@@ -408,24 +253,13 @@ const bringimageinhtmlPuzzle = (event) =>{
           ></Figures>
         
 
-        {/* {drawmodeonoff && <Button 
-          key="addTangram"
-          type='button' 
-          className="navBtn"
-          name='addTangram' 
-          onClick={addTangram}>칠교</Button>} */}
+
         <Chilgyo
           drawmodeonoff={drawmodeonoff}
           emitAdd={emitAdd}
           canvas={canvas}
           ></Chilgyo>
 
-        {/* {drawmodeonoff && <Button 
-          key="delete"
-          type='button' 
-          className="navBtn"
-          name='delete' 
-          onClick={deleteObject}> 지우기 </Button>} */}
         <Deletes
           drawmodeonoff={drawmodeonoff}
           canvas={canvas}
@@ -446,31 +280,11 @@ const bringimageinhtmlPuzzle = (event) =>{
           name='imageadd' 
           onClick={erasemode}> 지우개</Button>}  
 
-        {/* <Button 
-          key="image"
-          type='button' 
-          className="navBtn"
-          name='imageaddeee' 
-          onClick={imageshowlist}> 이미지</Button> */}
         <ImageBundle
           showimage={showimage}
           setShowimage={setShowimage}
         ></ImageBundle>
 
-        {/* <Button 
-          key="imagepuzzle"
-          type='button' 
-          className="navBtn"
-          name='imageaddeee2' 
-          onClick={imageshowlistPuzzle}> 퍼즐 놀이</Button>
-
-        <Button 
-          key="imagepuzzledd"
-          type='button' 
-          className="navBtn"
-          name='imageaddeee2ddd' 
-          onClick={imageshowlistPuzzledivexit}> 퍼즐 종료</Button>  */}
-        
         <PuzzleBundle
           showimagePuzzle={showimagePuzzle}
           setShowimagePuzzle={setShowimagePuzzle}
@@ -491,9 +305,6 @@ const bringimageinhtmlPuzzle = (event) =>{
       {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
 
-      {/* <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 
-        onChange={(e)=>{setimageURL(e.target.value); console.log(e.target.value);}}></input>
-        <button onClick={addImage}>버튼</button> */}
 
       </div>
 
@@ -529,6 +340,8 @@ const bringimageinhtmlPuzzle = (event) =>{
 
       <Quiz></Quiz>
       {showimagePuzzlediv && <Puzzle url = {puzzleurl}></Puzzle>}
+      {/* <Puzzle url = {puzzleurl}></Puzzle> */}
+      {/* <Puzzle></Puzzle> */}
       <div>
         <canvas id="canv" />
       </div>

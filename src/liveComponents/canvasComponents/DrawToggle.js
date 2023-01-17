@@ -21,9 +21,8 @@ const drawToggle = ({canvas, setShow, setdrawmodeonoff}) => {
           type='button' 
           className="navBtn"
           name='on/off(draw)' 
-          onClick={drawmode}> 
+          onClick={drawmode}>
           <CreateIcon></CreateIcon>
-          
     </Button>
   )
 }
