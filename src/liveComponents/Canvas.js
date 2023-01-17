@@ -37,6 +37,12 @@ function Canvas() {
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
 
+  //석규
+  const [showFigureBundle, setShowFigureBundle] = useState(false);
+  const showFigureBundleHandler = () => {
+    setShowFigureBundle(true);
+  }
+
 const bringimageinhtml = (event) => {
   let url = event.currentTarget.src;
   addImage(url)
