@@ -454,6 +454,7 @@ const MediasoupController = () => {
             const wrapper = document.createElement("div"); //상위 div
             const newElem = document.createElement("div"); // 비디오, 오디오 화면
             wrapper.setAttribute("id", `td-${remoteProducerId}`);
+            newElem.setAttribute("class", "micAndVid");
             if (params.kind === "audio") {
               //append to the audio container
               wrapper.innerHTML =
@@ -463,13 +464,13 @@ const MediasoupController = () => {
               wrapper.innerHTML =
                 '<video id="' +
                 remoteProducerId +
-                '" autoplay class="video" ></video> <p>"' +
+                '" autoplay class="video" ></video> <div class="controllers"><p class="guesNameDisplay">"' +
                 socketName +
-                '"</p> <button id="' +
+                '"</p> <div class="micAndVid"> <button id="' +
                 newSocketId +
                 '-mute">음소거</button> <button id="' +
                 newSocketId +
-                '-camera">카메라끄기</button>';
+                '-camera">카메라끄기</button></div></div>';
             }
             wrapper.appendChild(newElem)
             videoContainer.appendChild(wrapper)

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import GuestVideo from './GuestVideo';
+import HostVideo from './HostVideo';
 import Box from '@mui/material/Box';
 import Canvas from './Canvas';
 // import Cursor from './Cursor'
@@ -50,13 +51,16 @@ const LiveMain = () => {
             className='canvarsContiner'
             
             sx={{
-                maxWidth: '100%',
-                maxHeight: '100%',
+                maxWidth: '100vw',
+                maxHeight: '100vh',
             }}>
             <div className = "canvarsPosition">
                 <Canvas style = {{zIndex :'8'}}></Canvas>
             </div>
             <div className = "hostVideoPosition">
+                <HostVideo></HostVideo>
+            </div>
+            <div className = "guestVideoPosition">
                 <GuestVideo></GuestVideo>
             </div>    
             {/* <div className = "multiCursor">
