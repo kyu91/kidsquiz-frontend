@@ -37,10 +37,17 @@ function Canvas() {
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
 
-  //석규
+  //석규 도형 묶음 on/off 상태값
   const [showFigureBundle, setShowFigureBundle] = useState(false);
+
+  //석규 이미지 묶음 on/off 함수
   const showFigureBundleHandler = () => {
-    setShowFigureBundle(true);
+    if(showFigureBundle === false){
+      setShowFigureBundle(true);
+    }
+    else{
+      setShowFigureBundle(false);
+    }
   }
 
 const bringimageinhtml = (event) => {
@@ -70,20 +77,20 @@ const bringimageinhtmlPuzzle = (event) =>{
           'Authorization': `${localStorage.getItem('token')}`
 
       },
-  };
-  await axios(config)
-                
-  .then(response => {
-    console.log(response.data)
-      let arrayData = response.data.Puzzle
-      console.log(arrayData);
-      imagearrayData = arrayData.map((a,i) => {
-        return a.image
-      });
-  }).catch(error => {
-      console.error(error);
-  })
-   }
+    };
+    await axios(config)
+                  
+    .then(response => {
+      console.log(response.data)
+        // let arrayData = response.data.Puzzle
+        // console.log(arrayData);
+        // imagearrayData = arrayData.map((a,i) => {
+        //   return a.image
+        // });
+    }).catch(error => {
+        console.error(error);
+    })
+    }
 
 
 
@@ -112,19 +119,6 @@ const bringimageinhtmlPuzzle = (event) =>{
   // })
 
   //  }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -260,51 +254,36 @@ const bringimageinhtmlPuzzle = (event) =>{
             onClick={showFigureBundleHandler}
           >
             <CategoryIcon/>
-            {
+          </Button>
+          {
               showFigureBundle ? 
               <Figures
                 canvas={canvas}
                 colorvalue={colorvalue}
                 emitAdd={emitAdd}
                 drawmodeonoff={drawmodeonoff}
+                uuid={uuid}
               ></Figures> : <div></div>
             }
-          </Button>
         </div>
+        
         <PuzzleBundle
           showimagePuzzle={showimagePuzzle}
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
-        ></PuzzleBundle>
+        >퍼즐</PuzzleBundle>
 
         <Chilgyo
           drawmodeonoff={drawmodeonoff}
           emitAdd={emitAdd}
           canvas={canvas}
           ></Chilgyo>
-        
+
+        {/* ------------------------------------- */}
         <ButtonGroup 
           variant="contained" 
           aria-label="outlined primary button group"
           size='small'>
-
-        <NewCanvas
-          canvas={canvas}
-          emitClear={emitClear}
-        ></NewCanvas>
-        
-
-        <Chilgyo
-          drawmodeonoff={drawmodeonoff}
-          emitAdd={emitAdd}
-          canvas={canvas}
-          ></Chilgyo>
-
-        <Deletes
-          drawmodeonoff={drawmodeonoff}
-          canvas={canvas}
-          emitDelete={emitDelete}
-        ></Deletes>
 
         {!drawmodeonoff &&<Button 
           key="pencil"
@@ -324,12 +303,6 @@ const bringimageinhtmlPuzzle = (event) =>{
           showimage={showimage}
           setShowimage={setShowimage}
         ></ImageBundle>
-
-        <PuzzleBundle
-          showimagePuzzle={showimagePuzzle}
-          setShowimagePuzzle={setShowimagePuzzle}
-          setShowimagePuzzlediv={setShowimagePuzzlediv}
-        ></PuzzleBundle>
 
         <input 
           key="color"
