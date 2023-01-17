@@ -133,6 +133,7 @@ export default function CreateClass() {
       data.append('classKey',password );
       if (materiallistId[materials]){
         data.append('classMaterial',materiallistId[materials]['id']);
+        // console.log(materiallistId);
       }else{
         data.append('classMaterial',null);
       }

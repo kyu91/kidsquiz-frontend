@@ -15,9 +15,12 @@ const PuzzleBundle = ({ showimagePuzzle, setShowimagePuzzle, setShowimagePuzzled
         }
        }
     
-       function imageshowlistPuzzledivexit(){
+       
+    function imageshowlistPuzzledivexit() {
           setShowimagePuzzlediv(false)
        }
+
+
   return (
     <div>
         <Button 
@@ -27,8 +30,9 @@ const PuzzleBundle = ({ showimagePuzzle, setShowimagePuzzle, setShowimagePuzzled
           name='imageaddeee2' 
           onClick={imageshowlistPuzzle}><ExtensionIcon/></Button>
 
+
         <Button 
-          key="imagepuzzledd"
+          key="imagepuzzleexit"
           type='button' 
           className="navBtn"
           name='imageaddeee2ddd' 
