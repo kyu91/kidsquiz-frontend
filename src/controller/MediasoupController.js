@@ -115,7 +115,7 @@ const MediasoupController = () => {
       const hostName = document.getElementById("hostName"); //추가한거
       console.log("호스트인가?", hostBool);
 
-      if (hostBool == true) {
+      if (hostBool) {
         hostMe.srcObject = stream;
         guestMeWrap.setAttribute("visibility", "none");
         guestMeWrap.style.display = "none";
@@ -438,7 +438,7 @@ const MediasoupController = () => {
         let muteBtn = document.getElementById(newSocketId+'-mute')
 
           //! 새 소켓이 선생님인 경우 -> 선생님 칸으로 srcObject 넣어주기
-          if (isNewSocketHost === true) {
+          if (isNewSocketHost) {
             // 선생님에게 들어가야해
             const hostMe = document.getElementById("hostMe"); //추가한거
             const hostName = document.getElementById("hostName"); //추가한거
