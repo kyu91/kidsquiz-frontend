@@ -1,5 +1,7 @@
 import React from 'react'
 import Button from '@mui/material/Button';
+import ExtensionIcon from '@mui/icons-material/Extension';
+import ExtensionOffIcon from '@mui/icons-material/ExtensionOff';
 
 
 const PuzzleBundle = ({ showimagePuzzle, setShowimagePuzzle, setShowimagePuzzlediv }) => {
@@ -25,15 +27,16 @@ const PuzzleBundle = ({ showimagePuzzle, setShowimagePuzzle, setShowimagePuzzled
           key="imagepuzzle"
           type='button' 
           className="navBtn"
-          name='puzzleAsobi' 
-          onClick={imageshowlistPuzzle}> 퍼즐 놀이</Button>
+          name='imageaddeee2' 
+          onClick={imageshowlistPuzzle}><ExtensionIcon/></Button>
+
 
         <Button 
           key="imagepuzzleexit"
           type='button' 
           className="navBtn"
-          name='puzzleAsobishuryo' 
-          onClick={imageshowlistPuzzledivexit}> 퍼즐 종료</Button> 
+          name='imageaddeee2ddd' 
+          onClick={imageshowlistPuzzledivexit}><ExtensionOffIcon/></Button> 
     </div>
   )
 }
