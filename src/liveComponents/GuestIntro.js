@@ -56,12 +56,6 @@ const GuestIntro = () => {
       localStorage.setItem('guestKey', guestKey);
       localStorage.setItem('roomName', roomName);
 
-      // controller.init(roomName, e.target.name.value);
-
-      console.log(e.target.name.value); 
-      console.log(updatedUrl);
-      console.log(roomName);
-
     }
     
 
@@ -70,7 +64,7 @@ const GuestIntro = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
       setOpen(false);
-      window.location.reload();
+      
     }
 
     
@@ -134,7 +128,19 @@ const GuestIntro = () => {
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   환영합니다.
                 </Typography>
-                <NavLink to={updatedUrl}>강의실 이동</NavLink>
+                {/* <NavLink to={updatedUrl}>강의실 이동</NavLink> */}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  // href={updatedUrl}
+                  onClick={()=>{
+                    window.open(updatedUrl);
+                  }}
+                >
+                  강의실 이동
+                </Button>
               </Box>
             </Modal>
         </Box>

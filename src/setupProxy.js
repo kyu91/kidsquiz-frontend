@@ -2,13 +2,14 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app){
   app.use(
-    '/api',
-    createProxyMiddleware({
+    '/api', //백엔드 
+    createProxyMiddleware(
+      {
       target: 'http://13.125.34.115:5000',
-      // target: 'https://localhost:5000',
-  
-      changeOrigin: true
+      // target: 'http://localhost:5000', 
+      changeOrigin: true,
     })
-  )
+  );
 
 };
+

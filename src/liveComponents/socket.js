@@ -1,7 +1,13 @@
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import {fabric} from 'fabric'
-const socket = io("http://localhost:4000/")
+
+import socket from "./socketExport"
+
 // emitters
+
+export const emitUrl = (obj) => {
+  socket.emit("sendPuzzleURL", obj)
+}
 export const emitAdd = (obj) => {
   socket.emit('object-added', obj)
 }
@@ -65,7 +71,7 @@ export const addimageObj = canvas => {
     const {url, id} = data
     let object
     fabric.Image.fromURL(url, function(Image){
-      Image.scale(0.3);
+      Image.scale(0.4);
       object = Image
       object.set({id : id})
       canvas.add(object);

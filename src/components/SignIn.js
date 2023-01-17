@@ -18,8 +18,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/">
+        SnowBall
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -30,11 +30,12 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  
 
     const onhandlePost = async(data)=>{
       const config = {
           method: 'post',
-          url: '/api/login',
+          url: `/api/login`,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -43,11 +44,12 @@ export default function SignIn() {
         
         await axios(config)
           .then(response => {
-              console.log(response.data);
               alert('로그인 성공');
               //토큰 저장
               localStorage.setItem('token', response.data.token);
+              localStorage.setItem('name', response.data.name);
               window.location.href = '/class';
+              
               }
           ).catch(error => {
               console.error(error);
@@ -70,7 +72,7 @@ export default function SignIn() {
   return (
 
       <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      
         <CssBaseline />
         <Box
           sx={{
@@ -80,7 +82,7 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-        <CardCover sx={{ width: 320 }}>
+        <CardCover sx={{ width: 400 }}>
           <img
             src="https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/kidsquiz_logo.png"
             loading="lazy"
@@ -92,8 +94,8 @@ export default function SignIn() {
             }}
           />
         </CardCover>
-          <Typography component="h1" variant="h5">
-            로그인 해주세요
+          <Typography component="h1" variant="h5" style={{marginBottom: "30px"}}>
+            
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -101,7 +103,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="이메일 입력"
               name="email"
               autoComplete="email"
               autoFocus
@@ -111,34 +113,35 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="비밀번호 입력"
               type="password"
               id="password"
               autoComplete="current-password"
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="계정 기억하기"
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              style={{fontSize: "20px"}}
             >
-              Sign In
+              로그인
             </Button>
             <Grid container>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"회원이 아니신가요? 회원가입"}
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+      
     </ThemeProvider>
 
   );

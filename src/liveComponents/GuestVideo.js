@@ -1,87 +1,93 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import useProducerId from '../store';
-import './live_style.css'
+import React from "react";
+import "./css/live_style.css";
+import axios from "axios";
 
 
-import MediasoupController from '../controller/MediasoupController';
-
-
-//
-import {io} from "socket.io-client";
-import * as mediasoupClient from 'mediasoup-client';
-import VideoContainer from '../liveComponents/VideoContainer';
-import RemoteMedia from './RemoteMedia';
-
-
-
+//컨트롤러 임포트
+import MediasoupController from "../controller/MediasoupController";
 
 const controller = MediasoupController();
 
-const socket = io.connect("http://localhost:4000") 
+const GuestVideo = () => {
 
+//   const hostToken = localStorage.getItem("token");
+//   const roomName = localStorage.getItem("roomName");
+//   const [hostName, setHostName] = React.useState("");
+//   const [hostBool, setHostBool] = React.useState(false);
+//   const [isHost, setisHost] = React.useState(null);
+//   const [guest, setguest] = React.useState(null);
 
-const GuestVideo =  () => {
-    const guestName = localStorage.getItem('guestName');
-    
-    
-    React.useEffect(() => {
-        console.log('유진아 화이팅');
-        controller.init();
-        // const initCall = async() => {
-        //     controller.init();
-        // };
-        
-        // initCall();
-        
-    }, [])
+  //호스트 이름, 토큰확인 해서 이 방의 호스트인지 확인
+//   const params = { room: roomName };
+
+//   const getHost = async (hostToken) => {
+//     const config = {
+//       method: "get",
+//       url: `/api/class/host`,
+//       params,
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `${hostToken}`,
+//       },
+//     };
+//     await axios(config)
+//       .then((response) => {
+//         console.log("response!! : ", response);
+//         // setHostName(response.data.name);
+//         // setHostBool(response.data.result);
+//         // localStorage.setItem("hostBool", response.data.result);
+//         localStorage.getItem("hostBool");
+
+//         console.log("localStorage에 저장한 hostBool값", hostBool);
+
+//         setisHost(response.data.result);
+//         if (isHost) {
+//           setHostName(response.data.name);
+//         }
+//         // else {
+//         //     setguest(response.data.name);
+//         // }
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   };
+
+  React.useEffect(() => {
+    // if (hostToken) {
+    //   getHost(hostToken);
+    // }
+    // localStorage.setItem("hostBool", hostBool);
+    controller.init();
+  }, []);
 
   return (
-    <Box
-        sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center', //Paper를 가로로 정렬
-            // alignContent: 'center', // Paper 요소를 세로로 정렬
-            '& > :not(style)': {
-            m: 1,
-            mb: 5,
-            width: 1/5,
-            height: 160,
-            },
-        }}
-    >
-
-             
-        <div id = 'video'>
-            <table className = "mainTable">
-                <tbody>
-                    <tr>
-                        <td >
-                            <div className='localColumn'>
-                                <video id="localVideo" autoPlay muted>
-                                </video>
-                                <div style={{textAlign: 'center'}}>
-                                    <span id="userName"> {guestName} 👻   </span>
-                                    <button id="mute"> <i id="muteIcon" className="fa-solid fa-microphone"></i> 마이크 </button><span> </span>
-                                    <button id="camera"><i id="cameraIcon" className="fa-solid fa-video"></i> 카메라 </button><span> </span>
-                                </div>
-                            </div>
-                        </td>
-                        <td className='remotColumn'>
-                            <div id="videoContainer" style={{display: 'flex'}}> 
-                            
-                                
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <>
+      <div id="videos">
+        <div id="videoColumn" className="mainTable">
+          {/* <div id = "videoPosition" className='localColumn'> */}
+          <div id="hostCol" className="localColumn">
+            <video id="hostMe" autoPlay muted></video>
+            <div>
+              <p id="hostName"></p>
+              <button id="mute">음소거</button>
+              <button id="camera">카메라끄기</button>
+            </div>
+          </div>
+          <div id="videoContainer" className="remoteColumn">
+            <div id="guestMeWrap">
+              <video id="guestMe" autoPlay muted></video>
+              <div>
+                <p id="localUserName">  </p>
+                <button id="mute">음소거</button>
+                <button id="camera">카메라끄기</button>
+              </div>
+            </div>
+          </div>
         </div>
-             
-   
-    </Box>
-  )
-}
+      </div>
+    </>
+  );
+};
 
-export default GuestVideo
+export default GuestVideo;
