@@ -2,6 +2,7 @@ import React from 'react'
 import { v1 as uuid } from 'uuid'
 import { fabric } from 'fabric';
 import { Button } from '@mui/material';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 
 
 const Chilgyo = ({ drawmodeonoff, emitAdd, canvas }) => {
@@ -104,7 +105,7 @@ const Chilgyo = ({ drawmodeonoff, emitAdd, canvas }) => {
           type='button' 
           className="navBtn"
           name='addTangram' 
-          onClick={addTangram}>칠교</Button>}
+          onClick={addTangram}><DashboardCustomizeIcon/></Button>}
     </div>
   )
 }
