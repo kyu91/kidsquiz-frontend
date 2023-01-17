@@ -13,23 +13,26 @@ const PuzzleBundle = ({ showimagePuzzle, setShowimagePuzzle, setShowimagePuzzled
         }
        }
     
-       function imageshowlistPuzzledivexit(){
+       
+    function imageshowlistPuzzledivexit() {
           setShowimagePuzzlediv(false)
        }
+
+
   return (
     <div>
         <Button 
           key="imagepuzzle"
           type='button' 
           className="navBtn"
-          name='imageaddeee2' 
+          name='puzzleAsobi' 
           onClick={imageshowlistPuzzle}> 퍼즐 놀이</Button>
 
         <Button 
-          key="imagepuzzledd"
+          key="imagepuzzleexit"
           type='button' 
           className="navBtn"
-          name='imageaddeee2ddd' 
+          name='puzzleAsobishuryo' 
           onClick={imageshowlistPuzzledivexit}> 퍼즐 종료</Button> 
     </div>
   )
