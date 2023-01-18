@@ -1,22 +1,32 @@
 import './css/Canvas.css';
 import React, { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
+// import { uuid } from 'uuidv4'
 import { v1 as uuid } from 'uuid'
 import { emitModify, emitAdd, emitAddP, modifyObj, addObj, addPObj, emitDelete, deleteObj, emitClear, clearObj
   ,emitAddImage, addimageObj, emitUrl } from './socket'
 import axios from 'axios'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import socket from "./socketExport"
 
 //석규
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Quiz from './Quiz'
 import Puzzle from './Puzzle'
+import DrawToggle from './canvasComponents/DrawToggle';
+import NewCanvas from './canvasComponents/NewCanvas';
+import Figures from './canvasComponents/Figures';
+import Chilgyo from './canvasComponents/Chilgyo';
+import Deletes from './canvasComponents/Deletes';
+import ImageBundle from './canvasComponents/ImageBundle';
+import PuzzleBundle from './canvasComponents/PuzzleBundle';
+import PermDataSettingIcon from '@mui/icons-material/PermDataSetting';
+import CategoryIcon from '@mui/icons-material/Category';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import Crop32Icon from '@mui/icons-material/Crop32';
 
-import backEndUri from '../backEndUri';
-
-let imagearrayData =[]
-let puzzleurl
+// let puzzleurl
 
 function Canvas() {
   const [canvas, setCanvas] = useState('');
@@ -28,86 +38,94 @@ function Canvas() {
   const [showimagePuzzle, setShowimagePuzzle] = useState(false);
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
-  // const [puzzleimageurl,setpuzzleimageurl] = useState('');
+  const [imagearraydata,setimagearraydata] = useState([])
+  const [puzzlearraydata,setpuzzlearraydata] = useState([])
+  const [puzzleurl, setpuzzleurl] = useState('')
+  
 
-  const drawmode = () => {
-    if (canvas.isDrawingMode === true){
-      canvas.isDrawingMode = false
-      setShow(false)
-      setdrawmodeonoff(true)
+  //석규 도형 묶음 on/off 상태값
+  const [showFigureBundle, setShowFigureBundle] = useState(false);
+
+  //석규 이미지 묶음 on/off 함수
+  const showFigureBundleHandler = () => {
+    if(showFigureBundle === false){
+      setShowFigureBundle(true);
     }
-    else {
-      canvas.isDrawingMode = true
-      setShow(true)
-      setdrawmodeonoff(false)
+    else{
+      setShowFigureBundle(false);
     }
   }
 
 const bringimageinhtml = (event) => {
   let url = event.currentTarget.src;
   addImage(url)
+  setShowimage(false)
 }
 
 const bringimageinhtmlPuzzle = (event) =>{
-  puzzleurl = event.currentTarget.src;
-  emitUrl(puzzleurl);
+  setpuzzleurl(event.currentTarget.src);
+  emitUrl(event.currentTarget.src);
   setShowimagePuzzlediv(true)
   setShowimagePuzzle(false)
 }
 
-   const bringimage = async() =>{
 
+
+
+////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
+
+const data = new FormData();
+data.append("_id","63c6ce283ee52629a2b63b39")
+
+  const bringimage = async()=>{
     const config = {
-      method: 'get',
-      url: `/api/material`,
+      method: 'post',
+      url: `/api/live/image`,
       headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `${localStorage.getItem('token')}`
-
+        'Content-Type': 'application/json',
+        'Authorization': `${localStorage.getItem('token')}`
       },
+      data : data
+    };
+    
+    await axios(config)
+        .then(response => {
+            // console.log(response.data.image);
+            setimagearraydata(response.data.image)
+        }).catch(error => {
+            console.error(error);
+        }
+    );
   };
-  await axios(config)
-                
-  .then(response => {
-    console.log(response.data)
-      let arrayData = response.data.Puzzle
-      console.log(arrayData);
-      imagearrayData = arrayData.map((a,i) => {
-        return a.image
-      });
-  }).catch(error => {
-      console.error(error);
-  })
-
-   }  
 
 
-   function imageshowlist(){
+  const data2 = new FormData();
+data2.append("_id","63c6ce283ee52629a2b63b39")
 
-    if (showimage === false) {
-      setShowimage(true)
-    }
-    else {
-      setShowimage(false)
-    }
-   }
+  const bringpuzzleimage = async()=>{
+    const config = {
+      method: 'post',
+      url: `/api/live/puzzle`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${localStorage.getItem('token')}`
+      },
+      data : data2
+    };
+    
+    await axios(config)
+        .then(response => {
+          setpuzzlearraydata(response.data.puzzle);
+        }).catch(error => {
+            console.error(error);
+        }
+    );
+  };
 
-   function imageshowlistPuzzle(){
+////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
-    if (showimagePuzzle === false) {
-      setShowimagePuzzle(true)
-    }
-    else {
-      setShowimagePuzzle(false)
-    }
-   }
 
-   function imageshowlistPuzzledivexit(){
-      setShowimagePuzzlediv(false)
-   }
-  // var pencil;
-  // pencil = new fabric.PencilBrush(canvas);
-  // canvas.freeDrawingBrush = pencil;
+
 
   const erasemode = () => {
       canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
@@ -116,6 +134,8 @@ const bringimageinhtmlPuzzle = (event) =>{
   const pencilmode = () => {
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.width = parseInt(widthvalue);
+    canvas.freeDrawingBrush.color = colorvalue;
+    canvas.renderAll()
   }
   const changeWidth = (e) =>{
     setWidthvalue(e.target.value);
@@ -140,7 +160,8 @@ const bringimageinhtmlPuzzle = (event) =>{
 
   useEffect(() => {
     bringimage()
-  })
+    bringpuzzleimage()
+  }, [])
 
   useEffect(
     () => {
@@ -202,231 +223,100 @@ const bringimageinhtmlPuzzle = (event) =>{
     })
   }
 
-  const addShape = (e) => {
-    let type = e.target.name;
-    let object
+  socket.on("puzzleStart", function(data) {
+    setShowimagePuzzlediv(true)
+    setpuzzleurl(data)
+  })
 
-    if (type === 'rectangle') {
-      object = new fabric.Rect({
-        fill : colorvalue,
-        height: 75,
-        width: 150,
-      });
 
-    } else if (type === 'triangle') {
-      object = new fabric.Triangle({
-        fill : colorvalue,
-        width: 100,
-        height: 100,
-      })
-
-    } else if (type === 'circle') {
-      object = new fabric.Circle({
-        fill : colorvalue,
-        radius: 50,
-      })
-    }
-    object.set({id: uuid()})
-    canvas.add(object)
-    canvas.renderAll()
-    emitAdd({obj: object, id: object.id})
-
-  };
-  const deleteObject = () => {
-    let object;
-    object = canvas.getActiveObject()
-    canvas.remove(canvas.getActiveObject());
-    emitDelete({obj: object, id: object.id})
-  }
-  const clearCanvas = () => {
-    canvas.clear();
-    emitClear(1);
-  }
-
-  const addTangram = () => {
-    
-    let object
-
-    object = new fabric.Triangle({
-      width : 300,
-      height : 150,
-      fill : 'red',
-      angle : 90,
-      left : 300,
-      top :200,
-    })
-
-    object.set({id: uuid()})
-    canvas.add(object)
-    emitAdd({obj: object, id: object.id})
-
-    object = new fabric.Triangle({
-      width : 300,
-      height : 150,
-      fill : 'green',
-      left : 150,
-      top : 350,
-    })
-    object.set({id: uuid()})
-    canvas.add(object)
-
-    emitAdd({obj: object, id: object.id})
-
-    object = new fabric.Triangle({
-      width : 150,
-      height : 75,
-      fill : 'yellow',
-      left : 375,
-      top : 500,
-      angle : -90,
-    })
-    object.set({id: uuid()})
-    canvas.add(object)
-
-    emitAdd({obj: object, id: object.id})
-
-    object = new fabric.Triangle({
-      width : 150,
-      height : 75,
-      fill : 'orange',
-      left : 375,
-      top : 350,
-      angle : 180,
-    })
-    object.set({id: uuid()})
-    canvas.add(object)
-  
-    emitAdd({obj: object, id: object.id})
-
-    object = new fabric.Triangle({
-      width : 212,
-      height : 106,
-      fill : 'orange',
-      left : 375,
-      top : 123,
-      angle : 45,
-    })
-    object.set({id: uuid()})
-    canvas.add(object)
-    emitAdd({obj: object, id: object.id})
-
-    object = new fabric.Rect({
-      width : 106,
-      height : 106,
-      fill : 'purple',
-      left : 375,
-      top : 275,
-      angle : 45,
-    })
-    object.set({id: uuid()})
-    canvas.add(object)
-    emitAdd({obj: object, id: object.id})
-
-    object = new fabric.Rect({
-      width : 150,
-      height : 75,
-      fill : 'blue',
-      skewX : 45,
-      left : 150,
-      top : 200,
-      angle : 0,
-    })
-    object.set({id: uuid()})
-    canvas.add(object)
-    emitAdd({obj: object, id: object.id})
-  }
 
   return (
+    //!리턴
     <div className='App'>
-      <div>
-      <ButtonGroup 
-        variant="contained" 
-        aria-label="outlined primary button group"
-        size='small'>
+      <div id="buttonGroup">
 
-        <Button 
-          key="on/off(draw)"
-          type='button' 
-          className="navBtn"
-          name='on/off(draw)' 
-          onClick={drawmode}> 그리기/도형</Button>
 
-        <Button 
-          key="clear"
-          type='button' 
-          className="navBtn"
-          name='clear' 
-          onClick={clearCanvas}>새 도화지 </Button>
+        {/* 팬/도형 토글 */}
 
-        {drawmodeonoff && <Button 
-          key="Square"
-          type='button' 
-          className="navBtn"
-          name='circle' 
-          onClick={addShape}> 원 🟢 </Button>}
+        <DrawToggle
+          canvas={canvas}
+          setShow={setShow}
+          setdrawmodeonoff={setdrawmodeonoff}
+          size ="small"
+        ></DrawToggle>
 
-        {drawmodeonoff && <Button  
-          key = "Triangle"
-          type='button' 
-          className="navBtn"
-          name='triangle' 
-          onClick={addShape}> 삼각형 🔺</Button>}
+        {/* 리셋 */}
+        <NewCanvas
+          canvas={canvas}
+          emitClear={emitClear}
+        ></NewCanvas>
+        
+        {/* 선택 삭제 */}
+        <Deletes
+          drawmodeonoff={drawmodeonoff}
+          canvas={canvas}
+          emitDelete={emitDelete}
+        ></Deletes>
 
-        {drawmodeonoff && <Button 
-          key="Rectangle"
-          type='button' 
-          className="navBtn"
-          name='rectangle' 
-          onClick={addShape}>사각형 🟦 </Button>}
+        {/* 도형 묶음 */}
 
-        {drawmodeonoff && <Button 
-          key="addTangram"
-          type='button' 
-          className="navBtn"
-          name='addTangram' 
-          onClick={addTangram}>칠교</Button>}
+          <Button onClick={showFigureBundleHandler}>
+            <CategoryIcon/>
+          </Button>
+          {
+              showFigureBundle && <Figures
+                canvas={canvas}
+                colorvalue={colorvalue}
+                emitAdd={emitAdd}
+                // drawmodeonoff={drawmodeonoff}
+              ></Figures>
+            }
 
-        {drawmodeonoff && <Button 
-          key="delete"
-          type='button' 
-          className="navBtn"
-          name='delete' 
-          onClick={deleteObject}> 지우기 </Button>}
+              {/* <Figures
+                canvas={canvas}
+                colorvalue={colorvalue}
+                emitAdd={emitAdd}
+                drawmodeonoff={drawmodeonoff}
+                // uuid = {uuid}
+              ></Figures> */}
+        
+        <PuzzleBundle
+          showimagePuzzle={showimagePuzzle}
+          setShowimagePuzzle={setShowimagePuzzle}
+          setShowimagePuzzlediv={setShowimagePuzzlediv}
+        >퍼즐</PuzzleBundle>
+
+        <Chilgyo
+          drawmodeonoff={drawmodeonoff}
+          emitAdd={emitAdd}
+          canvas={canvas}
+          ></Chilgyo>
 
         {!drawmodeonoff &&<Button 
           key="pencil"
           type='button' 
           className="navBtn"
           name='imageadd' 
-          onClick={pencilmode}> 연필</Button>}
+          onClick={pencilmode}><BorderColorIcon/></Button>}
 
         {!drawmodeonoff &&<Button 
           key="erase"
           type='button' 
           className="navBtn"
           name='imageadd' 
-          onClick={erasemode}> 지우개</Button>}  
+          onClick={erasemode}><Crop32Icon/></Button>}  
 
-        <Button 
-          key="image"
-          type='button' 
-          className="navBtn"
-          name='imageaddeee' 
-          onClick={imageshowlist}> 이미지</Button>
+        <ImageBundle
+          showimage={showimage}
+          setShowimage={setShowimage}
+        ></ImageBundle>
 
-        <Button 
-          key="imagepuzzle"
-          type='button' 
-          className="navBtn"
-          name='imageaddeee2' 
-          onClick={imageshowlistPuzzle}> 퍼즐 놀이</Button>
+        <PuzzleBundle
+          showimagePuzzle={showimagePuzzle}
+          setShowimagePuzzle={setShowimagePuzzle}
+          setShowimagePuzzlediv={setShowimagePuzzlediv}
+        ></PuzzleBundle>
 
-        <Button 
-          key="imagepuzzledd"
-          type='button' 
-          className="navBtn"
-          name='imageaddeee2ddd' 
-          onClick={imageshowlistPuzzledivexit}> 퍼즐 종료</Button> 
 
         <input 
           key="color"
@@ -437,14 +327,11 @@ const bringimageinhtmlPuzzle = (event) =>{
           id="drawing-color"></input>
 
       
-      </ButtonGroup>
+      
 
       {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
 
-      {/* <input type='url' style={{alignItems: 'center', margin : 'auto', display : 'flex', justifyContent : 'center'}} 
-        onChange={(e)=>{setimageURL(e.target.value); console.log(e.target.value);}}></input>
-        <button onClick={addImage}>버튼</button> */}
 
       </div>
 
@@ -452,10 +339,10 @@ const bringimageinhtmlPuzzle = (event) =>{
         <ScrollContainer className="scroll-container" activationDistance = "10">
             <ul className="list">
         {
-        imagearrayData.map((a) => {
+        imagearraydata.map((a,i) => {
           return <li className="item">
-          <a className="link" >
-              <img className="image" src={a} onClick = {bringimageinhtml}></img>
+          <a className="link" key = {i+6546} >
+              <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
           </a>
       </li>
         })}
@@ -467,10 +354,10 @@ const bringimageinhtmlPuzzle = (event) =>{
         <ScrollContainer className="scroll-container" activationDistance = "10">
             <ul className="list">
         {
-        imagearrayData.map((a) => {
+        puzzlearraydata.map((b,i) => {
           return <li className="item">
-          <a className="link" >
-              <img className="image" src={a} onClick = {bringimageinhtmlPuzzle}></img>
+          <a className="link" key = {i} >
+              <img className="image" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
           </a>
       </li>
         })}
@@ -479,7 +366,7 @@ const bringimageinhtmlPuzzle = (event) =>{
       </div>}
 
       <Quiz></Quiz>
-      {showimagePuzzlediv && <Puzzle url = {puzzleurl}></Puzzle>}
+      {showimagePuzzlediv && <Puzzle puzzleurl = {puzzleurl} setpuzzleurl ={setpuzzleurl} ></Puzzle>}
       <div>
         <canvas id="canv" />
       </div>

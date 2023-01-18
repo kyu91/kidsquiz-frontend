@@ -134,7 +134,10 @@ const GuestIntro = () => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
-                  href={updatedUrl}
+                  // href={updatedUrl}
+                  onClick={()=>{
+                    window.open(updatedUrl);
+                  }}
                 >
                   강의실 이동
                 </Button>

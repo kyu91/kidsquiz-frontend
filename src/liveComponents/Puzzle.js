@@ -1,12 +1,15 @@
+import { border } from "@mui/system"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import "./css/Puzzle.css"
 import socket from "./socketExport"
 
-function Puzzle(props) {
-  let [img, setImg] = useState("")
-  socket.on("puzzleStart", function(data) {
-    setImg(data)
-  })
+function Puzzle({puzzleurl,setpuzzleurl}) {
+
+  // socket.on("puzzleStart", function(data) {
+  //   setpuzzleurl(data)
+  // })
+
+  // props.url
 
   // const [tempvalue, settempvalue] = useState('0')
 
@@ -31,7 +34,6 @@ function Puzzle(props) {
     const [imageSize, setImageSize] = useState()
     const [rootSize, setRootSize] = useState()
     const [calculatedHeight, setCalculatedHeight] = useState()
-    const [socketchange, setSocketchange] = useState()
     const rootElement = useRef()
     const resizeObserver = useRef()
     const draggingTile = useRef()
@@ -195,68 +197,6 @@ function Puzzle(props) {
       draggingTileBYS.current.elem.style.setProperty("top", `${tileYval}px`)
     }
 
-    // function moving() {
-    //   const {tileCopos, tileId, tileXval, tileYval} = movingdata
-    //   console.log('진입성공');
-
-    //   draggingTileBYS.current = tileCopos
-
-    //   draggingTileBYS.current.elem.style.setProperty('left', `${tileXval}px`)
-    //   draggingTileBYS.current.elem.style.setProperty('top', `${tileYval}px`)
-    // }
-
-    // const moving = useCallback((tile : Tile) => {
-    //   const {tileId, tileXval, tileYval} = movingdata
-    //   console.log('진입성공');
-    //   draggingTileBYS.current = {
-    //     tile,
-    //     elem: document.getElementById(tileId) as HTMLElement
-    //   };
-
-    //   draggingTileBYS.current.elem.style.setProperty('left', `${tileXval}px`)
-    //   draggingTileBYS.current.elem.style.setProperty('top', `${tileYval}px`)
-    // }, [tempvalue])
-
-    // function clickon(){
-    //   if (draggingTileBYS.current){
-    //     const draggedToPercentageBYS = {
-    //       x: clamp(draggingTileBYS.current!.elem.offsetLeft / rootSize!.width, 0, 1),
-    //       y: clamp(draggingTileBYS.current!.elem.offsetTop / rootSize!.height, 0, 1)
-    //     }
-    //     const {tileCopos,tileId} = movingdata
-    //     // const draggedTileBYS = tileCopos (여기에 대신 파일 불러와서 넣기)
-    //     const targetPositionPercentageBYS = {
-    //       x: tileCopos % columns / columns,
-    //       y: Math.floor(tileCopos / columns) / rows
-    //     }
-    //       const isSolved = Math.abs(targetPositionPercentageBYS.x - draggedToPercentageBYS.x) <= solveTolerancePercentage &&
-    //       Math.abs(targetPositionPercentageBYS.y - draggedToPercentageBYS.y) <= solveTolerancePercentage
-
-    //   }
-    // }
-
-    // const onTilesocket = useCallback((tile: Tile, element: HTMLElement | null)) => {
-    //   if (draggingTileBYS.current)
-    //   {
-    //     draggingTileBYS.current.elem.style.setProperty('left', `${tileXval}px`)
-    //     draggingTileBYS.current.elem.style.setProperty('top', `${tileYval}px`)
-    //   }
-    // },[socketchange])
-
-    // socket.on('movesinglepuzzle', data => {
-    //     (tile: Tile, elem: HTMLElement) =>{
-    //     console.log('진행');
-    //     const {tileId, tileXval, tileYval} = data
-    //   var tempelement = document.getElementById(tileId)
-    //   console.log(tempelement)
-    //   draggingTileBYS.current = {
-    //     tile,
-    //     elem: document.getElementById(tileId) as HTMLElement
-    //   };
-    //   draggingTileBYS.current.elem.style.setProperty('left', `${tileXval}px`)
-    //     draggingTileBYS.current.elem.style.setProperty('top', `${tileYval}px`)
-    //   }})
-
     const onRootMouseUp = useCallback(
       event => {
         if (draggingTile.current) {
@@ -389,7 +329,8 @@ function Puzzle(props) {
         onMouseLeave={onRootMouseUp}
         className="jigsaw-puzzle"
         style={{
-          height: !calculatedHeight ? undefined : `${calculatedHeight}px`
+          height: !calculatedHeight ? undefined : `${calculatedHeight}px`,
+          border: '2px solid black'
         }}
         onDragEnter={event => {
           event.stopPropagation()
@@ -419,6 +360,7 @@ function Puzzle(props) {
                 width: `${(1 / columns) * 100}%`,
                 backgroundImage: `url(${imageSrc})`,
                 backgroundSize: `${rootSize.width}px ${rootSize.height}px`,
+                // backgroundSize: `800px 800px`,
                 backgroundPositionX: `${((tile.correctPosition % columns) /
                   (columns - 1)) *
                   100}%`,
@@ -437,10 +379,10 @@ function Puzzle(props) {
   }
 
   return (
-    <div style={{ height: "500px", width: "500px" }}>
+    <div style={{ margin : 'auto', height: "580px", width: "580px" }}>
 
       <JigsawPuzzle
-        imageSrc={props.url}
+        imageSrc={puzzleurl}
         rows={2}
         columns={2}
         onSolved={() => alert("참 잘했어요")}

@@ -4,35 +4,23 @@ import Paper from '@mui/material/Paper';
 import CardMedia from '@mui/material/CardMedia';
 
 const HostVideo = () => {
-
-
   return (
-    <Box
-        sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'left', //Paper를 가로로 정렬
-            // alignContent: 'center', // Paper 요소를 세로로 정렬
-            '& > :not(style)': {
-            m: 1,
-            width: 220,
-            height: 180,
-            },
-        }}
-    >
-        <Paper elevation={3}>
-            <CardMedia
-                component="video"
-                alt="green iguana"
-                height="150"
-                src='https://www.w3schools.com/html/mov_bbb.mp4'
-                autoPlay
-                playsInline
-                muted
-            />
-        </Paper>
-
-    </Box>
+    <>
+    <div>
+        <div id="videoColumn" className="mainTable">
+            <div id="hostCol" className="localColumn">
+                <p id="hostName"></p>
+                <video id="hostMe" autoPlay muted></video>
+                <div className="controllers">
+                    <div className="micAndVid">
+                        <button id="mute">음소거</button>
+                        <button id="camera">카메라끄기</button>
+                    </div>
+                </div>
+          </div>
+        </div>
+    </div>
+    </>
   )
 }
 

@@ -10,13 +10,13 @@
 }
 
 .item {
-  padding-right: 1rem;
+  padding-right: 2rem;
   list-style: none;
   user-select: none;
 }
 
 .item:first-child {
-  padding-left: 1rem;
+  padding-left: 2rem;
 }
 
 .link {
@@ -28,6 +28,7 @@
   display: block;
   width: 200px;
   height: 200px;
+  border-radius: 15%;
   -webkit-user-drag: none;
 }
 /* button {
@@ -76,6 +77,21 @@ input[type=range]::-moz-range-thumb {
   color: black;
   font-size: 0.7em;
 } 
+#canv{
+  width: 100%;
+}
+#buttonGroup {
+  display: flex;
+}
+#buttonGroup button {
+  font-size: 1em;
+  margin: 0;
+}
+#buttonGroup button:hover {
+  color: rgba(255,0,0,0.9);
+  transform: scale( 1.5, 1.5 );
+  background: none;
+}
 
 
 

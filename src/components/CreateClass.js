@@ -133,6 +133,7 @@ export default function CreateClass() {
       data.append('classKey',password );
       if (materiallistId[materials]){
         data.append('classMaterial',materiallistId[materials]['id']);
+        // console.log(materiallistId);
       }else{
         data.append('classMaterial',null);
       }
@@ -149,13 +150,19 @@ export default function CreateClass() {
       <Typography variant="h4" mt={2}>
         라이브 생성
       </Typography>
+      <Typography variant="h6" mt={2} style={{marginBottom: '20px', color: '#808080'}}>
+        강의를 위한 라이브 방을 생성해 주세요.
+      </Typography>
       <Grid container spacing={3} component="form" encType="multipart/form-data" onSubmit={handleSubmit}>
         <Grid item xs={12}>
+          <Typography variant="h5" mt={2}>
+            강의제목*
+          </Typography>
           <TextField
             required
             id="title"
             name="title"
-            label="강의 제목"
+            label="강의 제목을 입력해주세요."
             fullWidth
             autoComplete="given-name"
             variant="standard"
@@ -165,8 +172,8 @@ export default function CreateClass() {
         {/* 날짜 선택 툴 */}
         <Grid item xs={12}>
             <Stack spacing={3}>
-                <Typography variant="p" mt={2}>
-                    날짜 선택
+                <Typography variant="h5" mt={2}>
+                    날짜선택*
                 </Typography>
                 <DatePicker
                 value={datePickerValue}
@@ -183,8 +190,8 @@ export default function CreateClass() {
 
         {/* 입장인원선택 라디오 */}
         <Grid item xs={12}>
-            <Typography variant="p" mt={2}>
-                입장 인원
+            <Typography variant="h5" mt={2}>
+                입장인원*
             </Typography>
             <p/>
             <RadioGroup 
@@ -227,6 +234,9 @@ export default function CreateClass() {
 
         {/* 입장 비밀번호 */}
         <Grid item xs={12}>
+          <Typography variant="h5" mt={2}>
+            입장비밀번호
+          </Typography>
           <TextField
             id="classKey"
             name="classKey"
@@ -240,6 +250,10 @@ export default function CreateClass() {
 
         {/* 교구 선택 */}
         <Grid item xs={12}>
+          <Typography variant="h5" mt={2} style={{marginBottom: '20px'}}>
+            교구선택
+          </Typography>
+          
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel 
@@ -273,29 +287,44 @@ export default function CreateClass() {
 
         {/* 섬네일 이미지 업로드 */}
         <Grid item xs={12}>
-          <Stack direction="row" alignItems="center">
-          <Typography variant="p" mt={2}>
-            {
-              
-              files.name ? files.name : '섬네일 이미지를 업로드해주세요.'
-            }
+          <Typography variant="h5" mt={2}>
+            섬네일 이미지 업로드
           </Typography>
-          <Button variant="contained" component="label">
+          <Stack direction="row" alignItems="center">
+          <Button 
+            variant="contained" 
+            component="label"
+            style={{fontSize: '1rem', marginRight: "1em"}}>
             Upload File
             <input hidden accept="image/*" name="image" type="file" ref={inputRef} onChange={handleChangeFile}/>
           </Button>
+          <Typography variant="h6" mt={2} style={{color: '#c0c0c0'}}>
+            {
+              
+              files.name ? files.name : '버튼을 눌러 이미지를 업로드해주세요.'
+            }
+          </Typography>
+          
           </Stack>
         </Grid>
 
         <Grid item xs={12}>
           <Stack spacing={2} direction="row">
-            <Button variant="outlined" href='/class'>취소</Button>
+            <Button 
+              variant="outlined" 
+              href='/class'
+              type='submit'
+              fullWidth
+              style={{fontSize: '1.2rem'}}
+              // sx={{ mt: 3, mb: 2 }}
+            >취소</Button>
             <Button 
               // href='/class'
               variant="contained" 
               type='submit'
               fullWidth
-              sx={{ mt: 3, mb: 2 }}
+              style={{fontSize: '1.2rem'}}
+              // sx={{ mt: 3, mb: 2 }}
             >등록</Button>
           </Stack>
         </Grid>

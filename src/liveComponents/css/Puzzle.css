@@ -1,5 +1,9 @@
 .jigsaw-puzzle {
+    width: 580px;
+    height: 500px;
     position: relative;
+    border: 2px soild black;
+    
   }
   
   .jigsaw-puzzle__piece {
@@ -9,7 +13,6 @@
     z-index: 1;
     user-select: none;
   }
-  
   .jigsaw-puzzle__piece.jigsaw-puzzle__piece--solved {
     border-color: #000;
     z-index: 0;
