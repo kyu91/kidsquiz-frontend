@@ -152,7 +152,7 @@ data2.append("_id","63c7b57d4424a5f77498335a")
      new fabric.Canvas('canv', {
        isDrawingMode: false,
        height: 1920,
-       width: 1080,
+       width: 4000,
      })
 
 
