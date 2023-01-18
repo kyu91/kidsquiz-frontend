@@ -19,6 +19,7 @@ const GuestVideo = () => {
       <div id="videos">
           <div id="videoContainer" className="remoteColumn">
             <div id="guestMeWrap">
+              <audio id="guestMeAudio" autoPlay></audio>
               <video id="guestMe" autoPlay muted></video>
               <div className="controllers">
                 <div className="micAndVid">
