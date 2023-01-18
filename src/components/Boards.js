@@ -138,7 +138,7 @@ export default function Boards() {
             />
             {/* <img src={board.thumbnail}></img> */}
             <h2 style={{marginTop: '4%', fontSize: '2em'}}>{board.title}</h2>
-            <p style={{marginTop: '4%', fontSize: '1.1em'}}>시작시간 : {board.startDateTime}</p>
+            <p style={{marginTop: '4%', fontSize: '1.1em'}}>시작시간 : {board.startDateTime.substr(0,10)}</p>
             <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}>참여학생 : {board.studentMaxNum} 명</p>
             <Button variant="outlined" style={{width: "20em", fontSize: "1em", fontWeight: "bold"}}
               onClick={()=>{
