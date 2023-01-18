@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getSocket, getSocketName } from '../controller/MediasoupController'
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import ImageIcon from '@mui/icons-material/Image';
+import WorkIcon from '@mui/icons-material/Work';
+import PetsIcon from '@mui/icons-material/Pets';
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import './css/quiz.css';
 const socket = getSocket()
 
@@ -15,6 +25,24 @@ function Quiz () {
     const [result, setresult] = useState(null);
     const [name, setname] = useState(getSocketName());
     const [hostSocket, sethostSocket] = useState(null);
+    //////////////////////////////////////////////////////////////테스트용 임시//////////////////////////////////////////////
+    const [tempdiv,settempdiv] = useState(false);
+
+
+    const setdiv = ()=>{
+        if (tempdiv == true){
+            settempdiv(false)
+        }
+        else{
+            settempdiv(true)
+        }
+    } 
+
+    //////////////////////////////////////////////////////////////테스트용 임시//////////////////////////////////////////////
+
+
+
+
 
     // 이 방의 호스트 인가 아닌가 확인 -> isHost 변수 설정 (근데 어차피 퀴즈 시작은 선생님만 할 수 있으니까 꼭 안해도 될듯..?)
     const hostBool = localStorage.getItem('hostBool');
@@ -96,7 +124,18 @@ function Quiz () {
     return (
         <>
         {hostBool?
-            <button id="btnnn" onClick={()=>{
+
+            <div>
+            <button id = "btnnn" onClick={setdiv}>퀴즈 시작</button>
+            
+            {tempdiv && <List sx={{ width: '100%', maxWidth: 180, bgcolor: 'orange', borderRadius: '15%'}}>
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar>
+            <PetsIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="동물 퀴즈" onClick={()=>{
                 //todo: 아래 quizId는 퀴즈 objectId여야 함 
                 let quizId = 1
                 socket.emit("startQuiz", quizId, socket.id, (q, c1, c2, ans)=>{
@@ -106,7 +145,38 @@ function Quiz () {
                     setrightAnswer(ans)
                 })
                 setquizStarted(true)
-            }}> 퀴즈 시작 </button>
+            }}/>
+      </ListItem>
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar>
+            <WorkIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="물건 퀴즈"/>
+      </ListItem>
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar>
+            <DirectionsBusIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="탈것 퀴즈"/>
+      </ListItem>
+    </List> }
+
+            {/* <button id="btnnn" onClick={()=>{
+                //todo: 아래 quizId는 퀴즈 objectId여야 함 
+                let quizId = 1
+                socket.emit("startQuiz", quizId, socket.id, (q, c1, c2, ans)=>{
+                    setquestion(q)
+                    setchoice1(c1)
+                    setchoice2(c2)
+                    setrightAnswer(ans)
+                })
+                setquizStarted(true)
+            }}> 퀴즈 시작 </button> */}
+            </div>
             : null}
         </>
     )
@@ -114,3 +184,4 @@ function Quiz () {
 }
 
 export default Quiz
+
