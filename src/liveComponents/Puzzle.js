@@ -341,6 +341,7 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
           event.preventDefault()
         }}
       >
+
         {tiles &&
           rootSize &&
           imageSize &&
@@ -379,15 +380,18 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
   }
 
   return (
-    <div style={{ margin : 'auto', height: "580px", width: "580px" }}>
+    <div className="miniImage">
+        <img style={{marginLeft : '3%', marginTop : '3%', height : '200px', width : '200px', borderRadius: '15%'}} src= {puzzleurl}></img>
 
+    <div style={{ marginLeft : '4%', height: "580px", width: "580px" }}>
       <JigsawPuzzle
         imageSrc={puzzleurl}
         rows={2}
         columns={2}
         onSolved={() => alert("참 잘했어요")}
       />
-    </div>
+      </div>
+  </div>
   )
 }
 
