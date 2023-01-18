@@ -91,6 +91,7 @@ data.append("_id","63c7b57d4424a5f77498335a")
     
     await axios(config)
         .then(response => {
+          console.log(response.data.image)
             setimagearraydata(response.data.image)
         }).catch(error => {
             console.error(error);
@@ -340,9 +341,7 @@ data2.append("_id","63c7b57d4424a5f77498335a")
         {
         imagearraydata.map((a,i) => {
           return <li className="item" key = {'imageitem'+i}>
-          <a className="link" key = {'imagelink'+i} >
               <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
-          </a>
       </li>
         })}
         </ul>
@@ -355,10 +354,8 @@ data2.append("_id","63c7b57d4424a5f77498335a")
         {
         puzzlearraydata.map((b,i) => {
           return <li className="item" key = {'puzzleitem'+i}>
-          <a className="link" key = {'puzzlelink'+i} >
               <img className="puzzleimage" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
-          </a>
-      </li>
+            </li>
         })}
         </ul>
         </ScrollContainer>

@@ -3,6 +3,7 @@
 }
 
 .list {
+  margin-left: 20%;
   padding: 1rem 0;
   width: 100%;
   display: flex;
@@ -12,22 +13,24 @@
 }
 
 .item {
+
   padding-right: 2rem;
   list-style: none;
   user-select: none;
 }
 
 .item:first-child {
+
   padding-left: 2rem;
 }
 
 .link {
+
   display: block;
   -webkit-user-drag: none;
 }
 
 .image {
-  margin-left: 310%;
   display: block;
   width: 100px;
   height: 100px;
@@ -37,7 +40,7 @@
 }
 
 .puzzleimage {
-  margin-left: 380%;
+  margin-left: 70%;
   display: block;
   width: 100px;
   height: 100px;
