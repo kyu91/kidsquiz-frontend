@@ -294,14 +294,14 @@ data2.append("_id","63c7b57d4424a5f77498335a")
           key="pencil"
           type='button' 
           className="navBtn"
-          name='imageadd' 
+          name='pencil' 
           onClick={pencilmode}><BorderColorIcon/></Button>}
 
         {!drawmodeonoff &&<Button 
           key="erase"
           type='button' 
           className="navBtn"
-          name='imageadd' 
+          name='eraser' 
           onClick={erasemode}><Crop32Icon/></Button>}  
 
         <ImageBundle
