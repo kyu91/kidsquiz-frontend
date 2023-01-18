@@ -132,6 +132,7 @@ data2.append("_id","63c7b57d4424a5f77498335a")
       canvas.freeDrawingBrush.width = parseInt(widthvalue)
   }
   const pencilmode = () => {
+    canvas.isDrawingMode = true
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.width = parseInt(widthvalue);
     canvas.freeDrawingBrush.color = colorvalue;
@@ -338,8 +339,8 @@ data2.append("_id","63c7b57d4424a5f77498335a")
             <ul className="list">
         {
         imagearraydata.map((a,i) => {
-          return <li className="item">
-          <a className="link" key = {i+6546} >
+          return <li className="item" key = {'imageitem'+i}>
+          <a className="link" key = {'imagelink'+i} >
               <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
           </a>
       </li>
@@ -353,8 +354,8 @@ data2.append("_id","63c7b57d4424a5f77498335a")
             <ul className="list">
         {
         puzzlearraydata.map((b,i) => {
-          return <li className="item">
-          <a className="link" key = {i} >
+          return <li className="item"key = {'puzzleitem'+i}>
+          <a className="link" key = {'puzzlelink'+i} >
               <img className="image" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
           </a>
       </li>
