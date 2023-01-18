@@ -19,6 +19,8 @@ import Box from '@mui/material/Box';
 import { useState } from 'react';
 import Materials from './components/Material';
 import CreateMaterial from './components/CreateMaterial';
+import MaterialList from './components/MaterialList';
+import CreateMaterialList from './components/CreateMaterialList';
 
 //메인페이지
 import Hero from './mainComponents/Hero';
@@ -145,6 +147,23 @@ function App() {
                           </Container>}
                   </ClientSideSuspense>
                 </RoomProvider>
+                  <RoomProvider id="1234" 
+                    initialPresence={{cursor: null}}
+                    // initialStorage={{
+                    //   scientist: new LiveObject({
+                    //     firstName: "Marie",
+                    //     lastName: "Curie",
+                    //   }),
+                    // }} 
+                    >
+                    {/* 페이지 안에 감싸는거?!? */}
+                  <ClientSideSuspense fallback={<div>Loading...</div>}>
+                    {() => <Container maxWidth="xl">
+                            <LiveMain></LiveMain>
+                          </Container>}
+                  </ClientSideSuspense>
+                </RoomProvider>
+
             }/>
 
             {/* 게스트 입장 인트로 페이지 라우터 */}
@@ -184,7 +203,10 @@ function App() {
             </div>: null
             }
             {
-            value == 1 ? <div> 교구 모음집</div>: null
+            value == 1 ? <div>
+                <MaterialList/>
+
+            </div>: null
             }                 
             </Container>
             }/>    
@@ -195,6 +217,14 @@ function App() {
               </Container>
               </div>}>
               </Route>
+
+            {/* 교구모음 만드는 곳 */}
+           <Route path="/material/list" element={
+              <Container maxWidth="xl">
+                <CreateMaterialList/>
+              </Container>
+            }/>
+
 
           </Routes>
         

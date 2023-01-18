@@ -6,7 +6,8 @@ module.exports = function(app){
     createProxyMiddleware(
       {
       target: 'http://13.125.34.115:5000',
-      // target: 'http://localhost:5000', 
+      // target: 'http://localhost:3300',
+
       changeOrigin: true,
     })
   );

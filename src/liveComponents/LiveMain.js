@@ -11,6 +11,10 @@ import './css/live_style.css';
 import cursor from '../svg/mouse.svg';
 
 // ✨클릭 추가
+import { useOthers } from "../liveblocks.config";
+import { useUpdateMyPresence } from "../liveblocks.config";
+// import { useStorage } from "../liveblocks.config";
+// ✨클릭 추가
 // import { useOthers } from "../liveblocks.config";
 import { useOthers, useUpdateMyPresence } from "../liveblocks.config";
 
@@ -24,8 +28,6 @@ const LiveMain = () => {
     const updatedUrl = location.pathname.replace('/intro', '');
     //방이름 추출
     const roomName = updatedUrl.split('/')[2];
-
-
     const useNavStyle = React.useRef(null);
     //토큰이 없다면 useNavStyle요소를 숨김
     const navStyle = {
@@ -50,7 +52,8 @@ const LiveMain = () => {
         }
     }, []);
 
- // Basic cursor component
+
+    // Basic cursor component
     // 다른 사용자의 현재 상태 확인
     function Cursor({ x, y }) {
         return (
@@ -91,6 +94,7 @@ const LiveMain = () => {
             </>
     
 
+
         <Box
             className='canvarsContiner'
             
@@ -98,6 +102,11 @@ const LiveMain = () => {
                 maxWidth: '100vw',
                 maxHeight: '100vh',
             }}>
+
+            {/* <div className = "navPosition" ref={useNavStyle} style={navStyle}>
+                <LiveNav></LiveNav>
+            </div> */}
+
             <div className = "canvarsPosition">
                 <Canvas style = {{zIndex :'8'}}></Canvas>
             </div>
@@ -111,10 +120,10 @@ const LiveMain = () => {
                 <Cursor></Cursor>
             </div> */}
         </Box>
-
+        
     </div>
 
-  )
+    )
 }
 
 export default LiveMain
