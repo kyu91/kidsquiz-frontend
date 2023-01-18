@@ -21,6 +21,10 @@
     z-index: 5;
     box-shadow: 1px 1px 5px 0px #00000091;
   }
+
+  .miniImage {
+    display: flex;
+  }
   
   /* .App-logo {
     height: 40vmin;

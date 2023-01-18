@@ -75,7 +75,8 @@ const bringimageinhtmlPuzzle = (event) =>{
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
 const data = new FormData();
-data.append("_id","63c6ce283ee52629a2b63b39")
+data.append("_id","63c7b57d4424a5f77498335a")
+
 
   const bringimage = async()=>{
     const config = {
@@ -90,7 +91,6 @@ data.append("_id","63c6ce283ee52629a2b63b39")
     
     await axios(config)
         .then(response => {
-            // console.log(response.data.image);
             setimagearraydata(response.data.image)
         }).catch(error => {
             console.error(error);
@@ -100,7 +100,7 @@ data.append("_id","63c6ce283ee52629a2b63b39")
 
 
   const data2 = new FormData();
-data2.append("_id","63c6ce283ee52629a2b63b39")
+data2.append("_id","63c7b57d4424a5f77498335a")
 
   const bringpuzzleimage = async()=>{
     const config = {
