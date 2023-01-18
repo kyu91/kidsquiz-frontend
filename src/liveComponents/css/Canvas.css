@@ -3,31 +3,47 @@
 }
 
 .list {
+  margin-left: 20%;
   padding: 1rem 0;
   width: 100%;
   display: flex;
   transform: translate(0, 0);
+  position: absolute ;
+  z-index: 3;
 }
 
 .item {
+
   padding-right: 2rem;
   list-style: none;
   user-select: none;
 }
 
 .item:first-child {
+
   padding-left: 2rem;
 }
 
 .link {
+
   display: block;
   -webkit-user-drag: none;
 }
 
 .image {
   display: block;
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
+  border-radius: 15%;
+  cursor: pointer;
+  -webkit-user-drag: none;
+}
+
+.puzzleimage {
+  margin-left: 70%;
+  display: block;
+  width: 100px;
+  height: 100px;
   border-radius: 15%;
   cursor: pointer;
   -webkit-user-drag: none;
