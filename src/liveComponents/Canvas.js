@@ -127,6 +127,149 @@ data2.append("_id","63c7b57d4424a5f77498335a")
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
+
+
+// finditem
+
+
+// const finditem = (imageURL)=> {
+//   fabric.Image.fromURL(imageURL, function(Image){
+
+//     var shell = new fabric.Circle({
+//       fill:'',
+//       stroke: 'blue',
+//       strokeWidth: 5,
+//       scaleX: 2,
+//       scaleY: 2,
+//       originX: 'center',
+//       originY: 'center',
+//     });
+//     var clipPath = new fabric.Circle({
+//       absolutePositioned: true,
+//       originX: 'center',
+//       originY: 'center',
+//       scaleX: 2,
+//       scaleY: 2
+//     })
+//   });
+
+
+//   function animate(){
+//     abort = fabric.util.animate({
+//       // startValue: 0,
+//       // endValue: 360 * scalar,
+//       // duration: 1000,
+//       easing: fabric.util.ease.easeInOutSine,
+//       onChange: function (value) {
+//         shell.set('angle', value);
+//         // clipPath.set('angle', value);
+//         Image.set('dirty', true);
+//       },
+//       // onComplete: function () {
+//       //   scalar += Math.sign(scalar);
+//       //   scalar *= -1;
+//       //   animate();
+//       // }
+//     });
+//   }
+
+
+
+
+
+// }
+
+
+//     Image.scale(0.4);
+//     object = Image
+//     object.set({id: uuid()})
+//     canvas.add(object);
+//     emitAddImage({url: imageURL, id: object.id})
+//     canvas.renderAll()
+//   })
+// }
+const finditem = () => {
+  fabric.Object.prototype.transparentCorners = false;
+  var radius = 300;
+  canvas.preserveObjectStacking = true;
+
+  
+  fabric.Image.fromURL('src\images\bestTeams.jpg', function(img) {
+    var scalar = 1, abort;
+    var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
+    var shell = new fabric.Path(path, { 
+      fill: '',
+      stroke: 'blue',
+      strokeWidth: 5,
+      scaleX: 2,
+      scaleY: 2,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockSkewingX: true,
+      lockSkewingY: true,
+      originX: 'center',
+      originY: 'center',
+    })
+    var clipPath = new fabric.Path(path, {
+      absolutePositioned: true,
+      originX: 'center',
+      originY: 'center',
+      scaleX: 2,
+      scaleY: 2
+    })
+    
+    function animate() {
+      abort = fabric.util.animate({
+        startValue: 0,
+        endValue: 360 * scalar,
+        duration: 1000,
+        easing: fabric.util.ease.easeInOutSine,
+        onChange: function (value) {
+          shell.set('angle', value);
+          clipPath.set('angle', value);
+          img.set('dirty', true);
+        },
+        onComplete: function () {
+          scalar += Math.sign(scalar);
+          scalar *= -1;
+          animate();
+        }
+      });
+    }
+
+    img.scale(0.5).set({
+      left: 200,
+      top: 180,
+      clipPath: clipPath
+    });
+    shell.on('moving', ({ e, transform, pointer }) => {
+      //  only because they are absolutePositioned
+      clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
+      img.set('dirty', true);
+    });
+    shell.on('rotating', () => {
+      clipPath.set({ angle: shell.angle });
+      img.set('dirty', true);
+    });
+    shell.on('selected', () => {
+      abort();
+    });
+    shell.on('deselected', () => {
+      scalar = 1;
+      animate()
+    });
+    img.clipPath = clipPath;
+    canvas.add(img, shell);
+    canvas.setActiveObject(img);
+
+    animate();
+  });
+};
+
+
+
+///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
 
   const erasemode = () => {
@@ -322,6 +465,8 @@ data2.append("_id","63c7b57d4424a5f77498335a")
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
+
+        <button onClick={finditem} > 테스트용버튼</button>
 
       </>
        : null}
