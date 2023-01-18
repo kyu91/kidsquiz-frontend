@@ -77,8 +77,6 @@ const bringimageinhtmlPuzzle = (event) =>{
 
 const data = new FormData();
 data.append("_id","63c7b57d4424a5f77498335a")
-
-
   const bringimage = async()=>{
     const config = {
       method: 'post',
@@ -105,6 +103,7 @@ data.append("_id","63c7b57d4424a5f77498335a")
 data2.append("_id","63c7b57d4424a5f77498335a")
 
   const bringpuzzleimage = async()=>{
+    
     const config = {
       method: 'post',
       url: `/api/live/puzzle`,
