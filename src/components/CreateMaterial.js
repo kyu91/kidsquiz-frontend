@@ -275,7 +275,7 @@ export default function CreateMaterial() {
             
           </RadioGroup>
           {radio == 4 ? (
-              <div>
+              
                 <Grid
                   container
                   spacing={3}
@@ -322,34 +322,37 @@ export default function CreateMaterial() {
                     </Grid>
                   }
                 </Grid>
-              </div>
+              
             ) : null}
             {radio == 3 ? (
-              <div>
-                <br />
-                <p>
+              
                   <Grid
                     container
-                    spacing={3}
+                    spacing={0}
                     component="form"
                     encType="multipart/form-data"
                     onSubmit={handleSubmit}
                   >
+                    <Typography variant="h5" mt={2}>
+                      퍼즐 제목*
+                    </Typography>
                     <TextField
                       required
                       id="title"
                       name="title"
-                      label="Title"
+                      label="퍼즐제목을 입력해주세요."
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
                     {/* 퍼즐 이미지 업로드 */}
                     <Grid item xs={12}>
-                      <Stack direction="row" alignItems="center">
-                        <Typography variant="p" mt={2}>
-                          {files.name ? files.name : "퍼즐로 만들고 싶은 이미지를 업로드해주세요."}
-                        </Typography>
+                      
+                      <Typography variant="h5" mt={2}>
+                        퍼즐 이미지 업로드
+                      </Typography>
+                      <Stack direction="row" alignItems="center" style={{ marginBottom: '1em'  }}>
                         <Button variant="contained" component="label">
                           Upload File
                           <input
@@ -361,36 +364,43 @@ export default function CreateMaterial() {
                             onChange={handleChangeFile}
                           />
                         </Button>
+                        <Typography variant="h6" mt={2} style={{color: '#c0c0c0', marginLeft: '1em'}}>
+                        {files.name ? files.name : "퀴즈로 사용할 이미지 두 개를 업로드해주세요."}
+                      </Typography>
                       </Stack>
                     </Grid>
 
                     {
                       <Grid item xs={12}>
                         <Stack spacing={2} direction="row">
-                          <Button variant="outlined" href="/material">
-                            취소
-                          </Button>
-                          <Button
-                            //href='/material'
-                            variant="contained"
-                            type="submit"
-                            fullWidth
-                            sx={{ mt: 3, mb: 2 }}
-                          >
-                            등록
-                          </Button>
+                        <Button 
+                          variant="outlined" 
+                          href="/material"
+                          type='submit'
+                          fullWidth
+                          style={{fontSize: '1.2rem'}}>
+                          취소
+                        </Button>
+                        <Button
+                          //href='/material'
+                          variant="contained" 
+                          type='submit'
+                          fullWidth
+                          style={{fontSize: '1.2rem'}}
+                        >
+                          등록
+                        </Button>
                         </Stack>
                       </Grid>
                     }
                   </Grid>
-                  {/* </Grid> */}
-                </p>{" "}
-              </div>
+                 
+               
             ) : null}
+
+            {/* 그림퀴즈 */}
             {radio == 2 ? (
-              <div>
-                <br />
-                <p>
+              
                   <Grid
                     container
                     spacing={0}
@@ -399,97 +409,122 @@ export default function CreateMaterial() {
                     encType="multipart/form-data"
                     onSubmit={handleSubmitImg}
                   >
+
+                    <Typography variant="h5" mt={2}>
+                      문제*
+                    </Typography>
                     <TextField
                       required
                       id="question"
                       name="question"
-                      label="Question"
+                      label="문제를 입력해주세요."
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
 
-                    <div />
-
+                    <Typography variant="h5" mt={2}>
+                      첫번째 이미지 제목*
+                    </Typography>
                     <TextField
                       // required
                       id="image"
                       name="image"
-                      label="image"
+                      label="첫번째 이미지 제목을 입력해주세요."
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
-
+        
+                    <Typography variant="h5" mt={2}>
+                      두번째 이미지 제목*
+                    </Typography>
                     <TextField
                       // style={{display:'none'}}
                       //   required
                       id="image"
                       name="image"
-                      label="image"
+                      label="두번째 이미지 제목을 입력해주세요."
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
 
+                    <Typography variant="h5" mt={2}>
+                      정답*
+                    </Typography>
                     <TextField
                       required
                       id="answer"
                       name="answer"
-                      label="answer"
+                      label="숫자로만 입력 하시오. (1 or 2)"
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
 
-                    {/*이미지 업로드*/}
+                  {/*이미지 업로드*/}
+                  <Grid item xs={12}>   
+                    <Typography variant="h5" mt={2}>
+                      섬네일 이미지 업로드
+                    </Typography>
+                    <Stack direction="row" alignItems="center">
+                    <Button 
+                      variant="contained" 
+                      component="label"
+                      style={{fontSize: '1rem', marginRight: "1em"}}>
+                      Upload File
+                      <input
+                        hidden
+                        accept="image/*"
+                        multiple
+                        name="image"
+                        type="file"
+                        ref={inputRef}
+                        onChange={handleChangeFile2}
+                      />
+                      </Button>
+                      <Typography variant="h6" mt={2} style={{color: '#c0c0c0', marginLeft: '1em'}}>
+                        {files.name ? files.name : "퀴즈로 사용할 이미지 두 개를 업로드해주세요."}
+                      </Typography>
+                    </Stack>
+                  </Grid>
                     <Grid item xs={12}>
-                      <Stack direction="row" alignItems="center">
-                        <Typography variant="p" mt={3}>
-                          {files.name ? files.name : "퀴즈로 사용할 이미지 두 개를 업로드해주세요."}
-                        </Typography>
-                        <Button variant="contained" component="label">
-                          Upload File
-                          <input
-                            hidden
-                            accept="image/*"
-                            multiple
-                            name="image"
-                            type="file"
-                            ref={inputRef}
-                            onChange={handleChangeFile2}
-                          />
+                      <Stack spacing={2} direction="row">
+                        <Button 
+                          variant="outlined" 
+                          href="/material"
+                          type='submit'
+                          fullWidth
+                          style={{fontSize: '1.2rem'}}>
+                          취소
+                        </Button>
+                        <Button
+                          //href='/material'
+                          variant="contained" 
+                          type='submit'
+                          fullWidth
+                          style={{fontSize: '1.2rem'}}
+                        >
+                          등록
                         </Button>
                       </Stack>
-
-                      {
-                        <Grid item xs={12}>
-                          <Stack spacing={2} direction="row">
-                            <Button variant="outlined" href="/material">
-                              취소
-                            </Button>
-                            <Button
-                              //href='/material'
-                              variant="contained"
-                              type="submit"
-                              fullWidth
-                              sx={{ mt: 3, mb: 2 }}
-                            >
-                              등록
-                            </Button>
-                          </Stack>
-                        </Grid>
-                      }
+                    
                     </Grid>
                   </Grid>
-                </p>{" "}
-              </div>
+               
             ) : null}
+
+            {/* 글자퀴즈 */}
             {radio == 1 ? (
               
                   <Grid
                     container
-                    spacing={1}
+                    spacing={0}
                     component="form"
                     encType="multipart/form-data"
                     onSubmit={handleSubmitTextQuiz}
@@ -505,10 +540,9 @@ export default function CreateMaterial() {
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
                     
-                    <div />
-
                     <Typography variant="h5" mt={2}>
                       첫번째 선택지*
                     </Typography>
@@ -520,6 +554,7 @@ export default function CreateMaterial() {
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
                     
                     <Typography variant="h5" mt={2}>
@@ -533,6 +568,7 @@ export default function CreateMaterial() {
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
                     
                     <Typography variant="h5" mt={2}>
@@ -546,6 +582,7 @@ export default function CreateMaterial() {
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
+                      style={{ marginBottom: '2rem' } }
                     />
 
                     <Grid item xs={12}>

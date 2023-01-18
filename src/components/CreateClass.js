@@ -308,7 +308,6 @@ export default function CreateClass() {
               type='submit'
               fullWidth
               style={{fontSize: '1.2rem'}}
-              // sx={{ mt: 3, mb: 2 }}
             >취소</Button>
             <Button 
               // href='/class'
@@ -316,7 +315,6 @@ export default function CreateClass() {
               type='submit'
               fullWidth
               style={{fontSize: '1.2rem'}}
-              // sx={{ mt: 3, mb: 2 }}
             >등록</Button>
           </Stack>
         </Grid>
