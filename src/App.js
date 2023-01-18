@@ -19,6 +19,8 @@ import Box from '@mui/material/Box';
 import { useState } from 'react';
 import Materials from './components/Material';
 import CreateMaterial from './components/CreateMaterial';
+import MaterialList from './components/MaterialList';
+import CreateMaterialList from './components/CreateMaterialList';
 
 //메인페이지
 import Hero from './mainComponents/Hero';
@@ -165,7 +167,10 @@ function App() {
             </div>: null
             }
             {
-            value == 1 ? <div> 교구 모음집</div>: null
+            value == 1 ? <div>
+                <MaterialList/>
+
+            </div>: null
             }                 
             </Container>
             }/>    
@@ -176,6 +181,14 @@ function App() {
               </Container>
               </div>}>
               </Route>
+
+            {/* 교구모음 만드는 곳 */}
+           <Route path="/material/list" element={
+              <Container maxWidth="xl">
+                <CreateMaterialList/>
+              </Container>
+            }/>
+
 
           </Routes>
         
