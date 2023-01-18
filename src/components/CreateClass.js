@@ -96,6 +96,7 @@ export default function CreateClass() {
 
     //서브밋
     const onhandlePost = async(data)=>{
+      console.log('33333333',data);
       const config = {
         method: 'post',
         url: `/api/class/new`,
@@ -117,8 +118,6 @@ export default function CreateClass() {
       );
     };
 
-    
-
     const handleSubmit = (event) => {
       event.preventDefault();
       const data = new FormData();
@@ -126,7 +125,7 @@ export default function CreateClass() {
       data.append('startDateTime',formattedDate );
       data.append('classKey',password );
       if (materialList[materials]){
-        data.append('classMaterial',materialList[materials]['id']);
+        data.append('classMaterial',materialList[materials]._id);
         // console.log(materiallistId);
       }else{
         data.append('classMaterial',null);
