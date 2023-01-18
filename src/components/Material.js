@@ -77,7 +77,6 @@ export default function Materials() {
             width: '35em',
             height: 200,
             float: "left",
-          
           }}
           style={{textAlign: 'center'}}
         >
@@ -94,7 +93,7 @@ export default function Materials() {
         {
           Puzzles.map((Puzzle, index) => {
             return (
-              <Paper elevation={3} key={index} 
+              <Paper elevation={3} key={'paper'+index} 
                 sx={{
                   m: 1,
                   width: '35em',
@@ -126,7 +125,7 @@ export default function Materials() {
           MultipleChoices.map((MultipleChoice, index) => {
             console.log(MultipleChoice);
             return (
-              <Paper elevation={3} key={index} 
+              <Paper elevation={3} key={'MultipleChoice'+ index} 
                 sx={{
                   m: 1,
                   width: '35em',
@@ -156,7 +155,7 @@ export default function Materials() {
             console.log(Image);
 
             return (
-              <Paper elevation={3} key={index} 
+              <Paper elevation={3} key={'justImages'+ index} 
                 sx={{
                   m: 1,
                   width: '35em',

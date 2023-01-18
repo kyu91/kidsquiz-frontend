@@ -46,7 +46,8 @@ import './index.css'
 import Header from './mainComponents/Header';
 
 function App() {
-    const [value, setValue] = useState(1);
+
+    const [value, setValue] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
