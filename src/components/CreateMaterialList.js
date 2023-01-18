@@ -1,5 +1,4 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
 import "dayjs/locale/fr";
 import "dayjs/locale/ru";
 import "dayjs/locale/de";
@@ -8,15 +7,13 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { useLocation} from 'react-router-dom';
 import { useState } from "react";
-import Puzzle from "../liveComponents/Puzzle";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
 import {Stack} from "@mui/material";
-import { FlipRounded } from "@material-ui/icons";
+
 
 
 export default function CreateMaterialList() {

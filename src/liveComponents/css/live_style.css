@@ -87,7 +87,7 @@ video{
 .controllers button {
     padding: 4px 6px 1px 7px;
     margin: 5px 4px;
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 190, 0, 0.3);
     border-radius: 20px;
     border: none
 }
