@@ -79,7 +79,6 @@ export default function Boards() {
   const onClickHandlerHostBool = async(e) => {
     console.log("✅ 호스트 체크 합시다")
     if (hostToken) {
-        console.log('겟 하기 전', e._id);
         setRoomName(e._id);
         await getHost(hostToken, e._id);
     }
@@ -89,6 +88,7 @@ export default function Boards() {
     window.open(`/live/${e._id}`);
   };
 
+  //!메인 리턴
   return (
     <Box
       sx={{
@@ -118,12 +118,12 @@ export default function Boards() {
       {boards.map((board, index) => {
         return (
           <Paper elevation={3} key={index}
-          sx={{
-            m: 1,
-            width: '35em',
-            height: 200,
-            float: "left",
-          }}>
+            sx={{
+              m: 1,
+              width: '35em',
+              height: 200,
+              float: "left",
+            }}>
             <Paper
               variant="outlined"
               component="img"

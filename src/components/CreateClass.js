@@ -30,7 +30,6 @@ import axios from 'axios';
 export default function CreateClass() {
     //날짜
     let today = new Date()
-    console.log(today)
     // const [datePickerValue, setDatePickerValue] = React.useState(dayjs('2021-01-01'));
     const [datePickerValue, setDatePickerValue] = React.useState(dayjs(today));
     const [timePickerValue, setTimePickerValue] = React.useState(dayjs('2021-01-01'));
@@ -69,10 +68,8 @@ export default function CreateClass() {
     };
 
     //교구선택 데이터 get
-    const materialChoice = React.useRef();
     const [materialList, setMaterialList] = React.useState([]); //데이터 받아오기
-    const [materiallistId, setMaterialListId] = React.useState([]); //데이터 받아오기
-   
+
     const getMaterialList = async () => {
       const config = {
         method: 'get',
@@ -84,16 +81,13 @@ export default function CreateClass() {
       };
       await axios(config)
           .then(response => {
-            setMaterialList(response.data.ClassMaterial);
-            setMaterialListId(response.data.ClassMaterial);
+            setMaterialList(response.data.classMaterial);
           }).catch(error => {
             console.error(error);
           }
           );
         };
-        
-    // const onhandleMaterialList = () => {
-    // };
+
     React.useEffect(() => {
       getMaterialList();
     }, []);
@@ -102,6 +96,7 @@ export default function CreateClass() {
 
     //서브밋
     const onhandlePost = async(data)=>{
+      console.log('33333333',data);
       const config = {
         method: 'post',
         url: `/api/class/new`,
@@ -116,14 +111,12 @@ export default function CreateClass() {
           .then(response => {
               alert('강의가 생성되었습니다.');
               window.location.href = '/class';
-              console.log(response);
+              
           }).catch(error => {
               console.error(error);
           }
       );
     };
-
-    
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -131,8 +124,8 @@ export default function CreateClass() {
       data.append('title', event.target.title.value);
       data.append('startDateTime',formattedDate );
       data.append('classKey',password );
-      if (materiallistId[materials]){
-        data.append('classMaterial',materiallistId[materials]['id']);
+      if (materialList[materials]){
+        data.append('classMaterial',materialList[materials]._id);
         // console.log(materiallistId);
       }else{
         data.append('classMaterial',null);
@@ -267,18 +260,16 @@ export default function CreateClass() {
                 // onClick={onhandleMaterialList}
                 onChange={handleChangeMaterial}
               >
-
                 {
                   materialList.map((material, index) => {
                     return (
                       <MenuItem 
                         key = {index} 
-                        ref={materialChoice} 
-                        value={index}>{material.title}
+                        value={index}>
+                          {material.title}
                       </MenuItem>
                     )
-                  }
-                  )
+                  })
                 }
               </Select>
             </FormControl>
@@ -316,7 +307,6 @@ export default function CreateClass() {
               type='submit'
               fullWidth
               style={{fontSize: '1.2rem'}}
-              // sx={{ mt: 3, mb: 2 }}
             >취소</Button>
             <Button 
               // href='/class'
@@ -324,7 +314,6 @@ export default function CreateClass() {
               type='submit'
               fullWidth
               style={{fontSize: '1.2rem'}}
-              // sx={{ mt: 3, mb: 2 }}
             >등록</Button>
           </Stack>
         </Grid>

@@ -41,6 +41,7 @@ function Canvas() {
   const [imagearraydata,setimagearraydata] = useState([])
   const [puzzlearraydata,setpuzzlearraydata] = useState([])
   const [puzzleurl, setpuzzleurl] = useState('')
+  const hostBool = localStorage.getItem('hostBool');
   
 
   //석규 도형 묶음 on/off 상태값
@@ -75,8 +76,7 @@ const bringimageinhtmlPuzzle = (event) =>{
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
 const data = new FormData();
-data.append("_id","63c6ce283ee52629a2b63b39")
-
+data.append("_id","63c7b57d4424a5f77498335a")
   const bringimage = async()=>{
     const config = {
       method: 'post',
@@ -90,7 +90,7 @@ data.append("_id","63c6ce283ee52629a2b63b39")
     
     await axios(config)
         .then(response => {
-            // console.log(response.data.image);
+          console.log(response.data.image)
             setimagearraydata(response.data.image)
         }).catch(error => {
             console.error(error);
@@ -100,9 +100,10 @@ data.append("_id","63c6ce283ee52629a2b63b39")
 
 
   const data2 = new FormData();
-data2.append("_id","63c6ce283ee52629a2b63b39")
+data2.append("_id","63c7b57d4424a5f77498335a")
 
   const bringpuzzleimage = async()=>{
+    
     const config = {
       method: 'post',
       url: `/api/live/puzzle`,
@@ -125,6 +126,149 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
 
+///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
+
+
+// finditem
+
+
+// const finditem = (imageURL)=> {
+//   fabric.Image.fromURL(imageURL, function(Image){
+
+//     var shell = new fabric.Circle({
+//       fill:'',
+//       stroke: 'blue',
+//       strokeWidth: 5,
+//       scaleX: 2,
+//       scaleY: 2,
+//       originX: 'center',
+//       originY: 'center',
+//     });
+//     var clipPath = new fabric.Circle({
+//       absolutePositioned: true,
+//       originX: 'center',
+//       originY: 'center',
+//       scaleX: 2,
+//       scaleY: 2
+//     })
+//   });
+
+
+//   function animate(){
+//     abort = fabric.util.animate({
+//       // startValue: 0,
+//       // endValue: 360 * scalar,
+//       // duration: 1000,
+//       easing: fabric.util.ease.easeInOutSine,
+//       onChange: function (value) {
+//         shell.set('angle', value);
+//         // clipPath.set('angle', value);
+//         Image.set('dirty', true);
+//       },
+//       // onComplete: function () {
+//       //   scalar += Math.sign(scalar);
+//       //   scalar *= -1;
+//       //   animate();
+//       // }
+//     });
+//   }
+
+
+
+
+
+// }
+
+
+//     Image.scale(0.4);
+//     object = Image
+//     object.set({id: uuid()})
+//     canvas.add(object);
+//     emitAddImage({url: imageURL, id: object.id})
+//     canvas.renderAll()
+//   })
+// }
+const finditem = () => {
+  fabric.Object.prototype.transparentCorners = false;
+  var radius = 300;
+  canvas.preserveObjectStacking = true;
+
+  
+  fabric.Image.fromURL('src\images\bestTeams.jpg', function(img) {
+    var scalar = 1, abort;
+    var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
+    var shell = new fabric.Path(path, { 
+      fill: '',
+      stroke: 'blue',
+      strokeWidth: 5,
+      scaleX: 2,
+      scaleY: 2,
+      lockScalingX: true,
+      lockScalingY: true,
+      lockSkewingX: true,
+      lockSkewingY: true,
+      originX: 'center',
+      originY: 'center',
+    })
+    var clipPath = new fabric.Path(path, {
+      absolutePositioned: true,
+      originX: 'center',
+      originY: 'center',
+      scaleX: 2,
+      scaleY: 2
+    })
+    
+    function animate() {
+      abort = fabric.util.animate({
+        startValue: 0,
+        endValue: 360 * scalar,
+        duration: 1000,
+        easing: fabric.util.ease.easeInOutSine,
+        onChange: function (value) {
+          shell.set('angle', value);
+          clipPath.set('angle', value);
+          img.set('dirty', true);
+        },
+        onComplete: function () {
+          scalar += Math.sign(scalar);
+          scalar *= -1;
+          animate();
+        }
+      });
+    }
+
+    img.scale(0.5).set({
+      left: 200,
+      top: 180,
+      clipPath: clipPath
+    });
+    shell.on('moving', ({ e, transform, pointer }) => {
+      //  only because they are absolutePositioned
+      clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
+      img.set('dirty', true);
+    });
+    shell.on('rotating', () => {
+      clipPath.set({ angle: shell.angle });
+      img.set('dirty', true);
+    });
+    shell.on('selected', () => {
+      abort();
+    });
+    shell.on('deselected', () => {
+      scalar = 1;
+      animate()
+    });
+    img.clipPath = clipPath;
+    canvas.add(img, shell);
+    canvas.setActiveObject(img);
+
+    animate();
+  });
+};
+
+
+
+///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
 
   const erasemode = () => {
@@ -132,6 +276,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
       canvas.freeDrawingBrush.width = parseInt(widthvalue)
   }
   const pencilmode = () => {
+    canvas.isDrawingMode = true
     canvas.freeDrawingBrush = new fabric.PencilBrush(canvas);
     canvas.freeDrawingBrush.width = parseInt(widthvalue);
     canvas.freeDrawingBrush.color = colorvalue;
@@ -150,7 +295,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
      new fabric.Canvas('canv', {
        isDrawingMode: false,
        height: 1920,
-       width: 1080,
+       width: 4000,
      })
 
 
@@ -243,6 +388,8 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
         ></DrawToggle>
 
         {/* 리셋 */}
+        {hostBool ?
+        <>
         <NewCanvas
           canvas={canvas}
           emitClear={emitClear}
@@ -277,11 +424,11 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
                 // uuid = {uuid}
               ></Figures> */}
         
-        <PuzzleBundle
+        {/* <PuzzleBundle
           showimagePuzzle={showimagePuzzle}
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
-        >퍼즐</PuzzleBundle>
+        >퍼즐</PuzzleBundle> */}
 
         <Chilgyo
           drawmodeonoff={drawmodeonoff}
@@ -293,29 +440,36 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           key="pencil"
           type='button' 
           className="navBtn"
-          name='imageadd' 
+          name='pencil' 
           onClick={pencilmode}><BorderColorIcon/></Button>}
 
         {!drawmodeonoff &&<Button 
           key="erase"
           type='button' 
           className="navBtn"
-          name='imageadd' 
+          name='eraser' 
           onClick={erasemode}><Crop32Icon/></Button>}  
 
         <ImageBundle
-          showimage={showimage}
+          showimage = {showimage}
           setShowimage={setShowimage}
+          showimagePuzzle={showimagePuzzle}
+          setShowimagePuzzle={setShowimagePuzzle}
         ></ImageBundle>
 
         <PuzzleBundle
+          showimage = {showimage}
+          setShowimage={setShowimage}
           showimagePuzzle={showimagePuzzle}
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
-    
-       
 
+        <button onClick={finditem} > 테스트용버튼</button>
+
+      </>
+       : null}
+       
         <input 
           key="color"
           type='color' 
@@ -323,9 +477,6 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           onChange={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
-
-      
-
 
       {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
@@ -338,10 +489,8 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
             <ul className="list">
         {
         imagearraydata.map((a,i) => {
-          return <li className="item">
-          <a className="link" key = {i+6546} >
+          return <li className="item" key = {'imageitem'+i}>
               <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
-          </a>
       </li>
         })}
         </ul>
@@ -353,11 +502,9 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
             <ul className="list">
         {
         puzzlearraydata.map((b,i) => {
-          return <li className="item">
-          <a className="link" key = {i} >
-              <img className="image" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
-          </a>
-      </li>
+          return <li className="item" key = {'puzzleitem'+i}>
+              <img className="puzzleimage" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
+            </li>
         })}
         </ul>
         </ScrollContainer>

@@ -46,7 +46,8 @@ import './index.css'
 import Header from './mainComponents/Header';
 
 function App() {
-    const [value, setValue] = useState(0);
+
+    const [value, setValue] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -131,22 +132,22 @@ function App() {
 
             {/* 라이브 페이지 라우터 */}
             <Route path="/live/:id" element={
-                  <RoomProvider id="1234" 
-                    initialPresence={{cursor: null}}
-                    // initialStorage={{
-                    //   scientist: new LiveObject({
-                    //     firstName: "Marie",
-                    //     lastName: "Curie",
-                    //   }),
-                    // }} 
-                    >
-                    {/* 페이지 안에 감싸는거?!? */}
-                  <ClientSideSuspense fallback={<div>Loading...</div>}>
-                    {() => <Container maxWidth="xl">
-                            <LiveMain></LiveMain>
-                          </Container>}
-                  </ClientSideSuspense>
-                </RoomProvider>
+              <RoomProvider id="1234" 
+                initialPresence={{cursor: null}}
+                // initialStorage={{
+                //   scientist: new LiveObject({
+                //     firstName: "Marie",
+                //     lastName: "Curie",
+                //   }),
+                // }} 
+                >
+                {/* 페이지 안에 감싸는거?!? */}
+              <ClientSideSuspense fallback={<div>Loading...</div>}>
+                {
+                  () => <LiveMain></LiveMain>
+                }
+              </ClientSideSuspense>
+            </RoomProvider>
 
             }/>
 
@@ -166,25 +167,32 @@ function App() {
           
             {/* 교구생성 기본페이지 */}
             <Route path="/material" element={
-              <Container maxWidth="xl">
-                <ResponsiveAppBar></ResponsiveAppBar>
+              <Container maxWidth="lg"
+              style={{
+                margin: '0 auto',
+              }}>
+              <ResponsiveAppBar></ResponsiveAppBar>
                                               
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              textColor="secondary"
-              indicatorColor="secondary"
-              aria-label="secondary tabs example"
-            >
-              <Tab value="0" label="교구생성" />
-              <Tab value="1" label="교구관리" />
-            </Tabs>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                textColor="secondary"
+                indicatorColor="secondary"
+                aria-label="secondary tabs example"
+              >
+                <Tab value="0" label="교구관리" 
+                  style={{ fontSize: "2em" }}
+                />
+                <Tab value="1" label="교구모음관리" 
+                  style={{ fontSize: "2em" }}
+                />
+              </Tabs>
 
 
             {
-            value == 0 ? <div>
-              <Materials/>
-            </div>: null
+              value == 0 ? <div>
+                <Materials/>
+              </div>: null
             }
             {
             value == 1 ? <div>
@@ -192,19 +200,26 @@ function App() {
 
             </div>: null
             }                 
-            </Container>
+             <Footer />
+                </Container>
             }/>    
-            {/* 교구공장 */}
+
+            {/* 교구생성 */}
             <Route path="/material/new" element={
-            <div><Container>
-              <CreateMaterial/>
-              </Container>
-              </div>}>
-              </Route>
+              <Container maxWidth="lg"
+                style={{
+                  margin: '0 auto',
+                }}>
+              <ResponsiveAppBar></ResponsiveAppBar>
+                <CreateMaterial/>
+              <Footer />
+            </Container> 
+            }/>
 
             {/* 교구모음 만드는 곳 */}
            <Route path="/material/list" element={
               <Container maxWidth="xl">
+                <ResponsiveAppBar></ResponsiveAppBar>
                 <CreateMaterialList/>
               </Container>
             }/>

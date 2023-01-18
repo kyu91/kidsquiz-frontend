@@ -2,6 +2,7 @@ import { io } from "socket.io-client";
 import socket from "../liveComponents/socketExport";
 import * as mediasoupClient from "mediasoup-client";
 
+
 // console.log("미디어숲 socket", socket)
 
 //익스포트 함수
@@ -58,7 +59,7 @@ const MediasoupController = () => {
     } else {
       hostBool = false;
     }
-    console.log("userName", userName, "hostBool", hostBool);
+    // console.log("userName", userName, "hostBool", hostBool);
 
     //석규추가
     const hostNameLine = document.getElementById("localUserName");
@@ -76,8 +77,11 @@ const MediasoupController = () => {
     let videoProducer;
     const videoContainer = document.getElementById("videoContainer");
 
+
+    
     //! 1.가장 먼저 실행되는 함수 ( io()로 서버에 소켓 연결이 되면 서버의 emit에 의해 가장 먼저 호출된다. )
     socket.on("connection-success", ({ socketId }) => {
+      console.log("🚀🚀🚀🚀🚀 내 소켓 아이디", socket.id)
       getLocalStream();
     });
 
@@ -111,6 +115,7 @@ const MediasoupController = () => {
     // 성공적으로 미디어를 가져온 경우에 실행됨
     //!3. 2번에서 성공적으로 미디어를 가져오면 실행되는 함수
     const streamSuccess = (stream) => {
+
       //id가 hostMe인 태그를 가져온다.
       const hostMe = document.getElementById("hostMe"); //추가한거
       const guestMeWrap = document.getElementById("guestMeWrap"); //추가한거
@@ -150,17 +155,18 @@ const MediasoupController = () => {
 
       if (hostBool) {
         hostMe.srcObject = stream;
-        guestMeWrap.setAttribute("visibility", "none");
-        guestMeWrap.style.display = "none";
-        hostName.innerText = `${userName} 선생님`;
 
+        // 기존의 게스트 창은 안쓴 거니까 visibility none으로 처리 
+        guestMeWrap.setAttribute("visibility", "none");
+        guestMeWrap.style.display = "none"; 
+
+        hostName.innerText = `${userName} 선생님`;
         const mute = document.getElementById("hostMemute"); //추가한거
         const camera = document.getElementById("hostMecamera"); //추가한거
         mute.addEventListener("click", myAudioController)
         camera.addEventListener("click", myVideoController)
                  
       } else {
-        console.log("게스트라면 로그", hostBool);
         guestMe.srcObject = stream;
 
         const mute = document.getElementById("guestMemute"); //추가한거
@@ -178,7 +184,7 @@ const MediasoupController = () => {
     //! 4. 3번에서 유저 미디어를 잘 받아서 비디오로 송출한 후에 호출되는 함수. 이 함수를 통해 실제 room에 조인하게 된다.
     const joinRoom = () => {
       socket.emit("joinRoom", roomName, userName, hostBool, (data) => {
-        console.log(`Router RTP Capabilities... ${data.rtpCapabilities}`);
+        // console.log(`Router RTP Capabilities... ${data.rtpCapabilities}`);
         // we assign to local variable and will be used when loading the client Device (see createDevice above)
         rtpCapabilities = data.rtpCapabilities;
         // once we have rtpCapabilities from the Router, create Device
@@ -236,6 +242,7 @@ const MediasoupController = () => {
 
           // this event is raised when a first call to transport.produce() is made
           // see connectSendTransport() below
+          //!! producer client가 SEND Trnasport(LP)의 메서드 produce 메서드를 호출하면 connect 이벤트와 produce 이벤트가 발생됨 
           producerTransport.on(
             "connect",
             async ({ dtlsParameters }, callback, errback) => {
@@ -254,11 +261,12 @@ const MediasoupController = () => {
               }
             }
           );
-
+          // producer client가 SEND Trnasport(LP)의 메서드 produce 메서드를 호출하면 connect 이벤트와 produce 이벤트가 발생됨 
           producerTransport.on(
             "produce",
             async (parameters, callback, errback) => {
               // console.log(parameters)
+              // console.log("produce 이벤트가 발생하였습니다!", parameters)
 
               try {
                 // tell the server to create a Producer
@@ -271,6 +279,7 @@ const MediasoupController = () => {
                     kind: parameters.kind,
                     rtpParameters: parameters.rtpParameters,
                     appData: parameters.appData,
+                    mysocket: socket.id
                   },
                   ({ id, producersExist }) => {
                     // Tell the transport that parameters were transmitted and provide it with the
@@ -298,7 +307,6 @@ const MediasoupController = () => {
       // to send media to the Router
 
       // this action will trigger the 'connect' and 'produce' events above
-
       audioProducer = await producerTransport.produce(audioParams);
       videoProducer = await producerTransport.produce(videoParams);
 
@@ -329,10 +337,10 @@ const MediasoupController = () => {
 
     //! 8 6번에서 방에 입장했을 때 이미 다른 참여자들이 있는 경우 실행됨
     const getProducers = () => {
-      socket.emit("getProducers", (producerIds) => {
+      
+      socket.emit("getProducers", (producerList) => {
         // for each of the producer create a consumer
-        producerIds.forEach((id) => {
-          console.log("내소캣, 서버에서 준거", socket.id, id[2]);
+        producerList.forEach((id) => {
           signalNewConsumerTransport(id[0], id[1], id[2], id[3]);
         });
 
@@ -350,7 +358,6 @@ const MediasoupController = () => {
       //check if we are already consuming the remoteProducerId
       if (consumingTransports.includes(remoteProducerId)) return;
       consumingTransports.push(remoteProducerId);
-      console.log("🚀🚀🚀🚀", isNewSocketHost);
 
       await socket.emit(
         "createWebRtcTransport",
@@ -472,7 +479,7 @@ const MediasoupController = () => {
 
         // destructure and retrieve the video track from the producer
         const { track } = consumer
-        console.log("새 소켓은 선생님인가!!", isNewSocketHost)
+        console.log("새 소켓은 host인가? ", isNewSocketHost)
         
         // console.log("cameraBtn!!", cameraBtn)
 
@@ -481,64 +488,78 @@ const MediasoupController = () => {
             // 선생님에게 들어가야해
             const hostMe = document.getElementById("hostMe"); //추가한거
             const hostName = document.getElementById("hostName"); //추가한거
-            hostMe.srcObject = new MediaStream([track]);
+            const hostMeAudio = document.getElementById("hostMeAudio"); //추가한거
+            if (track.kind === "audio") {
+              hostMeAudio.srcObject = new MediaStream([track]);
+            }
+            else {
+              hostMe.srcObject = new MediaStream([track]);
+            }
             hostName.innerText = `${socketName} 선생님`;
           }
           //! 그렇지 않은 경우 학생 요소로 넣어주기!
           else {
-            // const videoTrack = newSocketId.getVideoTracks()[0]
-            
-
             // create a new div element for the new consumer media
-            const wrapper = document.createElement("div"); //상위 div
-            const newElem = document.createElement("div"); // 비디오, 오디오 화면
-            wrapper.setAttribute("id", `td-${remoteProducerId}`);
-            newElem.setAttribute("class", "micAndVid");
+            // console.log("params.kind 는 ", params.kind, "remoteProducerId는 ", remoteProducerId)
+
             if (params.kind === "audio") {
-              //append to the audio container
-              wrapper.innerHTML =
-                '<audio id="' + remoteProducerId + '" autoplay></audio>';
+              //! 항상 오디오 요청이 먼저 들어옴. 따라서 모든 새 태그는 오디오일 때만 만들고, 비디오일때는 오디오에서 생성한 것을 찾아서 사용한다. 
+              const wrapper = document.createElement("div"); //상위 div (이 안에 오디오, 비디오, micAndVid div 까지 들어가게 될 것)
+              wrapper.setAttribute("id", `td-${remoteProducerId}`);
+              wrapper.setAttribute("class", newSocketId);
+            
+              const audio = document.createElement("audio") //! 오디오 태그 생성하고, 속성 설정한 후 srcObject에 스트림 넣어준다
+              // const video = document.createElement("video") //???
+              // video.srcObject = new MediaStream([track]) //???
+
+              // audio.setAttribute("id", remoteProducerId) //? 굳이 필요 없을듯???
+              audio.setAttribute("autoplay", "true")
+              wrapper.appendChild(audio)
+              
+              audio.srcObject = new MediaStream([track])
+              videoContainer.appendChild(wrapper)
+
+              // wrapper.innerHTML =
+              //   '<audio id="' + remoteProducerId + '" autoplay></audio>';
             } else {
-              //append to the video container
-              wrapper.innerHTML =
-                '<video id="' +
-                remoteProducerId +
-                '" autoplay class="video" ></video> <div class="controllers"><div class="micAndVid"><p class="guestNameDisplay">"' +
-                socketName +
-                '"</p>  <button id="' +
-                newSocketId +
-                '-mute" class="off"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg></button> <button id="' +
-                newSocketId +
-                '-camera" class="off"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg></button></div></div>';
-            }
-            wrapper.appendChild(newElem)
-            videoContainer.appendChild(wrapper)
+              const existingWrapper = document.getElementsByClassName(newSocketId)[0]
+              const video = document.createElement("video")
+              // const video = existingWrapper.getElementsByTagName("video") //???
+              
+              video.setAttribute("id", remoteProducerId) 
+              video.setAttribute("autoplay", "true")
+              existingWrapper.appendChild(video)
+              video.srcObject = new MediaStream([track])
+
+              const newElem = document.createElement("div"); // 비디오, 오디오 화면
+              newElem.setAttribute("class", "controllers")
+              newElem.innerHTML =
+              '<div class="micAndVid"> <p class="guestNameDisplay">"' +  socketName +
+               '"</p> <button id="' + newSocketId + '-mute" class="off"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg></button><button id="' 
+               + newSocketId + '-camera" class="off"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg></button></div></div> '
+               existingWrapper.appendChild(newElem)
+            // }
+
+            // document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
             
             //!버튼 이벤트리스너
-            let cameraBtn = document.getElementById(newSocketId+'-camera')
+            
             let muteBtn = document.getElementById(newSocketId+'-mute')
-            console.dir(cameraBtn.className)
-            console.dir(muteBtn.className)
-            // cameraBtn.setAttribute("class", "off")
-            // muteBtn.setAttribute("class", "off")
+            let cameraBtn = document.getElementById(newSocketId+'-camera')
             
             if (cameraBtn){
                 cameraBtn.addEventListener('click', async (e) => {
-                  console.log("콜백 함수 내", this)
                   let camCheck = cameraBtn.className
                   if (camCheck === 'off') {
                       cameraBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg>`
                       cameraBtn.setAttribute("class", "on")
-                      //e.srcElement.id 뒤에 camera 택스트 제거
-                      console.log(e.target,"에게 socket event video-out 예정 ")
-                      let tempSocket = e.target.id.replace('-camera', '');
-                      
-                      console.log(tempSocket,"에게 socket event video-out 예정 ")
+
+                      let tempSocket = e.target.id.replace('-camera', '');//e.srcElement.id 뒤에 camera 택스트 제거
                       socket.emit("video-out",{
                           studentSocketId: tempSocket,
                           on : false,
                       })
-                      console.log("socket event video-out 완료 ")
+                      // console.log("socket event video-out 완료 ")
 
                       
                   } else {
@@ -546,7 +567,6 @@ const MediasoupController = () => {
                     cameraBtn.setAttribute("class", "off")
                       //e.srcElement.id 뒤에 camera 택스트 제거
                       let tempSocket = e.target.id.replace('-camera', '');
-                      console.log("socket event audio-out 예정 ") 
                       socket.emit("video-out",{
                           studentSocketId: tempSocket,
                           on : true,
@@ -557,12 +577,15 @@ const MediasoupController = () => {
  
             if (muteBtn){
               muteBtn.addEventListener('click', async (e) => {
+                  console.log("mute 버튼 클릭했어요!!!! 현재 상태는 : ", muteBtn.className)
                   if (muteBtn.className === 'off') {
+                      // 소리를 꺼야해! 
                       muteBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`
                       muteBtn.setAttribute("class", "on")
                       
                       //e.srcElement.id 뒤에 camera 택스트 제거
-                      let tempSocket = e.target.id.replace('-audio', '');
+                      let tempSocket = e.target.id.replace('-mute', '');
+                      //console.log("조용히 시킬 소켓: ", tempSocket)
                       socket.emit('audio-out',{
                           studentSocketId: tempSocket,
                           on : false,
@@ -572,38 +595,40 @@ const MediasoupController = () => {
                       muteBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>`
                       muteBtn.setAttribute("class", "off")
                     //e.srcElement.id 뒤에 camera 택스트 제거
-                    let tempSocket = e.target.id.replace("-camera", "");
+                    let tempSocket = e.target.id.replace("-mute", "");
+                    //console.log("다시 말하게 해줄 소켓: ", tempSocket)
   
-                    socket.emit("video-out", {
+                    socket.emit("audio-out", {
                       studentSocketId: tempSocket,
                       on: true,
                     });
                   }
               })
           }
-          
-
-            document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
+            // document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
 
         }
-
+      } //!!!?!?!?!??!
 
         await socket.on('student-video-controller', ( on ) => {
-          console.log("나는!?!?!?")
             myStream
             .getVideoTracks()
             .forEach((track) => {
                 (track.enabled = on.on);                    
-            }); // 카메라 화면 요소를 키고 끄기 
+            }); 
+            console.log("현재 비디오 상태: ", on)
+            // 카메라 화면 요소를 키고 끄기 
         })
 
         await socket.on('student-audio-controller', ( on ) => {
-          console.log("나는!?!?!?")
+          console.log(socket.id, " 마이크 ", on.on ," 하겠습니다. ")
             myStream
             .getAudioTracks()
             .forEach((track) => {
                 (track.enabled = on.on);                    
-            }); // 마이크 화면 요소를 키고 끄기 
+            }); 
+            console.log("현재 오디오 상태: ", on)
+            // 마이크 화면 요소를 키고 끄기 
         })
         
         // the server consumer started with media paused

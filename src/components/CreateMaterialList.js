@@ -52,24 +52,17 @@ export default function CreateMaterialList() {
 
     //SUCCESS 클릭시
     const handleSubmitList = (event) => {
-    
-        let titleIs = (event.target.title.value)
-        console.log("몇번 찍히니")
         
         // const data = new FormData();
         // data.append("title", event.target.title.value);
         // data.append("image", imageList);
         // data.append("puzzle", puzzleList);
         // data.append("multipleChoice", quizList);
-
-        // console.log("이게 타이틀이야!",titleIs)
-        // console.log("여기 이미지야 image", imageList);
-        // console.log("puzzle", puzzleList);
-        // console.log("multipleChoice", quizList);
-        // console.log("12312123123123", data);
-
-        const form = {title : event.target.title.value,puzzle : {objectId:puzzleList}, 
-        multipleChoice : {objectId:quizList}, image : {objectId:imageList}}
+        //0119 0312 밑에코드 2줄
+        // const form = {title : event.target.title.value,puzzle : {objectId:puzzleList}, 
+        // multipleChoice : {objectId:quizList}, image : {objectId:imageList}}
+        const form = {title : event.target.title.value, puzzle :puzzleList, 
+        multipleChoice : quizList, image : imageList}
         console.log("이건 몇번찍히니?", form)
         // console.log("askdnasdklasnd", token)
         // console.log("타이틀입니다", event.target.title.value)
@@ -165,29 +158,29 @@ export default function CreateMaterialList() {
     
     //get 하는 부분
     React.useEffect(() => {
-        const getPuzzles = async()=>{
-            const config = {
-                method: 'get',
-                url: '/api/material',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `${localStorage.getItem('token')}`
+      const getPuzzles = async()=>{
+        const config = {
+            method: 'get',
+            url: '/api/material',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem('token')}`
 
-                },
-            };
-            await axios(config)
-                
-                .then(response => {
-                    setPuzzles(response.data.puzzle);
-                    setMultipleChoices(response.data.multipleChoice);
-                    setJustImages(response.data.image);
+            },
+        };
+        await axios(config)
+            
+            .then(response => {
+                setPuzzles(response.data.puzzle);
+                setMultipleChoices(response.data.multipleChoice);
+                setJustImages(response.data.image);
 
-                }).catch(error => {
-                    console.error(error.toJSON);
-                }
-            );
-        }
-        getPuzzles();
+            }).catch(error => {
+                console.error(error.toJSON);
+            }
+        );
+      }
+      getPuzzles();
     }, []);
 
     const location = useLocation();
@@ -204,48 +197,47 @@ export default function CreateMaterialList() {
 
 
 
-
+//!메인리턴
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
       <React.Fragment>
       <Grid
-                    container
-                    spacing={3}
-                    component="form"
-                    encType="multipart/form-data"
-                    onSubmit={handleSubmitList}
-                  >
-                    <TextField
-                      required
-                      id="title"
-                      name="title"
-                      label="Title"
-                      fullWidth
-                      autoComplete="given-name"
-                      variant="standard"
-                    />
+        container
+        spacing={3}
+        component="form"
+        encType="multipart/form-data"
+        onSubmit={handleSubmitList}
+      >
+        <TextField
+          required
+          id="title"
+          name="title"
+          label="Title"
+          fullWidth
+          autoComplete="given-name"
+          variant="standard"
+        />
 
 
-                    {
-                      <Grid item xs={3}>
-                        <Stack spacing={2} direction="row">
-                          <Button variant="outlined" href="/material">
-                            취소
-                          </Button>
-                          <Button
-                            //href='/material'
-                            variant="contained"
-                            type="submit"
-                            fullWidth
-                            sx={{ mt: 3, mb: 2 }}
-                          >
-                            등록
-                          </Button>
-                        </Stack>
-                      </Grid>
-                    }
-                  </Grid>
+        {
+          <Grid item xs={3}>
+            <Stack spacing={2} direction="row">
+              <Button variant="outlined" href="/material">
+                취소
+              </Button>
+              <Button
+                //href='/material'
+                variant="contained"
+                type="submit"
+                fullWidth
+                sx={{ mt: 3, mb: 2 }}
+              >
+                등록
+              </Button>
+            </Stack>
+          </Grid>
+        }
+      </Grid>
         <Box
       sx={{
         display: 'flex',
