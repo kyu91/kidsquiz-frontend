@@ -8,7 +8,8 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
   // socket.on("puzzleStart", function(data) {
   //   setpuzzleurl(data)
   // })
-
+  socket.off("allsolve")
+  socket.on("allsolve",  ()=> alert("참 잘했어요"))
   // props.url
 
   // const [tempvalue, settempvalue] = useState('0')
@@ -236,7 +237,7 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
             rootSizeH: rootSize.height
           }
           socket.emit("clickup-puzzle", clickpuzzledata)
-          console.log("clickup-emit")
+          // console.log("clickup-emit")
 
           setTiles(prevState => {
             const newState = [
@@ -255,7 +256,9 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
               }
             ]
             if (newState.every(tile => tile.solved)) {
-              onSolved()
+              // onSolved()
+              socket.emit('solveSign');
+              // console.log('solvesign')
             }
             return newState
           })
@@ -268,11 +271,11 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
     let solveddata
 
     socket.on("solvedpuzzle", data => {
-      console.log("solvedpuzzle 진입")
+      // console.log("solvedpuzzle 진입")
       solveddata = data
       clickon()
-      console.log("solved")
-      console.log(data)
+      // console.log("solved")
+      // console.log(data)
     })
 
     function clickon() {
@@ -282,7 +285,7 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
           x: clamp(draggingTileBYS.current.elem.offsetLeft / rootSizeW, 0, 1),
           y: clamp(draggingTileBYS.current.elem.offsetTop / rootSizeH, 0, 1)
         }
-        console.log("함수내부 1")
+        // console.log("함수내부 1")
         const draggedTileBYS = draggingTileBYS.current.tile
         const targetPositionPercentageBYS = {
           x: (draggedTileBYS.correctPosition % columns) / columns,
@@ -311,7 +314,7 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
             }
           ]
           if (newState.every(tile => tile.solved)) {
-            onSolved()
+            // onSolved()
           }
           return newState
         })
@@ -388,7 +391,7 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
         imageSrc={puzzleurl}
         rows={2}
         columns={2}
-        onSolved={() => alert("참 잘했어요")}
+        // onSolved={() => alert("참 잘했어요")}
       />
       </div>
   </div>
