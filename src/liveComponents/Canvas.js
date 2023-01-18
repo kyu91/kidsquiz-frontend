@@ -41,6 +41,7 @@ function Canvas() {
   const [imagearraydata,setimagearraydata] = useState([])
   const [puzzlearraydata,setpuzzlearraydata] = useState([])
   const [puzzleurl, setpuzzleurl] = useState('')
+  const hostBool = localStorage.getItem('hostBool');
   
 
   //석규 도형 묶음 on/off 상태값
@@ -244,6 +245,8 @@ data2.append("_id","63c7b57d4424a5f77498335a")
         ></DrawToggle>
 
         {/* 리셋 */}
+        {hostBool ?
+        <>
         <NewCanvas
           canvas={canvas}
           emitClear={emitClear}
@@ -314,8 +317,8 @@ data2.append("_id","63c7b57d4424a5f77498335a")
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
-    
-       
+      </>
+       : null}
 
         <input 
           key="color"

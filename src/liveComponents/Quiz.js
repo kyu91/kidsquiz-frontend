@@ -95,6 +95,7 @@ function Quiz () {
     // if (ansChosed) return ()
     return (
         <>
+        {hostBool?
             <button id="btnnn" onClick={()=>{
                 //todo: 아래 quizId는 퀴즈 objectId여야 함 
                 let quizId = 1
@@ -106,6 +107,7 @@ function Quiz () {
                 })
                 setquizStarted(true)
             }}> 퀴즈 시작 </button>
+            : null}
         </>
     )
     
