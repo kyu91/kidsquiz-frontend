@@ -113,7 +113,9 @@ export default function Materials() {
                     
                   }}></Paper>
                 <h2 style={{marginTop: '4%', fontSize: '2em'}}>{Puzzle.title} </h2>
-                <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}></p>
+                <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}>
+                  퍼즐 교구
+                </p>
               </Paper>
             )
           })
@@ -122,6 +124,7 @@ export default function Materials() {
         {/* 퀴즈 리스트 */}
         {
           MultipleChoices.map((MultipleChoice, index) => {
+            console.log(MultipleChoice);
             return (
               <Paper elevation={3} key={index} 
                 sx={{
@@ -130,7 +133,7 @@ export default function Materials() {
                   height: 200,
                   float: "left",
                 }}>
-                <Paper variant='outlined' component="img" src ={MultipleChoice._id}
+                <Paper variant='outlined' component="img" src ={MultipleChoice.firstChoice}
                 sx={{
                   m: 1,
                   width: 180,
@@ -139,8 +142,9 @@ export default function Materials() {
                   
                 }}></Paper>
                 <h2 style={{marginTop: '4%', fontSize: '2em'}}>{MultipleChoice.question} </h2>
-                <p style={{marginTop: '4%', fontSize: '1.1em'}}> 퀴즈1 : {MultipleChoice.secondChoice}</p>
-                <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}> 퀴즈2 : {MultipleChoice.secondChoice}</p>
+                <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}>
+                  퀴즈 교구
+                </p>
               </Paper>
             )
           })
@@ -149,6 +153,8 @@ export default function Materials() {
         {/* 이미지 리스트 */}
         {
           justImages.map((Image, index) => {
+            console.log(Image);
+
             return (
               <Paper elevation={3} key={index} 
                 sx={{
@@ -157,14 +163,14 @@ export default function Materials() {
                   height: 200,
                   float: "left",
                 }}>
-                <Paper variant='outlined' component="img" src ={Image}
+                <Paper variant='outlined' component="img" src ={Image.image}
                   sx={{
                     m: 1,
                     width: 180,
                     height: 180,
                     float: "left",
                   }}></Paper>
-                
+                  <h2 style={{marginTop: '4%', fontSize: '2em'}}>이미지 교구</h2>
               </Paper>
             )
           })

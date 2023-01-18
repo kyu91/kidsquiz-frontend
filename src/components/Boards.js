@@ -79,7 +79,6 @@ export default function Boards() {
   const onClickHandlerHostBool = async(e) => {
     console.log("✅ 호스트 체크 합시다")
     if (hostToken) {
-        console.log('겟 하기 전', e._id);
         setRoomName(e._id);
         await getHost(hostToken, e._id);
     }

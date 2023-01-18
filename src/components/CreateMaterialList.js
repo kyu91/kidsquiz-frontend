@@ -52,9 +52,6 @@ export default function CreateMaterialList() {
 
     //SUCCESS 클릭시
     const handleSubmitList = (event) => {
-    
-        let titleIs = (event.target.title.value)
-        console.log("몇번 찍히니")
         
         // const data = new FormData();
         // data.append("title", event.target.title.value);
@@ -201,7 +198,6 @@ export default function CreateMaterialList() {
 //!메인리턴
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
       <React.Fragment>
       <Grid
         container

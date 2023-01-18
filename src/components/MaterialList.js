@@ -10,17 +10,12 @@ import {
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './component_style.css';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import IconButton from '@mui/material/IconButton';
+import { Typography } from '@mui/material';
 
 
 export default function MaterialList() {
-
-    //const [materials, setMaterials] = React.useState([]);
-    const [Puzzles, setPuzzles] = React.useState([]);
-    const [MultipleChoices, setMultipleChoices] = React.useState([]);
-    const [justImages, setJustImages] = React.useState([]);
-    console.log(Puzzles)
+    const [materialList, setPuzzles] = React.useState([]);
+    console.log(materialList)
 
     
     
@@ -39,9 +34,6 @@ export default function MaterialList() {
                 
                 .then(response => {
                     setPuzzles(response.data.puzzle);
-                    setMultipleChoices(response.data.multipleChoice);
-                    setJustImages(response.data.image);
-                    console.log("걍 이미지임", justImages);
 
                 }).catch(error => {
                     console.error(error.toJSON);
@@ -69,26 +61,51 @@ export default function MaterialList() {
         display: 'flex',
         flexWrap: 'wrap',
         '& > :not(style)': {
-          m: 1,
-          width: 800,
-          height: 200,
         },
       }}
     >
-        <Paper elevation={3} className='createClassButton'>
-            <Button variant="contained" component={Link} to = "/material/list">교구 모음</Button>
+        <Paper elevation={3} className='createClassButton'
+          sx={{
+            m: 1,
+            width: '35em',
+            height: 200,
+            float: "left",
+          
+          }}
+          style={{textAlign: 'center'}}>
+            <Typography variant="h3" style={{width: "100%", fontSize: "1.4em", marginBottom: "1em"}}>
+              교구를 생성해 보세요</Typography>
+            <Button 
+              variant="contained" 
+              component={Link} 
+              to = "/material/list"
+              style={{width: "10em", fontSize: "1em", fontWeight: "bold"}}>교구 모음</Button>
         </Paper>
         {
-          Puzzles.map((Puzzle, index) => {
+          materialList.map((material, index) => {
 
             
             return (
-              <Paper elevation={3} key={index} >
-                <Paper variant='outlined' component="img" src ={Puzzle.image}
-                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
-                <h2> 제목 : {Puzzle.title} </h2>
-                <p> 이미지 : {Puzzle.image}</p>
-                <p>row, column : {Puzzle.user}</p>
+              <Paper  elevation={3} key={index} 
+                sx={{
+                  m: 1,
+                  width: '35em',
+                  height: 200,
+                  float: "left",
+                }}>
+                <Paper 
+                  variant='outlined'
+                  component="img" 
+                  src ={material.image}
+                  sx={{
+                    m: 1,
+                    width: 180,
+                    height: 180,
+                    float: "left",
+                    
+                  }}></Paper>
+                <h2 style={{marginTop: '4%', fontSize: '2em'}}>{material.title} </h2>
+                <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}></p>
               </Paper>
             )
           })
