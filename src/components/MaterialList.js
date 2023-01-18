@@ -14,13 +14,15 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import IconButton from '@mui/material/IconButton';
 
 
-export default function Materials() {
+export default function MaterialList() {
 
     //const [materials, setMaterials] = React.useState([]);
     const [Puzzles, setPuzzles] = React.useState([]);
     const [MultipleChoices, setMultipleChoices] = React.useState([]);
     const [justImages, setJustImages] = React.useState([]);
     console.log(Puzzles)
+
+    
     
     React.useEffect(() => {
         const getPuzzles = async()=>{
@@ -74,7 +76,7 @@ export default function Materials() {
       }}
     >
         <Paper elevation={3} className='createClassButton'>
-            <Button variant="contained" component={Link} to = "/material/new">교구 생성</Button>
+            <Button variant="contained" component={Link} to = "/material/list">교구 모음</Button>
         </Paper>
         {
           Puzzles.map((Puzzle, index) => {
@@ -90,36 +92,7 @@ export default function Materials() {
               </Paper>
             )
           })
-        }
-        {
-          MultipleChoices.map((MultipleChoice, index) => {
-
-            
-            return (
-              <Paper elevation={3} key={index} >
-                <Paper variant='outlined' component="img" src ={MultipleChoice._id}
-                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
-                <h2> 제목 : {MultipleChoice.question} </h2>
-                <p> 퀴즈1 : {MultipleChoice.secondChoice}</p>
-                <p> 퀴즈2 : {MultipleChoice.secondChoice}</p>
-              </Paper>
-            )
-          })
-        }
-          {
-          justImages.map((Image, index) => {
-
-            
-            return (
-              <Paper elevation={3} key={index} >
-                <Paper variant='outlined' component="img" src ={Image}
-                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
-                <h2> 이미지 : {Image.image} </h2>
-              </Paper>
-            )
-          })
-        }
-               
+        }             
     </Box>
   );
 }
