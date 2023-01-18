@@ -30,41 +30,18 @@
   height: 200px;
   -webkit-user-drag: none;
 }
-/* button {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-} */
+
 
 input[type=range] {
-  width: 100x; /* 슬라이더 길이 */
-  height: 8px; /* 슬라이더 두께 */
-  border-radius: 5px; /* 슬라이더 모서리를 약간 둥글게 */
-  background: powderblue; /* 슬라이더 색상 */
-  outline: none; /* 슬라이더 테두리 없이 */
-  margin : 0 0 0 10px;
+  width: 90px;
+  background: linear-gradient(to right, #FFE283 0%, #FFE283 50%, #ececec 50%, #ececec 100%);
+  border-radius: 8px;
+  outline: none;
+  transition: background 450ms ease-in;
+  accent-color: #ffca1d;
+  margin-left: 15px;
 }
 
-/* 슬라이더 핸들(클릭해서 드래그하는 부분) 커스텀 
-(Chrome, Opera, Safari, Edge 브라우저를 위해서는 -webkit-을,
-Firefox 브라우저를 위해서는 -moz- 를 사용하세요 */
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
-  appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
-  width: 15px; /* 슬라이더 핸들 길이 */
-  height: 15px; /* 슬라이더 핸들 높이 */
-  border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
-  background: green; /* 슬라이더 핸들 색상 */
-  cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
-}
-
-input[type=range]::-moz-range-thumb {
-  width: 10px; /* 슬라이더 핸들 길이 */
-  height: 15px; /* 슬라이더 핸들 높이 */
-  border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
-  background:  green; /* 슬라이더 핸들 색상 */
-  cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
-}
 
 /* button[type=button] { */
 .navBtn {
@@ -81,6 +58,8 @@ input[type=range]::-moz-range-thumb {
 }
 #buttonGroup {
   display: flex;
+  padding: 15px 0 0 20px;
+  align-items: center;
 }
 #buttonGroup button {
   font-size: 1em;
