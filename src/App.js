@@ -46,7 +46,7 @@ import './index.css'
 import Header from './mainComponents/Header';
 
 function App() {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -142,10 +142,8 @@ function App() {
                 >
                 {/* 페이지 안에 감싸는거?!? */}
               <ClientSideSuspense fallback={<div>Loading...</div>}>
-                {() => 
-                  
-                    <LiveMain></LiveMain>
-                  
+                {
+                  () => <LiveMain></LiveMain>
                 }
               </ClientSideSuspense>
             </RoomProvider>
@@ -181,8 +179,12 @@ function App() {
                 indicatorColor="secondary"
                 aria-label="secondary tabs example"
               >
-                <Tab value="0" label="교구생성" />
-                <Tab value="1" label="교구관리" />
+                <Tab value="0" label="교구관리" 
+                  style={{ fontSize: "2em" }}
+                />
+                <Tab value="1" label="교구모음관리" 
+                  style={{ fontSize: "2em" }}
+                />
               </Tabs>
 
 
@@ -192,7 +194,7 @@ function App() {
               </div>: null
             }
             {
-            value === 1 ? <div>
+            value == 1 ? <div>
                 <MaterialList/>
 
             </div>: null
@@ -216,6 +218,7 @@ function App() {
             {/* 교구모음 만드는 곳 */}
            <Route path="/material/list" element={
               <Container maxWidth="xl">
+                <ResponsiveAppBar></ResponsiveAppBar>
                 <CreateMaterialList/>
               </Container>
             }/>

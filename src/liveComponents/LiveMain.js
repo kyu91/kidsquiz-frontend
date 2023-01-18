@@ -42,6 +42,7 @@ const LiveMain = () => {
             return 
         }else if (token && !guestKey) {
             localStorage.setItem('roomName', roomName);
+            
             return
         }
         else if(!token && !guestKey) {
