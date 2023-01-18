@@ -10,10 +10,7 @@ import './css/live_style.css';
 
 import cursor from '../svg/mouse.svg';
 
-// ✨클릭 추가
-import { useOthers } from "../liveblocks.config";
-import { useUpdateMyPresence } from "../liveblocks.config";
-// import { useStorage } from "../liveblocks.config";
+
 // ✨클릭 추가
 // import { useOthers } from "../liveblocks.config";
 import { useOthers, useUpdateMyPresence } from "../liveblocks.config";
