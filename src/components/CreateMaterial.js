@@ -11,7 +11,7 @@ import { grey, blue } from '@mui/material/colors';
 
 
 export default function CreateMaterial() {
-  //봉수의 코드 칼부림
+
   //텍스트 퀴즈 드가자!
   const handleSubmitTextQuiz = (event) => {
     event.preventDefault();
@@ -21,16 +21,7 @@ export default function CreateMaterial() {
     data.append("firstChoice", event.target.firstChoice.value);
     data.append("secondChoice", event.target.secondChoice.value);
     data.append("answer", event.target.answer.value);
-    //title: event.target.title.value,
-    // thumbnail: files,
-    // studentMaxNum: radio
-    console.log({
-      question: data.get("question"),
-      category: data.get("category"),
-      firstChoice: data.get("firstChoice"),
-      secondChoice: data.get("secondChoice"),
-      answer: data.get("answer"),
-    });
+ 
     onhandlePostTextQuiz(data);
   };
 
@@ -55,12 +46,8 @@ export default function CreateMaterial() {
       });
   };
 
-  // 이미지 객관식 입니다. 꼭 해야합니다 그래야만 합니다.
 
-  const handleChangeFile2 = (event) => {
-    setFiles(event.target.files);
-  };
-
+  //이미지퀴즈 submit
   const handleSubmitImg = (event) => {
     event.preventDefault();
     const data = new FormData();
@@ -112,11 +99,24 @@ export default function CreateMaterial() {
   //파일 업로드
   const [files, setFiles] = React.useState([]);
   const inputRef = React.useRef();
-  const handleChangeFile = (event) => {
-    setFiles(event.target.files[0]);
+  const handleChangeFile2 = (event) => {
+    setFiles(event.target.files);
   };
 
-  ///그냥 이미지 넣는거임
+  //퍼즐 이미지 저장
+  const [puzzleFile, setPuzzleFile] = React.useState([]);
+  const handleChangePuzzleFile = (event) => {
+    setPuzzleFile(event.target.files[0]);
+  }
+  // 그냥 이미지업로드 추가요
+  const [imageFiles, setImageFiles] = React.useState('');
+  // const imageRef = React.useRef();
+  const handleChangeImageFile = (event) => {
+    setImageFiles(event.target.files[0]);
+    console.log("그냥 이미지 업로드 입니다",)
+  }
+
+  //그냥 이미지 넣는거임
   const onhandlePostImages = async (data) => {
     const config = {
       method: "post",
@@ -141,17 +141,12 @@ export default function CreateMaterial() {
   const handleSubmitJustImage = (event) => {
     event.preventDefault();
     const data = new FormData();
-    data.append("image", files);
-    //title: event.target.title.value,
-    // thumbnail: files,
-    // studentMaxNum: radio
-
-    console.log("12312123123123", files);
+    data.append("image", imageFiles);
     onhandlePostImages(data);
   };
 
   // 서브밋
-  const onhandlePost = async (data) => {
+  const onhandlePostPuzzle = async (data) => {
     const config = {
       method: "post",
       url: "/api/material/puzzle",
@@ -172,17 +167,18 @@ export default function CreateMaterial() {
       });
   };
 
-  const handleSubmit = (event) => {
+  const handlePuzzleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData();
     data.append("title", event.target.title.value);
-    data.append("image", files);
+    //st추가
+    data.append("image", puzzleFile);
     //title: event.target.title.value,
     // thumbnail: files,
     // studentMaxNum: radio
 
     console.log("12312123123123", data);
-    onhandlePost(data);
+    onhandlePostPuzzle(data);
   };
 
   return (
@@ -279,7 +275,8 @@ export default function CreateMaterial() {
                   <Grid item xs={12}>
                     <Stack direction="row" alignItems="center">
                       <Typography variant="p" mt={2}>
-                        {files.name ? files.name : "수업에 사용할 이미지를 업로드해주세요."}
+                        {console.log("들어갔나요 ?",imageFiles)}
+                        {imageFiles.name ? imageFiles.name : "수업에 사용할 이미지를 업로드해주세요."}
                       </Typography>
                       <Button variant="contained" component="label">
                         Upload File
@@ -289,7 +286,7 @@ export default function CreateMaterial() {
                           name="image"
                           type="file"
                           ref={inputRef}
-                          onChange={handleChangeFile}
+                          onChange={handleChangeImageFile}
                         />
                       </Button>
                     </Stack>
@@ -302,7 +299,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          //href='/material'
+                          href='/material'
                           variant="contained"
                           type="submit"
                           fullWidth
@@ -323,7 +320,7 @@ export default function CreateMaterial() {
                     spacing={0}
                     component="form"
                     encType="multipart/form-data"
-                    onSubmit={handleSubmit}
+                    onSubmit={handlePuzzleSubmit}
                   >
                     <Typography variant="h5" mt={2}>
                       퍼즐 제목*
@@ -353,11 +350,11 @@ export default function CreateMaterial() {
                             name="image"
                             type="file"
                             ref={inputRef}
-                            onChange={handleChangeFile}
+                            onChange={handleChangePuzzleFile}
                           />
                         </Button>
                         <Typography variant="h6" mt={2} style={{color: '#c0c0c0', marginLeft: '1em'}}>
-                        {files.name ? files.name : "퀴즈로 사용할 이미지 두 개를 업로드해주세요."}
+                        { puzzleFile.name ? puzzleFile.name : "퍼즐로 사용할 이미지를 업로드해주세요."}
                       </Typography>
                       </Stack>
                     </Grid>
@@ -480,7 +477,7 @@ export default function CreateMaterial() {
                         onChange={handleChangeFile2}
                       />
                       </Button>
-                      <Typography variant="h6" mt={2} style={{color: '#c0c0c0', marginLeft: '1em'}}>
+                      <Typography variant="h6" mt={2} style={{color: '#c0c0c0', marginLeft: '1em'}}>          
                         {files.name ? files.name : "퀴즈로 사용할 이미지 두 개를 업로드해주세요."}
                       </Typography>
                     </Stack>
@@ -496,7 +493,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          //href='/material'
+                          href='/material'
                           variant="contained" 
                           type='submit'
                           fullWidth
@@ -581,7 +578,7 @@ export default function CreateMaterial() {
                       <Stack spacing={2} direction="row">
                         <Button 
                           variant="outlined" 
-                          href='/class'
+                          href='/material'
                           type='submit'
                           fullWidth
                           style={{fontSize: '1.2rem'}}

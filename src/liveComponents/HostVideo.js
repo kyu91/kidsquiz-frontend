@@ -10,6 +10,7 @@ const HostVideo = () => {
         <div id="videoColumn" className="mainTable">
             <div id="hostCol" className="localColumn">
                 <p id="hostName"></p>
+                <audio id="hostMeAudio" autoPlay></audio>
                 <video id="hostMe" autoPlay muted></video>
                 <div className="controllers">
                     <div className="micAndVid">

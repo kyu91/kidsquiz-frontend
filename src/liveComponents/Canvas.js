@@ -114,6 +114,7 @@ const setpuzzlearraydata = ['https://w.namu.la/s/802843da743ce68476c370aea2a9d35
 //       },
 //       data : data2
 //     };
+
     
 //     await axios(config)
 //         .then(response => {
