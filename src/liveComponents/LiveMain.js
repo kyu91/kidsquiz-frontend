@@ -14,6 +14,9 @@ import cursor from '../svg/mouse.svg';
 import { useOthers } from "../liveblocks.config";
 import { useUpdateMyPresence } from "../liveblocks.config";
 // import { useStorage } from "../liveblocks.config";
+// ✨클릭 추가
+// import { useOthers } from "../liveblocks.config";
+import { useOthers, useUpdateMyPresence } from "../liveblocks.config";
 
 const LiveMain = () => {
     const history = useNavigate();
@@ -32,10 +35,10 @@ const LiveMain = () => {
         zIndex: 20 
     }
 
-    //✨라이브 커서 추가
-    const others = useOthers();
-    const updateMyPresence = useUpdateMyPresence();
 
+    //✨라이브 커서 추가
+    // const others = useOthers(); //todo: !!!!!! 왜지!?!?!?
+    const updateMyPresence = useUpdateMyPresence();
 
     React.useEffect(() => {
         if (!token && guestKey) {
@@ -48,6 +51,7 @@ const LiveMain = () => {
             history(`${location.pathname}/intro`);
         }
     }, []);
+
 
     // Basic cursor component
     // 다른 사용자의 현재 상태 확인
@@ -64,32 +68,33 @@ const LiveMain = () => {
                 src = {cursor}
             />
         </div>
+        );}
+ 
+  return (
 
-        );
-    }
-
-    return (
-
-        //✨updateMyPresence으로 포인터 이동 이벤트가 감지될 때마다 업데이트 된 커서 좌표를 가지고 옴
+    //✨updateMyPresence으로 포인터 이동 이벤트가 감지될 때마다 업데이트 된 커서 좌표를 가지고 옴
     <div             
         onPointerMove={(e) =>
         updateMyPresence({ cursor: { x: e.clientX, y: e.clientY } })
-    }
-    onPointerLeave={() => updateMyPresence({ cursor: null })} >
-        {/* 다른 사용자의 현재 상태 확인 */}
-        <>
-            {others.map(({ connectionId, presence }) =>
-            presence.cursor ? (
-                <Cursor
-                    key={connectionId}
-                    x={presence.cursor.x}
-                    y={presence.cursor.y}
-                />
-            ) : null
-            )}
-        </>
-            
-        
+        }
+        onPointerLeave={() => updateMyPresence({ cursor: null })} >
+            {/* 다른 사용자의 현재 상태 확인 */}
+            <> 
+            {/* //todo: ! 여기서부터  */}
+                {/* {others.map(({ connectionId, presence }) =>
+                presence.cursor ? (
+                    <Cursor
+                        key={connectionId}
+                        x={presence.cursor.x}
+                        y={presence.cursor.y}
+                    />
+                ) : null
+                )} */} 
+                {/* //todo: ! 여기까지 잠시 주석처리해둠 */}
+            </>
+    
+
+
         <Box
             className='canvarsContiner'
             
