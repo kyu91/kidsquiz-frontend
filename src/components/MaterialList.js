@@ -2,11 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import {
-    useLocation,
-  } from 'react-router-dom';
-
-
+import {useLocation} from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './component_style.css';
@@ -14,16 +10,16 @@ import { Typography } from '@mui/material';
 
 
 export default function MaterialList() {
-    const [materialList, setPuzzles] = React.useState([]);
-    console.log(materialList)
+    const [materialList, setMaterialList] = React.useState([]);
+
 
     
     
     React.useEffect(() => {
-        const getPuzzles = async()=>{
+        const getMaterial = async()=>{
             const config = {
                 method: 'get',
-                url: '/api/material',
+                url: '/api/classMaterial',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `${localStorage.getItem('token')}`
@@ -33,14 +29,14 @@ export default function MaterialList() {
             await axios(config)
                 
                 .then(response => {
-                    setPuzzles(response.data.puzzle);
+                  setMaterialList(response.data.classMaterial);
 
                 }).catch(error => {
                     console.error(error.toJSON);
                 }
             );
         }
-        getPuzzles();
+        getMaterial();
     }, []);
 
     const location = useLocation();
