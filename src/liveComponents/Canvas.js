@@ -234,10 +234,7 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
     //!리턴
     <div className='App'>
       <div id="buttonGroup">
-
-
         {/* 팬/도형 토글 */}
-
         <DrawToggle
           canvas={canvas}
           setShow={setShow}
@@ -316,7 +313,8 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
-
+    
+       
 
         <input 
           key="color"
@@ -327,14 +325,14 @@ data2.append("_id","63c6ce283ee52629a2b63b39")
           id="drawing-color"></input>
 
       
-      
+
 
       {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
 
 
       </div>
-
+      
       {showimage && <div>
         <ScrollContainer className="scroll-container" activationDistance = "10">
             <ul className="list">

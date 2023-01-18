@@ -1,5 +1,4 @@
 import * as React from "react";
-import Typography from "@mui/material/Typography";
 import "dayjs/locale/fr";
 import "dayjs/locale/ru";
 import "dayjs/locale/de";

@@ -34,6 +34,12 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 
+//✨다중 마우스 커서 추가
+import { ClientSideSuspense } from "@liveblocks/react";
+import { RoomProvider } from "./liveblocks.config.js";
+import { LiveObject } from "@liveblocks/client";
+
+
 //css리셋
 import { Reset } from 'styled-reset'
 import './index.css'
@@ -125,7 +131,25 @@ function App() {
 
             {/* 라이브 페이지 라우터 */}
             <Route path="/live/:id" element={
-                <LiveMain></LiveMain>
+              <RoomProvider id="1234" 
+                initialPresence={{cursor: null}}
+                // initialStorage={{
+                //   scientist: new LiveObject({
+                //     firstName: "Marie",
+                //     lastName: "Curie",
+                //   }),
+                // }} 
+                >
+                {/* 페이지 안에 감싸는거?!? */}
+              <ClientSideSuspense fallback={<div>Loading...</div>}>
+                {() => 
+                  
+                    <LiveMain></LiveMain>
+                  
+                }
+              </ClientSideSuspense>
+            </RoomProvider>
+
             }/>
 
             {/* 게스트 입장 인트로 페이지 라우터 */}
