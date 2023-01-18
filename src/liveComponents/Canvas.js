@@ -152,6 +152,7 @@ data2.append("_id","63c7b57d4424a5f77498335a")
        isDrawingMode: false,
        height: 1920,
        width: 1080,
+
      })
 
 
@@ -278,11 +279,11 @@ data2.append("_id","63c7b57d4424a5f77498335a")
                 // uuid = {uuid}
               ></Figures> */}
         
-        <PuzzleBundle
+        {/* <PuzzleBundle
           showimagePuzzle={showimagePuzzle}
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
-        >퍼즐</PuzzleBundle>
+        >퍼즐</PuzzleBundle> */}
 
         <Chilgyo
           drawmodeonoff={drawmodeonoff}
@@ -305,18 +306,20 @@ data2.append("_id","63c7b57d4424a5f77498335a")
           onClick={erasemode}><Crop32Icon/></Button>}  
 
         <ImageBundle
-          showimage={showimage}
+          showimage = {showimage}
           setShowimage={setShowimage}
+          showimagePuzzle={showimagePuzzle}
+          setShowimagePuzzle={setShowimagePuzzle}
         ></ImageBundle>
 
         <PuzzleBundle
+          showimage = {showimage}
+          setShowimage={setShowimage}
           showimagePuzzle={showimagePuzzle}
           setShowimagePuzzle={setShowimagePuzzle}
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
     
-       
-
         <input 
           key="color"
           type='color' 
@@ -324,9 +327,6 @@ data2.append("_id","63c7b57d4424a5f77498335a")
           onChange={changeColor}
           defaultValue="#000000" 
           id="drawing-color"></input>
-
-      
-
 
       {/* <span className='info'>{widthvalue}</span> */}
       {show && <input type="range" onChange={changeWidth} defaultValue ={widthvalue} min="1" max="150"></input>}
@@ -354,9 +354,9 @@ data2.append("_id","63c7b57d4424a5f77498335a")
             <ul className="list">
         {
         puzzlearraydata.map((b,i) => {
-          return <li className="item"key = {'puzzleitem'+i}>
+          return <li className="item" key = {'puzzleitem'+i}>
           <a className="link" key = {'puzzlelink'+i} >
-              <img className="image" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
+              <img className="puzzleimage" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
           </a>
       </li>
         })}

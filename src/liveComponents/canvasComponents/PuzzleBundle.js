@@ -4,11 +4,12 @@ import ExtensionIcon from '@mui/icons-material/Extension';
 import ExtensionOffIcon from '@mui/icons-material/ExtensionOff';
 
 
-const PuzzleBundle = ({ showimagePuzzle, setShowimagePuzzle, setShowimagePuzzlediv }) => {
+const PuzzleBundle = ({ setShowimage ,showimagePuzzle, setShowimagePuzzle, setShowimagePuzzlediv }) => {
     function imageshowlistPuzzle(){
 
         if (showimagePuzzle === false) {
           setShowimagePuzzle(true)
+          setShowimage(false)
         }
         else {
           setShowimagePuzzle(false)

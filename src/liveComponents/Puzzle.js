@@ -383,7 +383,7 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
   }
 
   return (
-    <div className="miniImage">
+    <div className="miniImage" style = {{position: "absolute"}}>
         <img style={{marginLeft : '3%', marginTop : '3%', height : '200px', width : '200px', borderRadius: '15%'}} src= {puzzleurl}></img>
 
     <div style={{ marginLeft : '4%', height: "580px", width: "580px" }}>
