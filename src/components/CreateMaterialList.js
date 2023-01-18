@@ -8,15 +8,13 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import Paper from '@mui/material/Paper';
-import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { useLocation} from 'react-router-dom';
 import { useState } from "react";
-import Puzzle from "../liveComponents/Puzzle";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
 import {Stack} from "@mui/material";
-import { FlipRounded } from "@material-ui/icons";
+
 
 
 export default function CreateMaterialList() {
@@ -64,12 +62,6 @@ export default function CreateMaterialList() {
         // data.append("image", imageList);
         // data.append("puzzle", puzzleList);
         // data.append("multipleChoice", quizList);
-
-        // console.log("이게 타이틀이야!",titleIs)
-        // console.log("여기 이미지야 image", imageList);
-        // console.log("puzzle", puzzleList);
-        // console.log("multipleChoice", quizList);
-        // console.log("12312123123123", data);
 
         const form = {title : event.target.title.value,puzzle : {objectId:puzzleList}, 
         multipleChoice : {objectId:quizList}, image : {objectId:imageList}}
@@ -168,29 +160,29 @@ export default function CreateMaterialList() {
     
     //get 하는 부분
     React.useEffect(() => {
-        const getPuzzles = async()=>{
-            const config = {
-                method: 'get',
-                url: '/api/material',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `${localStorage.getItem('token')}`
+      const getPuzzles = async()=>{
+        const config = {
+            method: 'get',
+            url: '/api/material',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${localStorage.getItem('token')}`
 
-                },
-            };
-            await axios(config)
-                
-                .then(response => {
-                    setPuzzles(response.data.puzzle);
-                    setMultipleChoices(response.data.multipleChoice);
-                    setJustImages(response.data.image);
+            },
+        };
+        await axios(config)
+            
+            .then(response => {
+                setPuzzles(response.data.puzzle);
+                setMultipleChoices(response.data.multipleChoice);
+                setJustImages(response.data.image);
 
-                }).catch(error => {
-                    console.error(error.toJSON);
-                }
-            );
-        }
-        getPuzzles();
+            }).catch(error => {
+                console.error(error.toJSON);
+            }
+        );
+      }
+      getPuzzles();
     }, []);
 
     const location = useLocation();
@@ -207,48 +199,48 @@ export default function CreateMaterialList() {
 
 
 
-
+//!메인리턴
   return (
     <>
       <ResponsiveAppBar></ResponsiveAppBar>
       <React.Fragment>
       <Grid
-                    container
-                    spacing={3}
-                    component="form"
-                    encType="multipart/form-data"
-                    onSubmit={handleSubmitList}
-                  >
-                    <TextField
-                      required
-                      id="title"
-                      name="title"
-                      label="Title"
-                      fullWidth
-                      autoComplete="given-name"
-                      variant="standard"
-                    />
+        container
+        spacing={3}
+        component="form"
+        encType="multipart/form-data"
+        onSubmit={handleSubmitList}
+      >
+        <TextField
+          required
+          id="title"
+          name="title"
+          label="Title"
+          fullWidth
+          autoComplete="given-name"
+          variant="standard"
+        />
 
 
-                    {
-                      <Grid item xs={3}>
-                        <Stack spacing={2} direction="row">
-                          <Button variant="outlined" href="/material">
-                            취소
-                          </Button>
-                          <Button
-                            //href='/material'
-                            variant="contained"
-                            type="submit"
-                            fullWidth
-                            sx={{ mt: 3, mb: 2 }}
-                          >
-                            등록
-                          </Button>
-                        </Stack>
-                      </Grid>
-                    }
-                  </Grid>
+        {
+          <Grid item xs={3}>
+            <Stack spacing={2} direction="row">
+              <Button variant="outlined" href="/material">
+                취소
+              </Button>
+              <Button
+                //href='/material'
+                variant="contained"
+                type="submit"
+                fullWidth
+                sx={{ mt: 3, mb: 2 }}
+              >
+                등록
+              </Button>
+            </Stack>
+          </Grid>
+        }
+      </Grid>
         <Box
       sx={{
         display: 'flex',

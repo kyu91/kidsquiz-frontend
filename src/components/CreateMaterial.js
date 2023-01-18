@@ -195,26 +195,25 @@ export default function CreateMaterial() {
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
       <React.Fragment>
         <Typography variant="h4" mt={6}>
           교구 생성
         </Typography>
-        {/* <Grid container spacing={3} component="form" encType="multipart/form-data" onSubmit={handleSubmit}> */}
-
+        <Typography variant="h6" mt={2} style={{marginBottom: '20px', color: '#808080'}}>
+          강의를 위한 교구를 생성해 주세요.
+        </Typography>
         {/* 입장인원선택 라디오 */}
-        <Grid item xs={12}>
-          {/* <Typography variant="p" mt={2}>
-                교구 선택
-            </Typography> */}
-          <p />
+        <Grid item xs={5}>
+          
           <RadioGroup
             row
             sx={{ my: 3 }}
             name="controlled-radio-buttons-group"
             onChange={handleChange}
             value={radio}
+            style={{ width: '100%' }}
           >
+            <div>
             <Radio
               color="info"
               size="md"
@@ -227,6 +226,7 @@ export default function CreateMaterial() {
                   color: blue[600],
                 },
               }}
+              style={{ width: '7em' }}
             />
             <Radio
               color="info"
@@ -240,6 +240,7 @@ export default function CreateMaterial() {
                   color: blue[600],
                 },
               }}
+              style={{ width: '7em' }}
             />
             <Radio
               color="info"
@@ -253,6 +254,7 @@ export default function CreateMaterial() {
                   color: blue[600],
                 },
               }}
+              style={{ width: '7em' }}
             />
             <Radio
               color="info"
@@ -263,11 +265,16 @@ export default function CreateMaterial() {
               sx={{
                 color: blue[900],
                 '&.Mui-checked': {
-                  color: blue[600],
+                color: blue[600],
+                
                 },
               }}
+              style={{ width: '7em' }}
             />
-            {radio == 4 ? (
+            </div>
+            
+          </RadioGroup>
+          {radio == 4 ? (
               <div>
                 <Grid
                   container
@@ -479,9 +486,7 @@ export default function CreateMaterial() {
               </div>
             ) : null}
             {radio == 1 ? (
-              <div>
-                <br />
-                <p>
+              
                   <Grid
                     container
                     spacing={1}
@@ -489,72 +494,84 @@ export default function CreateMaterial() {
                     encType="multipart/form-data"
                     onSubmit={handleSubmitTextQuiz}
                   >
+                    <Typography variant="h5" mt={2}>
+                      문제*
+                    </Typography>
                     <TextField
                       required
                       id="question"
                       name="question"
-                      label="question"
+                      label="문제를 입력해 주세요."
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
                     />
-                    {/* </Grid>          */}
+                    
                     <div />
 
-                    {/* <Grid container spacing={1} component="form" encType="multipart/form-data" onSubmit={handleSubmitTextQuiz}>           */}
+                    <Typography variant="h5" mt={2}>
+                      첫번째 선택지*
+                    </Typography>
                     <TextField
                       required
                       id="firstChoice"
                       name="firstChoice"
-                      label="firstChoice"
+                      label="첫번째 문항을 입력해 주세요."
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
                     />
-                    {/* </Grid> */}
-
-                    {/* <Grid container spacing={1} component="form" encType="multipart/form-data" onSubmit={handleSubmitTextQuiz}>           */}
+                    
+                    <Typography variant="h5" mt={2}>
+                      두번째 선택지*
+                    </Typography>
                     <TextField
                       required
                       id="secondChoice"
                       name="secondChoice"
-                      label="secondChoice"
+                      label="두번째 문항을 입력해 주세요."
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
                     />
-                    {/* </Grid>
-              <Grid container spacing={1} component="form" encType="multipart/form-data" onSubmit={handleSubmitTextQuiz}>           */}
+                    
+                    <Typography variant="h5" mt={2}>
+                      정답*
+                    </Typography>
                     <TextField
                       required
                       id="answer"
                       name="answer"
-                      label="answer"
+                      label="숫자로만 입력 하시오. (1 or 2)"
                       fullWidth
                       autoComplete="given-name"
                       variant="standard"
                     />
+
                     <Grid item xs={12}>
                       <Stack spacing={2} direction="row">
-                        <Button variant="outlined" href="/material">
+                        <Button 
+                          variant="outlined" 
+                          href='/class'
+                          type='submit'
+                          fullWidth
+                          style={{fontSize: '1.2rem'}}
+                        >
                           취소
                         </Button>
                         <Button
-                          //href='/material'
-                          variant="contained"
-                          type="submit"
+                          variant="contained" 
+                          type='submit'
                           fullWidth
-                          sx={{ mt: 3, mb: 2 }}
+                          style={{fontSize: '1.2rem'}}
                         >
                           등록
                         </Button>
                       </Stack>
                     </Grid>
                   </Grid>
-                </p>{" "}
-              </div>
+           
             ) : null}
-          </RadioGroup>
         </Grid>
       </React.Fragment>
     </>

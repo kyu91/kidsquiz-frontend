@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
 
 const pages = ['라이브 관리', '교구 관리'];
 const settings = ['로그아웃', '계정 관리'];
@@ -20,6 +21,7 @@ const settings = ['로그아웃', '계정 관리'];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -28,7 +30,12 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (i) => {
+    if (i === 0) {
+      navigate(`/class`);
+    } else if (i === 1) {
+      navigate(`/material`);
+    }
     setAnchorElNav(null);
   };
 
@@ -139,10 +146,10 @@ function ResponsiveAppBar() {
               </Typography>
             </Link>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={index}
+                onClick={() => {handleCloseNavMenu(index)}}
                 sx={{ my: 2, color: 'black',  display: 'block', fontSize: '1.2rem', fontWeight: 700, marginRight: '20px'}}
               >
                 {page}

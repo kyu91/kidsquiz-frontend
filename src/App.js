@@ -144,41 +144,50 @@ function App() {
           
             {/* 교구생성 기본페이지 */}
             <Route path="/material" element={
-              <Container maxWidth="xl">
-                <ResponsiveAppBar></ResponsiveAppBar>
+              <Container maxWidth="lg"
+              style={{
+                margin: '0 auto',
+              }}>
+              <ResponsiveAppBar></ResponsiveAppBar>
                                               
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              textColor="secondary"
-              indicatorColor="secondary"
-              aria-label="secondary tabs example"
-            >
-              <Tab value="0" label="교구생성" />
-              <Tab value="1" label="교구관리" />
-            </Tabs>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                textColor="secondary"
+                indicatorColor="secondary"
+                aria-label="secondary tabs example"
+              >
+                <Tab value="0" label="교구생성" />
+                <Tab value="1" label="교구관리" />
+              </Tabs>
 
 
             {
-            value == 0 ? <div>
-              <Materials/>
-            </div>: null
+              value == 0 ? <div>
+                <Materials/>
+              </div>: null
             }
             {
-            value == 1 ? <div>
+            value === 1 ? <div>
                 <MaterialList/>
 
             </div>: null
             }                 
-            </Container>
+             <Footer />
+                </Container>
             }/>    
-            {/* 교구공장 */}
+
+            {/* 교구생성 */}
             <Route path="/material/new" element={
-            <div><Container>
-              <CreateMaterial/>
-              </Container>
-              </div>}>
-              </Route>
+              <Container maxWidth="lg"
+                style={{
+                  margin: '0 auto',
+                }}>
+              <ResponsiveAppBar></ResponsiveAppBar>
+                <CreateMaterial/>
+              <Footer />
+            </Container> 
+            }/>
 
             {/* 교구모음 만드는 곳 */}
            <Route path="/material/list" element={

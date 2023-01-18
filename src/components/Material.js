@@ -10,8 +10,7 @@ import {
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './component_style.css';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import IconButton from '@mui/material/IconButton';
+import { Typography } from '@mui/material';
 
 
 export default function Materials() {
@@ -20,7 +19,6 @@ export default function Materials() {
     const [Puzzles, setPuzzles] = React.useState([]);
     const [MultipleChoices, setMultipleChoices] = React.useState([]);
     const [justImages, setJustImages] = React.useState([]);
-    console.log(Puzzles)
     
     React.useEffect(() => {
         const getPuzzles = async()=>{
@@ -39,7 +37,6 @@ export default function Materials() {
                     setPuzzles(response.data.puzzle);
                     setMultipleChoices(response.data.multipleChoice);
                     setJustImages(response.data.image);
-                    console.log("걍 이미지임", justImages);
 
                 }).catch(error => {
                     console.error(error.toJSON);
@@ -61,60 +58,113 @@ export default function Materials() {
         }
       }, [location.pathname]);
 
+
+      //!메인 리턴!
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        '& > :not(style)': {
-          m: 1,
-          width: 800,
-          height: 200,
+        display: "flex",
+        flexWrap: "wrap",
+        "& > :not(style)": {
+          // m: 1,
         },
       }}
     >
-        <Paper elevation={3} className='createClassButton'>
-            <Button variant="contained" component={Link} to = "/material/new">교구 생성</Button>
+      {/* 생성버튼 박스 */}
+        <Paper elevation={3} className='createClassButton'
+          sx={{
+            m: 1,
+            width: '35em',
+            height: 200,
+            float: "left",
+          
+          }}
+          style={{textAlign: 'center'}}
+        >
+          <Typography variant="h3" style={{width: "100%", fontSize: "1.4em", marginBottom: "1em"}}>교구를 생성해 보세요</Typography>
+            <Button 
+              variant="contained" 
+              component={Link} 
+              to = "/material/new"
+              style={{width: "10em", fontSize: "1em", fontWeight: "bold"}}
+            >교구 생성</Button>
         </Paper>
+
+        {/* 퍼즐 리스트 */}
         {
           Puzzles.map((Puzzle, index) => {
-
-            
             return (
-              <Paper elevation={3} key={index} >
-                <Paper variant='outlined' component="img" src ={Puzzle.image}
-                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
-                <h2> 제목 : {Puzzle.title} </h2>
-                <p> 이미지 : {Puzzle.image}</p>
-                <p>row, column : {Puzzle.user}</p>
+              <Paper elevation={3} key={index} 
+                sx={{
+                  m: 1,
+                  width: '35em',
+                  height: 200,
+                  float: "left",
+                }}>
+                <Paper 
+                  variant='outlined'
+                  component="img" 
+                  src ={Puzzle.image}
+                  sx={{
+                    m: 1,
+                    width: 180,
+                    height: 180,
+                    float: "left",
+                    
+                  }}></Paper>
+                <h2 style={{marginTop: '4%', fontSize: '2em'}}>{Puzzle.title} </h2>
+                <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}></p>
               </Paper>
             )
           })
         }
+
+        {/* 퀴즈 리스트 */}
         {
           MultipleChoices.map((MultipleChoice, index) => {
-
-            
             return (
-              <Paper elevation={3} key={index} >
+              <Paper elevation={3} key={index} 
+                sx={{
+                  m: 1,
+                  width: '35em',
+                  height: 200,
+                  float: "left",
+                }}>
                 <Paper variant='outlined' component="img" src ={MultipleChoice._id}
-                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
-                <h2> 제목 : {MultipleChoice.question} </h2>
-                <p> 퀴즈1 : {MultipleChoice.secondChoice}</p>
-                <p> 퀴즈2 : {MultipleChoice.secondChoice}</p>
+                sx={{
+                  m: 1,
+                  width: 180,
+                  height: 180,
+                  float: "left",
+                  
+                }}></Paper>
+                <h2 style={{marginTop: '4%', fontSize: '2em'}}>{MultipleChoice.question} </h2>
+                <p style={{marginTop: '4%', fontSize: '1.1em'}}> 퀴즈1 : {MultipleChoice.secondChoice}</p>
+                <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}> 퀴즈2 : {MultipleChoice.secondChoice}</p>
               </Paper>
             )
           })
         }
-          {
-          justImages.map((Image, index) => {
 
-            
+        {/* 이미지 리스트 */}
+        {
+          justImages.map((Image, index) => {
             return (
-              <Paper elevation={3} key={index} >
+              <Paper elevation={3} key={index} 
+                sx={{
+                  m: 1,
+                  width: '35em',
+                  height: 200,
+                  float: "left",
+                }}>
                 <Paper variant='outlined' component="img" src ={Image}
-                sx={{ m:1, width:180, height:180, float:'left'}}></Paper>
-                <h2> 이미지 : {Image.image} </h2>
+                  sx={{
+                    m: 1,
+                    width: 180,
+                    height: 180,
+                    float: "left",
+                  }}></Paper>
+                
               </Paper>
             )
           })
