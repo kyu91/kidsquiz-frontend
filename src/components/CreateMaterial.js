@@ -368,7 +368,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          href='/material'
+                          //href='/material'
                           variant="contained" 
                           type='submit'
                           fullWidth
