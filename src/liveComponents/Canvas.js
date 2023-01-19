@@ -38,8 +38,8 @@ function Canvas() {
   const [showimagePuzzle, setShowimagePuzzle] = useState(false);
   const [showimagePuzzlediv, setShowimagePuzzlediv] = useState(false);
   const [drawmodeonoff, setdrawmodeonoff] = useState(true);
-  const [imagearraydata,setimagearraydata] = useState([])
-  const [puzzlearraydata,setpuzzlearraydata] = useState([])
+  // const [imagearraydata,setimagearraydata] = useState([])
+  // const [puzzlearraydata,setpuzzlearraydata] = useState([])
   const [puzzleurl, setpuzzleurl] = useState('')
   const hostBool = localStorage.getItem('hostBool');
   
@@ -70,58 +70,60 @@ const bringimageinhtmlPuzzle = (event) =>{
   setShowimagePuzzle(false)
 }
 
-
-
+const setimagearraydata = ['https://w.namu.la/s/802843da743ce68476c370aea2a9d35c45c05a27c8a524ec55de03d5f9d188c1cc225dc55fe22f467a6b66b3d90cb0a41a56c8c4c7d71e6bc46dcdefe6395fcf045f3227e8867e2ca75fe2abeca9291d58a46765df176c49288c4982fe528cd7','https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2408DD3658A648B12C','https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Giraffen.jpg/500px-Giraffen.jpg','http://www.astronomer.rocks/news/photo/201811/86557_11344_4542.jpg','https://mblogthumb-phinf.pstatic.net/20120420_141/wpa12_1334893227134psCrD_JPEG/20120420_121453.jpg?type=w2','https://imgnn.seoul.co.kr/img/upload/2020/08/18/SSI_20200818152435_V.jpg']
+const setpuzzlearraydata = ['https://w.namu.la/s/802843da743ce68476c370aea2a9d35c45c05a27c8a524ec55de03d5f9d188c1cc225dc55fe22f467a6b66b3d90cb0a41a56c8c4c7d71e6bc46dcdefe6395fcf045f3227e8867e2ca75fe2abeca9291d58a46765df176c49288c4982fe528cd7','https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2408DD3658A648B12C','https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Giraffen.jpg/500px-Giraffen.jpg','http://www.astronomer.rocks/news/photo/201811/86557_11344_4542.jpg','https://mblogthumb-phinf.pstatic.net/20120420_141/wpa12_1334893227134psCrD_JPEG/20120420_121453.jpg?type=w2','https://imgnn.seoul.co.kr/img/upload/2020/08/18/SSI_20200818152435_V.jpg']
 
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
-const data = new FormData();
-data.append("_id","63c7b57d4424a5f77498335a")
-  const bringimage = async()=>{
-    const config = {
-      method: 'post',
-      url: `/api/live/image`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${localStorage.getItem('token')}`
-      },
-      data : data
-    };
-    
-    await axios(config)
-        .then(response => {
-          console.log(response.data.image)
-            setimagearraydata(response.data.image)
-        }).catch(error => {
-            console.error(error);
-        }
-    );
-  };
+// const data = new FormData();
+// data.append("_id","63c7b57d4424a5f77498335a")
 
 
-  const data2 = new FormData();
-data2.append("_id","63c7b57d4424a5f77498335a")
+//   const bringimage = async()=>{
+//     const config = {
+//       method: 'post',
+//       url: `/api/live/image`,
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `${localStorage.getItem('token')}`
+//       },
+//       data : data
+//     };
+    
+//     await axios(config)
+//         .then(response => {
+//           console.log(response.data.image)
+//             setimagearraydata(response.data.image)
+//         }).catch(error => {
+//             console.error(error);
+//         }
+//     );
+//   };
 
-  const bringpuzzleimage = async()=>{
+
+//   const data2 = new FormData();
+// data2.append("_id","63c7b57d4424a5f77498335a")
+
+//   const bringpuzzleimage = async()=>{
+//     const config = {
+//       method: 'post',
+//       url: `/api/live/puzzle`,
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `${localStorage.getItem('token')}`
+//       },
+//       data : data2
+//     };
+
     
-    const config = {
-      method: 'post',
-      url: `/api/live/puzzle`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${localStorage.getItem('token')}`
-      },
-      data : data2
-    };
-    
-    await axios(config)
-        .then(response => {
-          setpuzzlearraydata(response.data.puzzle);
-        }).catch(error => {
-            console.error(error);
-        }
-    );
-  };
+//     await axios(config)
+//         .then(response => {
+//           setpuzzlearraydata(response.data.puzzle);
+//         }).catch(error => {
+//             console.error(error);
+//         }
+//     );
+//   };
 
 ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -188,86 +190,90 @@ data2.append("_id","63c7b57d4424a5f77498335a")
 //     canvas.renderAll()
 //   })
 // }
-const finditem = () => {
-  fabric.Object.prototype.transparentCorners = false;
-  var radius = 300;
-  canvas.preserveObjectStacking = true;
+
+/////////////////////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////
+// const finditem = () => {
+//   // fabric.Object.prototype.transparentCorners = false;
+//   // var radius = 300;
+//   canvas.preserveObjectStacking = true;
+
+// var url = 'https://img.hankyung.com/photo/202208/03.30968100.1.jpg'
 
   
-  fabric.Image.fromURL('src\images\bestTeams.jpg', function(img) {
-    var scalar = 1, abort;
-    var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
-    var shell = new fabric.Path(path, { 
-      fill: '',
-      stroke: 'blue',
-      strokeWidth: 5,
-      scaleX: 2,
-      scaleY: 2,
-      lockScalingX: true,
-      lockScalingY: true,
-      lockSkewingX: true,
-      lockSkewingY: true,
-      originX: 'center',
-      originY: 'center',
-    })
-    var clipPath = new fabric.Path(path, {
-      absolutePositioned: true,
-      originX: 'center',
-      originY: 'center',
-      scaleX: 2,
-      scaleY: 2
-    })
+//   fabric.Image.fromURL(url, function(img) {
+//     var scalar = 1, abort;
+//     var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
+//     var shell = new fabric.Path(path, { 
+//       fill: '',
+//       stroke: 'blue',
+//       strokeWidth: 5,
+//       scaleX: 2,
+//       scaleY: 2,
+//       lockScalingX: true,
+//       lockScalingY: true,
+//       lockSkewingX: true,
+//       lockSkewingY: true,
+//       originX: 'center',
+//       originY: 'center',
+//     })
+//     var clipPath = new fabric.Path(path, {
+//       absolutePositioned: true,
+//       originX: 'center',
+//       originY: 'center',
+//       scaleX: 2,
+//       scaleY: 2
+//     })
     
-    function animate() {
-      abort = fabric.util.animate({
-        startValue: 0,
-        endValue: 360 * scalar,
-        duration: 1000,
-        easing: fabric.util.ease.easeInOutSine,
-        onChange: function (value) {
-          shell.set('angle', value);
-          clipPath.set('angle', value);
-          img.set('dirty', true);
-        },
-        onComplete: function () {
-          scalar += Math.sign(scalar);
-          scalar *= -1;
-          animate();
-        }
-      });
-    }
+//     function animate() {
+//       abort = fabric.util.animate({
+//         startValue: 0,
+//         endValue: 360 * scalar,
+//         duration: 1000,
+//         easing: fabric.util.ease.easeInOutSine,
+//         onChange: function (value) {
+//           shell.set('angle', value);
+//           clipPath.set('angle', value);
+//           img.set('dirty', true);
+//         },
+//         onComplete: function () {
+//           scalar += Math.sign(scalar);
+//           scalar *= -1;
+//           animate();
+//         }
+//       });
+//     }
 
-    img.scale(0.5).set({
-      left: 200,
-      top: 180,
-      clipPath: clipPath
-    });
-    shell.on('moving', ({ e, transform, pointer }) => {
-      //  only because they are absolutePositioned
-      clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
-      img.set('dirty', true);
-    });
-    shell.on('rotating', () => {
-      clipPath.set({ angle: shell.angle });
-      img.set('dirty', true);
-    });
-    shell.on('selected', () => {
-      abort();
-    });
-    shell.on('deselected', () => {
-      scalar = 1;
-      animate()
-    });
-    img.clipPath = clipPath;
-    canvas.add(img, shell);
-    canvas.setActiveObject(img);
+//     img.scale(0.5).set({
+//       left: 200,
+//       top: 180,
+//       clipPath: clipPath
+//     });
+//     shell.on('moving', ({ e, transform, pointer }) => {
+//       //  only because they are absolutePositioned
+//       clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
+//       img.set('dirty', true);
+//     });
+//     shell.on('rotating', () => {
+//       clipPath.set({ angle: shell.angle });
+//       img.set('dirty', true);
+//     });
+//     shell.on('selected', () => {
+//       abort();
+//     });
+//     shell.on('deselected', () => {
+//       scalar = 1;
+//       animate()
+//     });
+//     img.clipPath = clipPath;
+//     canvas.add(img, shell);
+//     canvas.setActiveObject(img);
 
-    animate();
-  });
-};
+//     animate();
+//   });
+// };
 
 
-
+/////////////////////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////
 ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
 
@@ -303,10 +309,10 @@ const finditem = () => {
     setCanvas(initCanvas());
   }, []);
 
-  useEffect(() => {
-    bringimage()
-    bringpuzzleimage()
-  }, [])
+  // useEffect(() => {
+  //   bringimage()
+  //   bringpuzzleimage()
+  // }, [])
 
   useEffect(
     () => {
@@ -465,7 +471,7 @@ const finditem = () => {
           setShowimagePuzzlediv={setShowimagePuzzlediv}
         ></PuzzleBundle>
 
-        <button onClick={finditem} > 테스트용버튼</button>
+        {/* <button onClick={finditem} > 테스트용버튼</button> */}
 
       </>
        : null}
@@ -488,6 +494,21 @@ const finditem = () => {
         <ScrollContainer className="scroll-container" activationDistance = "10">
             <ul className="list">
         {
+        setimagearraydata.map((a,i) => {
+          return <li className="item" key = {'imageitem'+i}>
+              <img className="image" src={a} onClick = {bringimageinhtml}></img>
+      </li>
+        })}
+        </ul>
+        </ScrollContainer>
+      </div>}
+
+
+
+      {/* {showimage && <div>
+        <ScrollContainer className="scroll-container" activationDistance = "10">
+            <ul className="list">
+        {
         imagearraydata.map((a,i) => {
           return <li className="item" key = {'imageitem'+i}>
               <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
@@ -495,9 +516,23 @@ const finditem = () => {
         })}
         </ul>
         </ScrollContainer>
-      </div>}
+      </div>} */}
       
       {showimagePuzzle && <div>
+        <ScrollContainer className="scroll-container" activationDistance = "10">
+            <ul className="list">
+        {
+        setpuzzlearraydata.map((b,i) => {
+          return <li className="item" key = {'puzzleitem'+i}>
+              <img className="puzzleimage" src={b} onClick = {bringimageinhtmlPuzzle}></img>
+            </li>
+        })}
+        </ul>
+        </ScrollContainer>
+      </div>}
+
+
+      {/* {showimagePuzzle && <div>
         <ScrollContainer className="scroll-container" activationDistance = "10">
             <ul className="list">
         {
@@ -508,8 +543,9 @@ const finditem = () => {
         })}
         </ul>
         </ScrollContainer>
-      </div>}
+      </div>} */}
 
+      {/* <button onClick={()=> alert()}>퀴즈 시작</button> */}
       <Quiz></Quiz>
       {showimagePuzzlediv && <Puzzle puzzleurl = {puzzleurl} setpuzzleurl ={setpuzzleurl} ></Puzzle>}
       <div>
