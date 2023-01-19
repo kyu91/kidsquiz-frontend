@@ -4,38 +4,40 @@
   }
 
 .quizWrapper {
-    background-color: rgba(255,51,140,0.6);
+    background-color: rgba(255,51,140,0.2);
     border-radius: 20px;
-    padding: 20px 10px 10px 10px;
+    padding: 50px 0px 20px 0px;
     margin : 30px auto;
-    width: 60%; 
+    width: 55%; 
     text-align: center;
     position: absolute ;
-    top: 20%;
-    left : 10%;;
+    top: 17%;
+    left :20%;
     z-index: 2;
 
 }
 #ques {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 24px;
+    font-size: 28px;
 }
 #imgAnswersWrapper {
     display: flex;
     justify-content: center;
-    padding: 10px; 
+    padding: 10px;
+    width: 100%; 
 }
 
 #imgAnswersWrapper img {
-    width: 20%;
-    margin: 10px 20px;
+    width: 40%;
+    margin: 30px 20px;
 }
 
 #resultMsg {
     padding: 1em 2em ;
     margin : 1em 0 2em 0;
-    background-color: rgba(255,255,0,0.5);
+    background-color: rgba(255,255,255,0.5);
     color: blue;
+    font-size: 20px;
     font-family: 'Noto Sans KR', sans-serif;
 }
 
