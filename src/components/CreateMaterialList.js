@@ -58,9 +58,11 @@ export default function CreateMaterialList() {
         // data.append("image", imageList);
         // data.append("puzzle", puzzleList);
         // data.append("multipleChoice", quizList);
-
-        const form = {title : event.target.title.value,puzzle : {objectId:puzzleList}, 
-        multipleChoice : {objectId:quizList}, image : {objectId:imageList}}
+        //0119 0312 밑에코드 2줄
+        // const form = {title : event.target.title.value,puzzle : {objectId:puzzleList}, 
+        // multipleChoice : {objectId:quizList}, image : {objectId:imageList}}
+        const form = {title : event.target.title.value, puzzle :puzzleList, 
+        multipleChoice : quizList, image : imageList}
         console.log("이건 몇번찍히니?", form)
         // console.log("askdnasdklasnd", token)
         // console.log("타이틀입니다", event.target.title.value)

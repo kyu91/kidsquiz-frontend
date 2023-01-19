@@ -114,6 +114,7 @@ const setpuzzlearraydata = ['https://file.mk.co.kr/mkde/N0/2018/04/20180425_3684
 //       },
 //       data : data2
 //     };
+
     
 //     await axios(config)
 //         .then(response => {
