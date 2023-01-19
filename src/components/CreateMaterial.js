@@ -171,11 +171,8 @@ export default function CreateMaterial() {
     event.preventDefault();
     const data = new FormData();
     data.append("title", event.target.title.value);
-    //st추가
     data.append("image", puzzleFile);
-    //title: event.target.title.value,
-    // thumbnail: files,
-    // studentMaxNum: radio
+
 
     console.log("12312123123123", data);
     onhandlePostPuzzle(data);
@@ -299,7 +296,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          href='/material'
+                          //href='/material'
                           variant="contained"
                           type="submit"
                           fullWidth
@@ -371,7 +368,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          //href='/material'
+                          href='/material'
                           variant="contained" 
                           type='submit'
                           fullWidth
@@ -493,7 +490,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          href='/material'
+                          //href='/material'
                           variant="contained" 
                           type='submit'
                           fullWidth

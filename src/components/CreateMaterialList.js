@@ -64,18 +64,11 @@ export default function CreateMaterialList() {
         const form = {title : event.target.title.value, puzzle :puzzleList, 
         multipleChoice : quizList, image : imageList}
         console.log("이건 몇번찍히니?", form)
-        // console.log("askdnasdklasnd", token)
-        // console.log("타이틀입니다", event.target.title.value)
         onhandlePostList(form)
         event.preventDefault();
     };
     //밑에임
         const onhandlePostList = async (forms) => {
-            console.log("qweqweqweqweqweqweqw",forms)
-            if (forms.puzzle.length === 0 || forms.multipleChoice.length === 0 || forms.image.length === 0){
-              console.log("리스트 없다")
-              return
-            }
             let config = {
               method: "post",
               url: "/api/classMaterial",
@@ -89,7 +82,7 @@ export default function CreateMaterialList() {
             console.log("🚀🚀🚀🚀", forms);
             await axios(config)
               .then((response) => {
-                // alert("모음집이 생성되었습니다.");
+                alert("모음집이 생성되었습니다.");
                 console.log(response);
               })
               .catch((error) => {
