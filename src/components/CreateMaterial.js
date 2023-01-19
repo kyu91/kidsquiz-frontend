@@ -171,11 +171,8 @@ export default function CreateMaterial() {
     event.preventDefault();
     const data = new FormData();
     data.append("title", event.target.title.value);
-    //st추가
     data.append("image", puzzleFile);
-    //title: event.target.title.value,
-    // thumbnail: files,
-    // studentMaxNum: radio
+
 
     console.log("12312123123123", data);
     onhandlePostPuzzle(data);
@@ -299,7 +296,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          href='/material'
+                          //href='/material'
                           variant="contained"
                           type="submit"
                           fullWidth
@@ -335,6 +332,29 @@ export default function CreateMaterial() {
                       variant="standard"
                       style={{ marginBottom: '2rem' } }
                     />
+                     {/* 나중에 밑에 지우면 됨 */}
+                    <TextField
+      
+                      id="columns"
+                      name="columns"
+                      label="행을 입력해주세요."
+                      fullWidth
+                      autoComplete="given-name"
+                      variant="standard"
+                      style={{ marginBottom: '2rem' } }
+                    />
+                    <TextField
+                  
+                      id="rows"
+                      name="row"
+                      label="열을 입력해주세요."
+                      fullWidth
+                      autoComplete="given-name"
+                      variant="standard"
+                      style={{ marginBottom: '2rem' } }
+                    />
+
+                    
                     {/* 퍼즐 이미지 업로드 */}
                     <Grid item xs={12}>
                       
@@ -493,7 +513,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          href='/material'
+                          //href='/material'
                           variant="contained" 
                           type='submit'
                           fullWidth

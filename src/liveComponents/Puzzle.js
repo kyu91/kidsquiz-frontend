@@ -9,7 +9,8 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
   //   setpuzzleurl(data)
   // })
   socket.off("allsolve")
-  socket.on("allsolve",  ()=> alert("참 잘했어요"))
+  socket.on("allsolve",  ()=> alert("모두 참 잘했어요!!!"))
+
   // props.url
 
   // const [tempvalue, settempvalue] = useState('0')
@@ -27,8 +28,8 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
 
   const JigsawPuzzle = ({
     imageSrc,
-    rows = 2,
-    columns = 2,
+    rows = 3,
+    columns = 3,
     onSolved = () => {}
   }) => {
     const [tiles, setTiles] = useState()
@@ -258,7 +259,7 @@ function Puzzle({puzzleurl,setpuzzleurl}) {
             if (newState.every(tile => tile.solved)) {
               // onSolved()
               socket.emit('solveSign');
-              // console.log('solvesign')
+              console.log('solvesign')
             }
             return newState
           })
