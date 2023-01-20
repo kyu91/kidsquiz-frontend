@@ -133,13 +133,12 @@ export default function Boards() {
                 width: 180,
                 height: 180,
                 float: "left",
-                
               }}
             />
             {/* <img src={board.thumbnail}></img> */}
-            <h2 style={{marginTop: '4%', fontSize: '2em'}}>{board.title}</h2>
-            <p style={{marginTop: '4%', fontSize: '1.1em'}}>시작시간 : {board.startDateTime.substr(0,10)}</p>
-            <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}>참여학생 : {board.studentMaxNum} 명</p>
+            <h2 style={{marginTop: '4%', fontFamily:'Noto Sans KR',fontSize: '1.8em'}}>{board.title}</h2>
+            <p style={{marginTop: '4%', fontFamily:'Noto Sans KR', fontSize: '1.1em'}}>시작시간 : {board.startDateTime.substr(0,10)} {board.startDateTime.substr(11,5)}</p>
+            <p style={{marginTop: '3%', fontFamily:'Noto Sans KR',marginBottom: '2%', fontSize: '1.1em'}}>참여학생 : {board.studentMaxNum} 명</p>
             <Button variant="outlined" style={{width: "20em", fontSize: "1em", fontWeight: "bold"}}
               onClick={()=>{
                 onClickHandlerHostBool(board)
