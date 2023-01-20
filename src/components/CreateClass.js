@@ -96,7 +96,7 @@ export default function CreateClass() {
 
   //서브밋
   const onhandlePost = async (data) => {
-    console.log("33333333", data);
+    
     const config = {
       method: "post",
       url: `/api/class/new`,
@@ -109,7 +109,9 @@ export default function CreateClass() {
 
     await axios(config)
       .then((response) => {
+        console.log('포스트 하고 온거',response)
         alert("강의가 생성되었습니다.");
+
         window.location.href = "/class";
       })
       .catch((error) => {
@@ -118,6 +120,7 @@ export default function CreateClass() {
   };
 
   const handleSubmit = (event) => {
+    console.log("33333333", files);
     event.preventDefault();
     const data = new FormData();
     data.append("title", event.target.title.value);
