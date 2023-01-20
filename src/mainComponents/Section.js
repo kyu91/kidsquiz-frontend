@@ -24,7 +24,7 @@ const Section = () => {
     {
       id: 3,
       icon: <PaidOutlinedIcon sx={{ fontSize: 100 }} color="primary" />,
-      sentence: '모든 서비스를 무료로 사용해 보세요.',
+      sentence: '모든 서비스를 무료로 사용해 보세요. 아이들의 학습을 돕는 것이 우리의 목표입니다.',
     },
   ];
   return (
