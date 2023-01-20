@@ -49,7 +49,7 @@ const Testimonial = () => {
       <Grid container spacing={3}>
         {reviews.map((review) => (
           <Grid item sm={12} md={4} key={review.id}>
-            <Card className={classes.testimonialCard}>
+            <Card className={classes.testimonialCard} style={{height: "100%"}}>
               <CardContent>
                 <Typography className={classes.testimonialStatement}>
                   "{review.statement}"
