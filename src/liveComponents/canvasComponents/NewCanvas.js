@@ -3,10 +3,12 @@ import Button from '@mui/material/Button';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 const NewCanvas = ({canvas, emitClear}) => {
-    const clearCanvas = () => {
-        canvas.clear();
-        emitClear(1);
-      }
+  const [hover, setHover] = React.useState(false);
+  const clearCanvas = () => {
+      canvas.clear();
+      emitClear(1);
+    }
+  
   return (
     <div>
     <Button 
@@ -14,6 +16,8 @@ const NewCanvas = ({canvas, emitClear}) => {
           type='button' 
           className="navBtn"
           name='clear' 
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
           onClick={clearCanvas}><RefreshIcon/> 
     </Button>
     </div>

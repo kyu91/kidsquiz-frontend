@@ -86,11 +86,34 @@ function Canvas() {
     "https://mblogthumb-phinf.pstatic.net/20120420_141/wpa12_1334893227134psCrD_JPEG/20120420_121453.jpg?type=w2",
     "https://imgnn.seoul.co.kr/img/upload/2020/08/18/SSI_20200818152435_V.jpg",
   ];
-  const setpuzzlearraydata = [
-    "https://file.mk.co.kr/mkde/N0/2018/04/20180425_3684665_1524645248.jpeg",
-    "https://img.insight.co.kr/static/2018/12/02/700/tf9u0wgv5g90929xq19n.jpg",
-    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc0EiWg%2FbtqH0pqTV8y%2FjZIG6HhIlkNqemjsGkx4i0%2Fimg.jpg",
-  ];
+
+  //퍼즐, 이미지 묶음 데이터 담을 state(수업의 오브젝트 아이디를 줌)
+  const [classMaterials, setClassMaterials] = useState([]);
+
+  //퍼즐, 이미지 묶음 데이터 get 요청으로 받아옴
+  useEffect(() => {
+    const getClassMaterials = async () => {
+      const config = {
+        method: "get",
+        url: `/api/class/material/${localStorage.getItem("roomName")}`,
+        // url: `/api/class/material/63cae319ef9f5b63ce6b6e4b`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      };
+
+      await axios(config)
+        .then((response) => {
+          console.log('get잘 들어오니?',response.data)
+          setClassMaterials(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getClassMaterials();
+  }, []);
 
   ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -391,7 +414,10 @@ function Canvas() {
         {/* 리셋 */}
         {hostBool ? (
           <>
-            <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
+            <NewCanvas 
+              canvas={canvas} 
+              emitClear={emitClear}
+            ></NewCanvas>
 
             {/* 선택 삭제 */}
             <Deletes
@@ -402,26 +428,26 @@ function Canvas() {
 
             {/* 도형 묶음 */}
             <div className="figuresContiner">
-            <Button onClick={showFigureBundleHandler}>
-              {/* <CategoryIcon /> */}
-              도형모음
-            </Button>
-            {showFigureBundle ? (
-              <div className="figuresChilgyoBox">
-                <Figures
-                  canvas={canvas}
-                  colorvalue={colorvalue}
-                  emitAdd={emitAdd}
-                  showFigureBundleHandler={showFigureBundleHandler}
-                ></Figures>
-                <Chilgyo
-                  drawmodeonoff={drawmodeonoff}
-                  emitAdd={emitAdd}
-                  canvas={canvas}
-                  showFigureBundleHandler={showFigureBundleHandler}
-                ></Chilgyo>
-              </div>
-            ) : null}
+              <Button onClick={showFigureBundleHandler}>
+                {/* <CategoryIcon /> */}
+                도형모음
+              </Button>
+              {showFigureBundle ? (
+                <div className="figuresChilgyoBox">
+                  <Figures
+                    canvas={canvas}
+                    colorvalue={colorvalue}
+                    emitAdd={emitAdd}
+                    showFigureBundleHandler={showFigureBundleHandler}
+                  ></Figures>
+                  <Chilgyo
+                    drawmodeonoff={drawmodeonoff}
+                    emitAdd={emitAdd}
+                    canvas={canvas}
+                    showFigureBundleHandler={showFigureBundleHandler}
+                  ></Chilgyo>
+                </div>
+              ) : null}
             </div>
 
             {!drawmodeonoff && (
@@ -499,6 +525,7 @@ function Canvas() {
                       className="image"
                       src={a}
                       onClick={bringimageinhtml}
+                      alt="이미지"
                     ></img>
                   </li>
                 );
@@ -521,17 +548,18 @@ function Canvas() {
         </ScrollContainer>
       </div>} */}
 
-      {showimagePuzzle && (
+      {classMaterials.puzzle && (
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
-              {setpuzzlearraydata.map((b, i) => {
+              {classMaterials.puzzle.map((b, i) => {
                 return (
                   <li className="item" key={"puzzleitem" + i}>
                     <img
                       className="puzzleimage"
-                      src={b}
+                      src={b.image}
                       onClick={bringimageinhtmlPuzzle}
+                      alt='puzzle'
                     ></img>
                   </li>
                 );

@@ -267,7 +267,7 @@ export default function CreateMaterialList() {
         >
           [퍼즐] {Puzzle.title}
         </Button>
-        <h2 style={{ fontSize: "1em" }}></h2>
+        <p style={{ fontSize: "1em" }}></p>
                 <input
                   type="checkbox"
                   value={Puzzle.data}

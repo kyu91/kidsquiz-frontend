@@ -25,7 +25,6 @@ const LiveMain = () => {
     const updatedUrl = location.pathname.replace('/intro', '');
     //방이름 추출
     const roomName = updatedUrl.split('/')[2];
-    const useNavStyle = React.useRef(null);
     //토큰이 없다면 useNavStyle요소를 숨김
     const navStyle = {
         display: token ? 'block' : 'none',
@@ -53,20 +52,21 @@ const LiveMain = () => {
 
     // Basic cursor component
     // 다른 사용자의 현재 상태 확인
-    function Cursor({ x, y }) {
-        return (
-        <div>
-            <img style={{
-                position: "absolute",
-                transform: `translate(${x}px, ${y}px)`,
-                zIndex: 900,
-                width : 50,
-                height :50
-                }}
-                src = {cursor}
-            />
-        </div>
-        );}
+    // function Cursor({ x, y }) {
+    //     return (
+    //     <div>
+    //         <img style={{
+    //             position: "absolute",
+    //             transform: `translate(${x}px, ${y}px)`,
+    //             zIndex: 900,
+    //             width : 50,
+    //             height :50
+    //             }}
+    //             src = {cursor}
+    //             alt='cursor'
+    //         />
+    //     </div>
+    //     );}
  
   return (
 
