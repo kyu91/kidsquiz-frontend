@@ -131,7 +131,6 @@ export default function Boards() {
                 width: 180,
                 height: 180,
                 float: "left",
-                
               }}
             />
             {/* <img src={board.thumbnail}></img> */}
@@ -144,6 +143,7 @@ export default function Boards() {
               }}>{board.title}</h2>
             <p style={{marginTop: '4%', fontSize: '1.1em'}}>날짜 : {board.startDateTime.substr(0,10)} / 시간 : {board.startDateTime.substr(11,5)}</p>
             <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}>참여학생 : {board.studentMaxNum} 명</p>
+
             <Button variant="outlined" style={{width: "20em", fontSize: "1em", fontWeight: "bold"}}
               onClick={()=>{
                 onClickHandlerHostBool(board)
