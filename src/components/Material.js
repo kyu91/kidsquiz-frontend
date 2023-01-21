@@ -145,12 +145,120 @@ export default function Materials() {
               component={Box}
               style={{ width: "10em", fontSize: "1em" }}
             >
-              {Puzzle.title}
+              [퍼즐] {Puzzle.title}
             </Button>
             <h2 style={{ fontSize: "1em" }}></h2>
           </Box>
         );
       })}
+    {/* 퀴즈 리스트 */}
+    {MultipleChoices.map((MultipleChoice, index) => {
+    return (
+      <Box
+        key={index}
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        <Box
+          elevation={0}
+          sx={{
+            m: 1,
+            width: "15rem",
+            height: "15rem",
+            borderRadius: "1.5rem",
+            background: "#f8f8ff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            
+          }}>
+            
+          <Paper
+            elevation={0}
+            component="img"
+            src={MultipleChoice.image || "https://images.chosun.com/resizer/5UBvfTU-pa3fiMELyLWDZ1QVPLs=/530x576/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/JC53LPAYARPTIYHZKBA5BHT7MA.png"}
+            sx={{
+              width: "13rem",
+              height: "13rem",
+              borderRadius: "1.5rem",
+              background: "#f8f8ff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "1px solid #dde0ea",
+            }}
+          >
+          </Paper>
+        </Box>
+        <Button
+          variant="text"
+          component={Box}
+          style={{ width: "10em", fontSize: "1em" }}
+        >
+          [퀴즈] {MultipleChoice.question}
+        </Button>
+      </Box>
+    );
+  
+  })}
+
+      {/* 이미지 리스트 */}
+      {justImages.map((Image, index) => {
+    return (
+      <Box
+        key={index}
+        sx={{
+          textAlign: "center",
+        }}
+      >
+        <Box
+          elevation={0}
+          sx={{
+            m: 1,
+            width: "15rem",
+            height: "15rem",
+            borderRadius: "1.5rem",
+            background: "#f8f8ff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "1rem",
+            
+          }}>
+            
+          <Paper
+            elevation={0}
+            component="img"
+            src={Image.image || "https://images.chosun.com/resizer/5UBvfTU-pa3fiMELyLWDZ1QVPLs=/530x576/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/JC53LPAYARPTIYHZKBA5BHT7MA.png"}
+            sx={{
+              width: "13rem",
+              height: "13rem",
+              borderRadius: "1.5rem",
+              background: "#f8f8ff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "1px solid #dde0ea",
+            }}
+          >
+            
+          </Paper>
+        </Box>
+        <Button
+          variant="text"
+          component={Box}
+          style={{ width: "10em", fontSize: "1em" }}
+        >
+          {"[이미지]"}
+        </Button>
+      </Box>
+    );
+  })}
+  
+  
+    
     </Box>
   );
 }
