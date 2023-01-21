@@ -35,6 +35,7 @@ import ImageBundle from "./canvasComponents/ImageBundle";
 import PuzzleBundle from "./canvasComponents/PuzzleBundle";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Crop32Icon from "@mui/icons-material/Crop32";
+import { useLocation } from "react-router-dom";
 
 // let puzzleurl
 
@@ -65,6 +66,14 @@ function Canvas() {
     }
   };
 
+  //현재URL에서 /intro를 제거
+
+  const location = useLocation();
+  const updatedUrl = location.pathname.replace("/intro", "");
+
+  //방이름을 추출
+  const roomName = updatedUrl.split("/")[2];
+
   const bringimageinhtml = (event) => {
     let url = event.currentTarget.src;
     addImage(url);
@@ -78,15 +87,6 @@ function Canvas() {
     setShowimagePuzzle(false);
   };
 
-  const setimagearraydata = [
-    "https://file.mk.co.kr/mkde/N0/2018/04/20180425_3684665_1524645248.jpeg",
-    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc0EiWg%2FbtqH0pqTV8y%2FjZIG6HhIlkNqemjsGkx4i0%2Fimg.jpg",
-    "https://img.insight.co.kr/static/2018/12/02/700/tf9u0wgv5g90929xq19n.jpg",
-    "http://www.astronomer.rocks/news/photo/201811/86557_11344_4542.jpg",
-    "https://mblogthumb-phinf.pstatic.net/20120420_141/wpa12_1334893227134psCrD_JPEG/20120420_121453.jpg?type=w2",
-    "https://imgnn.seoul.co.kr/img/upload/2020/08/18/SSI_20200818152435_V.jpg",
-  ];
-
   //퍼즐, 이미지 묶음 데이터 담을 state(수업의 오브젝트 아이디를 줌)
   const [classMaterials, setClassMaterials] = useState([]);
 
@@ -95,7 +95,7 @@ function Canvas() {
     const getClassMaterials = async () => {
       const config = {
         method: "get",
-        url: `/api/class/material/${localStorage.getItem("roomName")}`,
+        url: `/api/class/material/${roomName}`,
         // url: `/api/class/material/63cae319ef9f5b63ce6b6e4b`,
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +105,6 @@ function Canvas() {
 
       await axios(config)
         .then((response) => {
-          console.log('get잘 들어오니?',response.data)
           setClassMaterials(response.data);
         })
         .catch((error) => {
@@ -414,10 +413,7 @@ function Canvas() {
         {/* 리셋 */}
         {hostBool ? (
           <>
-            <NewCanvas 
-              canvas={canvas} 
-              emitClear={emitClear}
-            ></NewCanvas>
+            <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
 
             {/* 선택 삭제 */}
             <Deletes
@@ -518,12 +514,12 @@ function Canvas() {
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
-              {setimagearraydata.map((a, i) => {
+              {classMaterials.image.map((a, i) => {
                 return (
                   <li className="item" key={"imageitem" + i}>
                     <img
                       className="image"
-                      src={a}
+                      src={a.image}
                       onClick={bringimageinhtml}
                       alt="이미지"
                     ></img>
@@ -548,7 +544,7 @@ function Canvas() {
         </ScrollContainer>
       </div>} */}
 
-      {classMaterials.puzzle && (
+      {showimagePuzzle && (
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
@@ -559,7 +555,7 @@ function Canvas() {
                       className="puzzleimage"
                       src={b.image}
                       onClick={bringimageinhtmlPuzzle}
-                      alt='puzzle'
+                      alt="puzzle"
                     ></img>
                   </li>
                 );

@@ -76,14 +76,14 @@ export default function Boards() {
       });
   };
   const onClickHandlerHostBool = async(e) => {
-    console.log("✅ 호스트 체크 합시다")
+    console.log("✅ 호스트 체크 합시다", e)
     if (hostToken) {
         setRoomName(e._id);
         await getHost(hostToken, e._id);
     }
     
     localStorage.setItem("roomName", e._id);
-    // navigate(`/live/${e._id}`);
+    // localStorage.setItem("classMaterial", e.classMaterial);
     window.open(`/live/${e._id}`);
   };
 
