@@ -3,13 +3,11 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useLocation } from "react-router-dom";
-
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./component_style.css";
-import { Typography } from "@mui/material";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
-import { border } from '@mui/system';
+
+import "./component_style.css";
 
 export default function Materials() {
   //const [materials, setMaterials] = React.useState([]);

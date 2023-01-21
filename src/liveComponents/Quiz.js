@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getSocket, getSocketName } from '../controller/MediasoupController'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import PetsIcon from '@mui/icons-material/Pets';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import './css/quiz.css';
 const socket = getSocket()
 
@@ -113,8 +111,8 @@ function Quiz () {
         <div className='quizWrapper'>
             <p id="ques"> {question}  </p>
             <div id="imgAnswersWrapper">
-                <img id="answerImg1" onClick={() => {checkAnswer(1, rightAnswer, name)}} src= {choice1}></img>
-                <img id="answerImg2" onClick={() => {checkAnswer(2, rightAnswer, name)}} src= {choice2}></img>
+                <img id="answerImg1" onClick={() => {checkAnswer(1, rightAnswer, name)}} src= {choice1} alt=""></img>
+                <img id="answerImg2" onClick={() => {checkAnswer(2, rightAnswer, name)}} src= {choice2} alt=""></img>
             </div>         
         {ansChosen ? (<div id="resultMsg"> {result} </div>) : (<div> </div>)} 
         <button id="finishQuiz" onClick={finishQuiz}>퀴즈 종료</button>

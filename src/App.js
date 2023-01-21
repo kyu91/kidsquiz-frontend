@@ -15,7 +15,6 @@ import LiveMain from './liveComponents/LiveMain';
 import GuestIntro from './liveComponents/GuestIntro';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import { useState } from 'react';
 import Materials from './components//Material';
 import CreateMaterial from './components/createMaterialgroup/CreateMaterial';

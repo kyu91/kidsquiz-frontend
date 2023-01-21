@@ -47,13 +47,6 @@ export default function CreateClass() {
   //라디오 버튼
   const [radio, setRadio] = React.useState("1");
 
-
-  //비밀번호
-  const [password, setPassword] = React.useState("");
-  const handleChangePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
   //교구선택
   const [materials, setMaterial] = React.useState("");
   const handleChangeMaterial = (event) => {
@@ -121,7 +114,6 @@ export default function CreateClass() {
     const data = new FormData();
     data.append("title", event.target.title.value);
     data.append("startDateTime", formattedDate);
-    data.append("classKey", password);
     if (materialList[materials]) {
       data.append("classMaterial", materialList[materials]._id);
       // console.log(materiallistId);
@@ -214,22 +206,6 @@ export default function CreateClass() {
                 }
               </RadioGroup>
             </FormControl>
-          </Grid>
-
-          {/* 입장 비밀번호 */}
-          <Grid item xs={12}>
-            <Typography variant="h5" mt={2}>
-              입장비밀번호
-            </Typography>
-            <TextField
-              id="classKey"
-              name="classKey"
-              label="입장 비밀번호"
-              fullWidth
-              autoComplete="shipping address-line2"
-              variant="standard"
-              onChange={handleChangePassword}
-            />
           </Grid>
 
           {/* 교구 선택 */}

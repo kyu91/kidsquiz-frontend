@@ -2,7 +2,7 @@ import React from 'react'
 import { v1 as uuid } from 'uuid'
 import { fabric } from 'fabric';
 import { Button } from '@mui/material';
-import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
+// import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 
 
 const Chilgyo = ({ drawmodeonoff, emitAdd, canvas, showFigureBundleHandler }) => {
