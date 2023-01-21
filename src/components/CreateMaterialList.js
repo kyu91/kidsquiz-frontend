@@ -265,7 +265,7 @@ export default function CreateMaterialList() {
           component={Box}
           style={{ width: "10em", fontSize: "1em" }}
         >
-          {Puzzle.title}
+          [퍼즐] {Puzzle.title}
         </Button>
         <h2 style={{ fontSize: "1em" }}></h2>
                 <input
@@ -326,7 +326,7 @@ export default function CreateMaterialList() {
           component={Box}
           style={{ width: "10em", fontSize: "1em" }}
         >
-          {MultipleChoice.question}
+          [퀴즈] {MultipleChoice.question}
         </Button>
         <h2 style={{ fontSize: "1em" }}></h2>
                 <input
@@ -387,7 +387,7 @@ export default function CreateMaterialList() {
           component={Box}
           style={{ width: "10em", fontSize: "1em" }}
         >
-          {"교육용 이미지"}
+          {"[이미지]"}
         </Button>
         <h2 style={{ fontSize: "1em" }}></h2>
                 <input
