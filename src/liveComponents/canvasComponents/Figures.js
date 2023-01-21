@@ -2,11 +2,9 @@ import React from 'react'
 import { v1 as uuid } from 'uuid'
 import { fabric } from 'fabric';
 import { Button } from '@mui/material';
-import SquareIcon from '@mui/icons-material/Square';
-import CircleIcon from '@mui/icons-material/Circle';
-import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
+import "../css/Canvas.css"
 
-const Figures = ({canvas, colorvalue, emitAdd}) => {
+const Figures = ({canvas, colorvalue, emitAdd, showFigureBundleHandler}) => {
     const addShape = (e) => {
         let type = e.target.name;
         let object
@@ -35,10 +33,10 @@ const Figures = ({canvas, colorvalue, emitAdd}) => {
         canvas.add(object)
         canvas.renderAll()
         emitAdd({obj: object, id: object.id})
-    
+        showFigureBundleHandler();
       };
   return (
-    <div>
+    <div className="figuresBox">
         <Button 
           key="Circle"
           type='button' 

@@ -18,9 +18,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-
-
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -49,6 +46,7 @@ export default function CreateClass() {
   const [radioValue] = React.useState(["1", "2", "3", '4']);
   //라디오 버튼
   const [radio, setRadio] = React.useState("1");
+
 
   //비밀번호
   const [password, setPassword] = React.useState("");
@@ -95,8 +93,7 @@ export default function CreateClass() {
   }, []);
 
   //서브밋
-  const onhandlePost = async (data) => {
-    
+  const onhandleClassPost = async (data) => {
     const config = {
       method: "post",
       url: `/api/class/new`,
@@ -111,7 +108,6 @@ export default function CreateClass() {
       .then((response) => {
         console.log('포스트 하고 온거',response)
         alert("강의가 생성되었습니다.");
-
         window.location.href = "/class";
       })
       .catch((error) => {
@@ -120,7 +116,7 @@ export default function CreateClass() {
   };
 
   const handleSubmit = (event) => {
-    console.log("33333333", files);
+    console.log("33333333", materialList[materials]);
     event.preventDefault();
     const data = new FormData();
     data.append("title", event.target.title.value);
@@ -135,7 +131,7 @@ export default function CreateClass() {
     data.append("studentMaxNum", radio);
     data.append("image", files);
 
-    onhandlePost(data);
+    onhandleClassPost(data);
   };
 
   return (
@@ -250,7 +246,6 @@ export default function CreateClass() {
                   id="demo-simple-select"
                   value={materials}
                   label="Age"
-                  // onClick={onhandleMaterialList}
                   onChange={handleChangeMaterial}
                 >
                   {materialList.map((material, index) => {
