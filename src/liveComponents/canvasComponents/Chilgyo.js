@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 
 
-const Chilgyo = ({ drawmodeonoff, emitAdd, canvas }) => {
+const Chilgyo = ({ drawmodeonoff, emitAdd, canvas, showFigureBundleHandler }) => {
     const addTangram = ()=> {
     
         let object
@@ -97,6 +97,7 @@ const Chilgyo = ({ drawmodeonoff, emitAdd, canvas }) => {
         object.set({id: uuid()})
         canvas.add(object)
         emitAdd({obj: object, id: object.id})
+        showFigureBundleHandler();
       }
   return (
     <div>
@@ -105,7 +106,10 @@ const Chilgyo = ({ drawmodeonoff, emitAdd, canvas }) => {
           type='button' 
           className="navBtn"
           name='addTangram' 
-          onClick={addTangram}><DashboardCustomizeIcon/></Button>}
+          onClick={addTangram}>
+            {/* <DashboardCustomizeIcon/> */}
+            칠교놀이
+          </Button>}
     </div>
   )
 }
