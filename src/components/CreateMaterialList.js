@@ -75,6 +75,7 @@ export default function CreateMaterialList() {
     await axios(config)
       .then((response) => {
         alert("모음집이 생성되었습니다.");
+        window.location.reload();
         console.log(response);
       })
       .catch((error) => {

@@ -11,7 +11,6 @@ import { grey, blue } from '@mui/material/colors';
 
 
 export default function CreateMaterial() {
-
   //텍스트 퀴즈 드가자!
   const handleSubmitTextQuiz = (event) => {
     event.preventDefault();
@@ -38,8 +37,9 @@ export default function CreateMaterial() {
     console.log("🚀🚀🚀🚀", data);
     await axios(config)
       .then((response) => {
-        alert("텍스트 퀴즈가 생성되었습니다.");
+        alert("텍스트 퀴즈가 생성되었습니다.")
         console.log(response);
+      
       })
       .catch((error) => {
         console.error(error);
@@ -83,6 +83,8 @@ export default function CreateMaterial() {
     await axios(config)
       .then((response) => {
         alert("이미지 퀴즈가 생성되었습니다.");
+        //밑에거는 post 데이터를포함
+        //location.reload(); 
         console.log(response);
       })
       .catch((error) => {

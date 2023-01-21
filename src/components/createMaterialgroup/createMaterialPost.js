@@ -14,6 +14,8 @@ export const onhandlePostTextQuiz = async(data) => {
     await axios(config)
         .then((response) => {
         alert("텍스트 퀴즈가 생성되었습니다.");
+        //선택시 화면 새로고침
+        window.location.reload();
         console.log(response);
         })
         .catch((error) => {
@@ -35,6 +37,7 @@ export const onhandlePostImgQuiz = async (data) => {
     await axios(config)
       .then((response) => {
         alert("이미지 퀴즈가 생성되었습니다.");
+        window.location.reload();
         console.log(response);
       })
       .catch((error) => {
@@ -57,6 +60,7 @@ export const onhandlePostPuzzle = async (data) => {
     await axios(config)
       .then((response) => {
         alert("퍼즐이 생성되었습니다.");
+        window.location.reload();
         console.log(response);
       })
       .catch((error) => {
@@ -78,6 +82,7 @@ export const onhandlePostImages = async (data) => {
     await axios(config)
       .then((response) => {
         alert("이미지가 생성되었습니다.");
+        window.location.reload();
         console.log(response);
       })
       .catch((error) => {
