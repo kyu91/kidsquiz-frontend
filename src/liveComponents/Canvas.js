@@ -107,6 +107,7 @@ function Canvas() {
       await axios(config)
         .then((response) => {
           setClassMaterials(response.data);
+          console.log(response.data.image)
         })
         .catch((error) => {
           console.error(error);
@@ -302,6 +303,30 @@ function Canvas() {
   // };
 
   /////////////////////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////
+
+   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
+
+   const DragandDrop = (e) =>{
+    // settempurl(e.target.src)
+    e.stopPropagation()
+    let tempurl = e.target.src
+    console.log(tempurl,'테스트용콘솔')
+      let object;
+      fabric.Image.fromURL(tempurl, function (Image) {
+        Image.scale(0.4);
+        object = Image;
+        object.set({ id: uuid() });
+        canvas.add(object);
+        emitAddImage({ url: tempurl, id: object.id });
+        canvas.renderAll();
+      });
+  } 
+
+  const prevent = (e) => {
+    e.preventDefault()
+  }
+
+////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {
@@ -528,7 +553,7 @@ function Canvas() {
                       draggable = 'true'
                       onDragOver={prevent}
                       onDragEnd= {DragandDrop}
-                      src={a}
+                      src={a.image}
                       onClick={bringimageinhtml}
                       alt="이미지"
                     ></img>
