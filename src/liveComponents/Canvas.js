@@ -66,6 +66,7 @@ function Canvas() {
     }
   };
 
+
   //현재URL에서 /intro를 제거
 
   const location = useLocation();
@@ -361,6 +362,7 @@ function Canvas() {
         }
       });
 
+
       canvas.on("path:created", function (options) {
         if (options.path) {
           options.path.set({ id: uuid() });
@@ -380,6 +382,7 @@ function Canvas() {
       addimageObj(canvas);
     }
   }, [canvas]);
+
 
   const addImage = (imageURL) => {
     let object;
@@ -424,6 +427,7 @@ function Canvas() {
 
             {/* 도형 묶음 */}
             <div className="figuresContiner">
+
               <Button onClick={showFigureBundleHandler}>
                 {/* <CategoryIcon /> */}
                 도형모음
@@ -444,6 +448,7 @@ function Canvas() {
                   ></Chilgyo>
                 </div>
               ) : null}
+
             </div>
 
             {!drawmodeonoff && (
@@ -514,12 +519,16 @@ function Canvas() {
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
+
               {classMaterials.image.map((a, i) => {
                 return (
                   <li className="item" key={"imageitem" + i}>
                     <img
                       className="image"
-                      src={a.image}
+                      draggable = 'true'
+                      onDragOver={prevent}
+                      onDragEnd= {DragandDrop}
+                      src={a}
                       onClick={bringimageinhtml}
                       alt="이미지"
                     ></img>
@@ -548,6 +557,7 @@ function Canvas() {
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
+
               {classMaterials.puzzle.map((b, i) => {
                 return (
                   <li className="item" key={"puzzleitem" + i}>
