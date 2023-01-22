@@ -13,7 +13,7 @@ export const emitAdd = (obj) => {
 }
 export const emitAddImage = (data) => {
   socket.emit('imageobj-added', data)
-  console.log("이미지 전송 완료")
+  // console.log("이미지 전송 완료")
   console.log(data)
 }
 export const emitAddP = (path) =>{
