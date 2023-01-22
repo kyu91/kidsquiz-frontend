@@ -68,12 +68,12 @@ export const addObj = canvas => {
 export const addimageObj = canvas => {
   socket.off('new-addimg')
   socket.on('new-addimg', data =>{
-    const {url, id} = data
+    const {url, id, left, top} = data
     let object
     fabric.Image.fromURL(url, function(Image){
       Image.scale(0.4);
       object = Image
-      object.set({id : id})
+      object.set({id : id, left : left, top : top})
       canvas.add(object);
       canvas.renderAll()
     })

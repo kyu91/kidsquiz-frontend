@@ -66,7 +66,6 @@ function Canvas() {
     }
   };
 
-
   //현재URL에서 /intro를 제거
 
   const location = useLocation();
@@ -311,13 +310,20 @@ function Canvas() {
     e.stopPropagation()
     let tempurl = e.target.src
     console.log(tempurl,'테스트용콘솔')
+    // canvas.on("mouse:move", function(e){
+    //   console.log(e.pointer)
+    // })
+    console.log(e.clientX,e.clientY)
       let object;
       fabric.Image.fromURL(tempurl, function (Image) {
         Image.scale(0.4);
         object = Image;
-        object.set({ id: uuid() });
+        console.log(object)
+        // console.log(((object.height)*0.8))
+        object.set({left : e.clientX - ((object.width)*0.278), top : e.clientY - ((object.height)*0.425), originX: 'left', originY: 'top', id: uuid()})
+        // object.set({left : e.clientX - ((object.width) * 0.5), top : e.clientX, id: uuid()})
         canvas.add(object);
-        emitAddImage({ url: tempurl, id: object.id });
+        emitAddImage({ url: tempurl, id: object.id, left: object.left, top: object.top});
         canvas.renderAll();
       });
   } 
@@ -386,6 +392,10 @@ function Canvas() {
           emitModify(modifiedObj);
         }
       });
+
+      // canvas.on("mouse:move", function(e){
+      //   console.log(e.pointer)
+      // })
 
 
       canvas.on("path:created", function (options) {
