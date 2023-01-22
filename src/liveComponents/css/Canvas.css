@@ -90,6 +90,22 @@ input[type=range] {
   background: none;
 }
 
+.figuresContiner{
+  display: inline-block;
+}
+
+.figuresChilgyoBox{
+  display: block;
+  flex-direction: column;
+  position: absolute;
+  z-index: 1;
+}
+
+.figuresBox{
+  display: block;
+  width: 100px;
+}
+
 
 
 /* @media (prefers-reduced-motion: no-preference) {

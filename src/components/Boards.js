@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -36,7 +36,6 @@ export default function Boards() {
   }, []);
 
   const location = useLocation();
-  const navigate = useNavigate()
   const token = localStorage.getItem("token");
   React.useEffect(() => {
     if (location.pathname === "/class") {
@@ -77,14 +76,14 @@ export default function Boards() {
       });
   };
   const onClickHandlerHostBool = async(e) => {
-    console.log("✅ 호스트 체크 합시다")
+    console.log("✅ 호스트 체크 합시다", e)
     if (hostToken) {
         setRoomName(e._id);
         await getHost(hostToken, e._id);
     }
     
     localStorage.setItem("roomName", e._id);
-    // navigate(`/live/${e._id}`);
+    // localStorage.setItem("classMaterial", e.classMaterial);
     window.open(`/live/${e._id}`);
   };
 
@@ -111,7 +110,6 @@ export default function Boards() {
         <Typography variant="h3" style={{width: "100%", fontSize: "1.4em", marginBottom: "1em"}}>지금바로 손쉽게 화상강의를 생성해 보세요</Typography>
         <Button variant="contained" component={Link} to="/class/new"
           style={{width: "10em", fontSize: "1em", fontWeight: "bold"}}>
-          
           강의 생성
         </Button>
       </Paper>
@@ -133,13 +131,19 @@ export default function Boards() {
                 width: 180,
                 height: 180,
                 float: "left",
-                
               }}
             />
             {/* <img src={board.thumbnail}></img> */}
-            <h2 style={{marginTop: '4%', fontSize: '2em'}}>{board.title}</h2>
-            <p style={{marginTop: '4%', fontSize: '1.1em'}}>시작시간 : {board.startDateTime.substr(0,10)}</p>
+            <h2 style={{
+              marginTop: '4%', 
+              fontSize: '1.5em',
+              whiteSpace: 'nowrap',
+              overflow: "hidden",
+              textOverflow: 'ellipsis',
+              }}>{board.title}</h2>
+            <p style={{marginTop: '4%', fontSize: '1.1em'}}>날짜 : {board.startDateTime.substr(0,10)} / 시간 : {board.startDateTime.substr(11,5)}</p>
             <p style={{marginTop: '4%', marginBottom: '2%', fontSize: '1.1em'}}>참여학생 : {board.studentMaxNum} 명</p>
+
             <Button variant="outlined" style={{width: "20em", fontSize: "1em", fontWeight: "bold"}}
               onClick={()=>{
                 onClickHandlerHostBool(board)

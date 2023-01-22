@@ -1,13 +1,12 @@
 import React from 'react';
 import { Grid, Typography, Button, Box } from '@mui/material';
-import bestTeams from '../images/bestTeams.jpg';
 import useStyles from '../styles/styles';
 
 const AboutUs = () => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.aboutUsContainer}>
+    <Box className={classes.aboutUsContainer} style={{background: "white"}}>
       <Grid container spacing={6} className={classes.gridContainer}>
         <Grid item xs={12} md={5}>
           <img src='https://www.nhis.or.kr/static/alim/paper/oldpaper/202111/assets/images/sub/sub10_03.gif' 

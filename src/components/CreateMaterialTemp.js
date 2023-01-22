@@ -11,7 +11,6 @@ import { grey, blue } from '@mui/material/colors';
 
 
 export default function CreateMaterial() {
-
   //텍스트 퀴즈 드가자!
   const handleSubmitTextQuiz = (event) => {
     event.preventDefault();
@@ -38,8 +37,9 @@ export default function CreateMaterial() {
     console.log("🚀🚀🚀🚀", data);
     await axios(config)
       .then((response) => {
-        alert("텍스트 퀴즈가 생성되었습니다.");
+        alert("텍스트 퀴즈가 생성되었습니다.")
         console.log(response);
+      
       })
       .catch((error) => {
         console.error(error);
@@ -83,6 +83,8 @@ export default function CreateMaterial() {
     await axios(config)
       .then((response) => {
         alert("이미지 퀴즈가 생성되었습니다.");
+        //밑에거는 post 데이터를포함
+        //location.reload(); 
         console.log(response);
       })
       .catch((error) => {
@@ -171,11 +173,8 @@ export default function CreateMaterial() {
     event.preventDefault();
     const data = new FormData();
     data.append("title", event.target.title.value);
-    //st추가
     data.append("image", puzzleFile);
-    //title: event.target.title.value,
-    // thumbnail: files,
-    // studentMaxNum: radio
+
 
     console.log("12312123123123", data);
     onhandlePostPuzzle(data);
@@ -299,7 +298,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          href='/material'
+                          //href='/material'
                           variant="contained"
                           type="submit"
                           fullWidth
@@ -516,7 +515,7 @@ export default function CreateMaterial() {
                           취소
                         </Button>
                         <Button
-                          href='/material'
+                          //href='/material'
                           variant="contained" 
                           type='submit'
                           fullWidth
