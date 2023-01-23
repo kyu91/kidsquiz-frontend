@@ -130,7 +130,7 @@ function Quiz() {
   // if (ansChosed) return ()
   return (
     <>
-      {hostBool ? (
+      {hostBool ? 
         <div>
           <Button id="btnnn" onClick={setdiv}>
             퀴즈 시작
@@ -139,18 +139,18 @@ function Quiz() {
           {tempdiv && (
             <List
               sx={{
-                width: "300px",
+                width: "100px",
                 maxWidth: 180,
                 bgcolor: "orange",
                 borderRadius: "15%",
               }}
             >
               <ListItem>
-                <ListItemAvatar>
+                {/* <ListItemAvatar>
                   <Avatar>
                     <PetsIcon />
                   </Avatar>
-                </ListItemAvatar>
+                </ListItemAvatar> */}
                 <ListItemText
                   primary="동물 퀴즈"
                   onClick={() => {
@@ -172,19 +172,19 @@ function Quiz() {
                 />
               </ListItem>
               <ListItem>
-                <ListItemAvatar>
+                {/* <ListItemAvatar>
                   <Avatar>
                     <WorkIcon />
                   </Avatar>
-                </ListItemAvatar>
+                </ListItemAvatar> */}
                 <ListItemText primary="물건 퀴즈" />
               </ListItem>
               <ListItem>
-                <ListItemAvatar>
+                {/* <ListItemAvatar>
                   <Avatar>
                     <DirectionsBusIcon />
                   </Avatar>
-                </ListItemAvatar>
+                </ListItemAvatar> */}
                 <ListItemText primary="탈것 퀴즈" />
               </ListItem>
             </List>
@@ -202,7 +202,7 @@ function Quiz() {
                 setquizStarted(true)
             }}> 퀴즈 시작 </button> */}
         </div>
-      ) : null}
+       : null}
     </>
   );
 }

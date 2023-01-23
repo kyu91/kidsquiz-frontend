@@ -460,6 +460,7 @@ function Canvas() {
     //!리턴
     <div className="App">
       <div id="buttonGroup">
+        
         {/* 팬/도형 토글 */}
         <div className="drowContainer">
           <DrawToggle
@@ -561,14 +562,11 @@ function Canvas() {
                     setShowimagePuzzle={setShowimagePuzzle}
                     setShowimagePuzzlediv={setShowimagePuzzlediv}
                   ></PuzzleBundle>
-                  {/* 퀴즈! */}
-                  <Quiz></Quiz>
                 </div>
               ) : null}
             </div>
           </>
         ) : null}
-
         <input
           key="color"
           type="color"
@@ -577,7 +575,8 @@ function Canvas() {
           defaultValue="#000000"
           id="drawing-color"
         ></input>
-
+        {/* 퀴즈! */}
+        <Quiz></Quiz>
         {/* <span className='info'>{widthvalue}</span> */}
       </div>
 
