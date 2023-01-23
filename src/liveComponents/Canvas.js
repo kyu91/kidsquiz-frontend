@@ -572,7 +572,7 @@ function Canvas() {
         <input
           key="color"
           type="color"
-          className="color"
+          className="color colorPicker"
           onChange={changeColor}
           defaultValue="#000000"
           id="drawing-color"
