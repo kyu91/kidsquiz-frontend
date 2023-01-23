@@ -128,6 +128,9 @@ const MediasoupController = () => {
           // cursorImage.setAttribute('src', 'https://cdn-icons-png.flaticon.com/512/8000/8000373.png')
           cursorImage.setAttribute('width', '50px')
           cursorImage.setAttribute('height', '50px')
+          cursorImage.setAttribute('position', 'absolute')
+          cursorImage.setAttribute('top', '0px')
+          cursorImage.setAttribute('left', '-30px')
           const color = getRandomColor()
           const svgVariable = `<svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" enable-background="new 0 0 48 48">
           <path fill="${color}" d="M27.8,39.7c-0.1,0-0.2,0-0.4-0.1c-0.2-0.1-0.4-0.3-0.6-0.5l-3.7-8.6l-4.5,4.2C18.5,34.9,18.3,35,18,35 c-0.1,0-0.3,0-0.4-0.1C17.3,34.8,17,34.4,17,34l0-22c0-0.4,0.2-0.8,0.6-0.9C17.7,11,17.9,11,18,11c0.2,0,0.5,0.1,0.7,0.3l16,15 c0.3,0.3,0.4,0.7,0.3,1.1c-0.1,0.4-0.5,0.6-0.9,0.7l-6.3,0.6l3.9,8.5c0.1,0.2,0.1,0.5,0,0.8c-0.1,0.2-0.3,0.5-0.5,0.6l-2.9,1.3 C28.1,39.7,27.9,39.7,27.8,39.7z"/>
@@ -147,7 +150,7 @@ const MediasoupController = () => {
           document.getElementsByClassName("App")[0].appendChild(cursorDiv);
         }
         cursorDiv = document.getElementById('mousePosition-' + key)
-        cursorDiv.style.left = data.x + 'px';
+        cursorDiv.style.left = (data.x - 50) + 'px';
         cursorDiv.style.top = data.y + 'px';
         //cursorDiv.style.left = data.x_pct + 'px';
         //cursorDiv.style.top = data.y_pct + 'px';
