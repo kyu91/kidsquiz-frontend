@@ -65,6 +65,14 @@ function Canvas() {
     }
   };
 
+  //현재URL에서 /intro를 제거
+
+  const location = useLocation();
+  const updatedUrl = location.pathname.replace("/intro", "");
+
+  //방이름을 추출
+  const roomName = updatedUrl.split("/")[2];
+
   const bringimageinhtml = (event) => {
     let url = event.currentTarget.src;
     addImage(url);
@@ -78,19 +86,35 @@ function Canvas() {
     setShowimagePuzzle(false);
   };
 
-  const setimagearraydata = [
-    "https://file.mk.co.kr/mkde/N0/2018/04/20180425_3684665_1524645248.jpeg",
-    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc0EiWg%2FbtqH0pqTV8y%2FjZIG6HhIlkNqemjsGkx4i0%2Fimg.jpg",
-    "https://img.insight.co.kr/static/2018/12/02/700/tf9u0wgv5g90929xq19n.jpg",
-    "http://www.astronomer.rocks/news/photo/201811/86557_11344_4542.jpg",
-    "https://mblogthumb-phinf.pstatic.net/20120420_141/wpa12_1334893227134psCrD_JPEG/20120420_121453.jpg?type=w2",
-    "https://imgnn.seoul.co.kr/img/upload/2020/08/18/SSI_20200818152435_V.jpg",
-  ];
-  const setpuzzlearraydata = [
-    "https://file.mk.co.kr/mkde/N0/2018/04/20180425_3684665_1524645248.jpeg",
-    "https://img.insight.co.kr/static/2018/12/02/700/tf9u0wgv5g90929xq19n.jpg",
-    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc0EiWg%2FbtqH0pqTV8y%2FjZIG6HhIlkNqemjsGkx4i0%2Fimg.jpg",
-  ];
+
+  //퍼즐, 이미지 묶음 데이터 담을 state(수업의 오브젝트 아이디를 줌)
+  const [classMaterials, setClassMaterials] = useState([]);
+
+  //퍼즐, 이미지 묶음 데이터 get 요청으로 받아옴
+  useEffect(() => {
+    const getClassMaterials = async () => {
+      const config = {
+        method: "get",
+        url: `/api/class/material/${roomName}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${localStorage.getItem("token")}`,
+        },
+      };
+
+      await axios(config)
+        .then((response) => {
+          console.log("몇번 드러오는지 보자", response.data);
+          setClassMaterials(response.data);
+          console.log(response.data.image);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+    getClassMaterials();
+  }, []);
+
 
   ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -279,6 +303,48 @@ function Canvas() {
   // };
 
   /////////////////////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////
+
+  ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
+
+  const DragandDrop = (e) => {
+    // settempurl(e.target.src)
+    e.stopPropagation();
+    let tempurl = e.target.src;
+    console.log(tempurl, "테스트용콘솔");
+    // canvas.on("mouse:move", function(e){
+    //   console.log(e.pointer)
+    // })
+    console.log(e.clientX, e.clientY);
+    let object;
+    fabric.Image.fromURL(tempurl, function (Image) {
+      Image.scale(0.4);
+      object = Image;
+      console.log(object);
+      // console.log(((object.height)*0.8))
+      object.set({
+        left: e.clientX - object.width * 0.278,
+        top: e.clientY - object.height * 0.425,
+        originX: "left",
+        originY: "top",
+        id: uuid(),
+      });
+      // object.set({left : e.clientX - ((object.width) * 0.5), top : e.clientX, id: uuid()})
+      canvas.add(object);
+      emitAddImage({
+        url: tempurl,
+        id: object.id,
+        left: object.left,
+        top: object.top,
+      });
+      canvas.renderAll();
+    });
+  };
+
+  const prevent = (e) => {
+    e.preventDefault();
+  };
+
+  ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {
@@ -339,6 +405,10 @@ function Canvas() {
         }
       });
 
+      // canvas.on("mouse:move", function(e){
+      //   console.log(e.pointer)
+      // })
+
       canvas.on("path:created", function (options) {
         if (options.path) {
           options.path.set({ id: uuid() });
@@ -381,111 +451,125 @@ function Canvas() {
     <div className="App">
       <div id="buttonGroup">
         {/* 팬/도형 토글 */}
-        <DrawToggle
-          canvas={canvas}
-          setShow={setShow}
-          setdrawmodeonoff={setdrawmodeonoff}
-          size="small"
-        ></DrawToggle>
+        <div className="drowContainer">
+          <DrawToggle
+            canvas={canvas}
+            setShow={setShow}
+            setdrawmodeonoff={setdrawmodeonoff}
+            size="small"
+          ></DrawToggle>
 
+          {/* 드로우 툴 boxs */}
+          <div className="drowBox">
+            {show && (
+              <input
+                type="range"
+                onChange={changeWidth}
+                defaultValue={widthvalue}
+                min="1"
+                max="150"
+              ></input>
+            )}
+            {!drawmodeonoff && (
+              <>
+                <Button
+                  key="pencil"
+                  type="button"
+                  className="navBtn"
+                  name="pencil"
+                  onClick={pencilmode}
+                >
+                  <BorderColorIcon />
+                </Button>
+                <Button
+                  key="erase"
+                  type="button"
+                  className="navBtn"
+                  name="eraser"
+                  onClick={erasemode}
+                >
+                  <Crop32Icon />
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
         {/* 리셋 */}
         {hostBool ? (
           <>
-            <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
-
+            <NewCanvas 
+              canvas={canvas} 
+              emitClear={emitClear}
+            ></NewCanvas>
             {/* 선택 삭제 */}
             <Deletes
-              drawmodeonoff={drawmodeonoff}
               canvas={canvas}
               emitDelete={emitDelete}
             ></Deletes>
 
-            {/* 도형 묶음 */}
-            <div className="figuresContiner">
-            <Button onClick={showFigureBundleHandler}>
-              {/* <CategoryIcon /> */}
-              도형모음
-            </Button>
-            {showFigureBundle ? (
-              <div className="figuresChilgyoBox">
-                <Figures
-                  canvas={canvas}
-                  colorvalue={colorvalue}
-                  emitAdd={emitAdd}
-                  showFigureBundleHandler={showFigureBundleHandler}
-                ></Figures>
-                <Chilgyo
-                  drawmodeonoff={drawmodeonoff}
-                  emitAdd={emitAdd}
-                  canvas={canvas}
-                  showFigureBundleHandler={showFigureBundleHandler}
-                ></Chilgyo>
-              </div>
-            ) : null}
+
+            {/* 교구 모음 */}
+            <div className="materialContiner">
+              <Button onClick={showMaterialHandler}>교구모음</Button>
+
+              {showMaterial ? (
+                <div className="materialBox">
+                  {/* 도형 묶음 */}
+                  <div className="figuresContiner">
+                    <Button onClick={showFigureBundleHandler}>
+                      {/* <CategoryIcon /> */}
+                      도형모음
+                    </Button>
+                    {showFigureBundle ? (
+                      <div className="figuresChilgyoBox">
+                        <Figures
+                          canvas={canvas}
+                          colorvalue={colorvalue}
+                          emitAdd={emitAdd}
+                          showFigureBundleHandler={showFigureBundleHandler}
+                        ></Figures>
+                        <Chilgyo
+                          drawmodeonoff={drawmodeonoff}
+                          emitAdd={emitAdd}
+                          canvas={canvas}
+                          showFigureBundleHandler={showFigureBundleHandler}
+                        ></Chilgyo>
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <ImageBundle
+                    showimage={showimage}
+                    setShowimage={setShowimage}
+                    showimagePuzzle={showimagePuzzle}
+                    setShowimagePuzzle={setShowimagePuzzle}
+                  ></ImageBundle>
+
+                  <PuzzleBundle
+                    showimage={showimage}
+                    setShowimage={setShowimage}
+                    showimagePuzzle={showimagePuzzle}
+                    setShowimagePuzzle={setShowimagePuzzle}
+                    setShowimagePuzzlediv={setShowimagePuzzlediv}
+                  ></PuzzleBundle>
+                  {/* 퀴즈! */}
+                  <Quiz></Quiz>
+                </div>
+              ) : null}
             </div>
-
-            {!drawmodeonoff && (
-              <Button
-                key="pencil"
-                type="button"
-                className="navBtn"
-                name="pencil"
-                onClick={pencilmode}
-              >
-                <BorderColorIcon />
-              </Button>
-            )}
-
-            {!drawmodeonoff && (
-              <Button
-                key="erase"
-                type="button"
-                className="navBtn"
-                name="eraser"
-                onClick={erasemode}
-              >
-                <Crop32Icon />
-              </Button>
-            )}
-
-            <ImageBundle
-              showimage={showimage}
-              setShowimage={setShowimage}
-              showimagePuzzle={showimagePuzzle}
-              setShowimagePuzzle={setShowimagePuzzle}
-            ></ImageBundle>
-
-            <PuzzleBundle
-              showimage={showimage}
-              setShowimage={setShowimage}
-              showimagePuzzle={showimagePuzzle}
-              setShowimagePuzzle={setShowimagePuzzle}
-              setShowimagePuzzlediv={setShowimagePuzzlediv}
-            ></PuzzleBundle>
-
-            {/* <button onClick={finditem} > 테스트용버튼</button> */}
           </>
         ) : null}
 
         <input
           key="color"
           type="color"
-          className="color"
+          className="color colorPicker"
           onChange={changeColor}
           defaultValue="#000000"
           id="drawing-color"
         ></input>
 
         {/* <span className='info'>{widthvalue}</span> */}
-        {show && (
-          <input
-            type="range"
-            onChange={changeWidth}
-            defaultValue={widthvalue}
-            min="1"
-            max="150"
-          ></input>
-        )}
       </div>
 
       {showimage && (
@@ -497,7 +581,10 @@ function Canvas() {
                   <li className="item" key={"imageitem" + i}>
                     <img
                       className="image"
-                      src={a}
+                      draggable="true"
+                      onDragOver={prevent}
+                      onDragEnd={DragandDrop}
+                      src={a.image}
                       onClick={bringimageinhtml}
                     ></img>
                   </li>
@@ -554,8 +641,6 @@ function Canvas() {
         </ScrollContainer>
       </div>} */}
 
-      {/* <button onClick={()=> alert()}>퀴즈 시작</button> */}
-      <Quiz></Quiz>
       {showimagePuzzlediv && (
         <Puzzle puzzleurl={puzzleurl} setpuzzleurl={setpuzzleurl}></Puzzle>
       )}

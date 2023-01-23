@@ -125,7 +125,7 @@ export default function Materials() {
               <Paper
                 elevation={0}
                 component="img"
-                src={Puzzle.image || "https://images.chosun.com/resizer/5UBvfTU-pa3fiMELyLWDZ1QVPLs=/530x576/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/JC53LPAYARPTIYHZKBA5BHT7MA.png"}
+                src={Puzzle.image || "https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/%E2%80%94Pngtree%E2%80%94toys+box_8877082.png"}
                 sx={{
                   width: "13rem",
                   height: "13rem",
@@ -176,7 +176,7 @@ export default function Materials() {
           <Paper
             elevation={0}
             component="img"
-            src={MultipleChoice.image || "https://images.chosun.com/resizer/5UBvfTU-pa3fiMELyLWDZ1QVPLs=/530x576/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/JC53LPAYARPTIYHZKBA5BHT7MA.png"}
+            src={MultipleChoice.image || "https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/%E2%80%94Pngtree%E2%80%94toys+box_8877082.png"}
             sx={{
               width: "13rem",
               height: "13rem",
@@ -229,7 +229,7 @@ export default function Materials() {
           <Paper
             elevation={0}
             component="img"
-            src={Image.image || "https://images.chosun.com/resizer/5UBvfTU-pa3fiMELyLWDZ1QVPLs=/530x576/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/JC53LPAYARPTIYHZKBA5BHT7MA.png"}
+            src={Image.image || "https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/%E2%80%94Pngtree%E2%80%94toys+box_8877082.png"}
             sx={{
               width: "13rem",
               height: "13rem",

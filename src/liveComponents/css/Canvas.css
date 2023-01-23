@@ -2,6 +2,7 @@
   text-align: center;
 }
 
+
 .list {
   margin-left: 20%;
   padding: 1rem 0;
@@ -36,7 +37,7 @@
   height: 100px;
   border-radius: 15%;
   cursor: pointer;
-  -webkit-user-drag: none;
+  /* -webkit-user-drag: none; */
 }
 
 .puzzleimage {
@@ -75,9 +76,15 @@ input[type=range] {
   width: 100%;
 }
 #buttonGroup {
+  text-align: center;
   display: flex;
-  padding: 15px 0 0 20px;
-  align-items: center;
+  flex-direction: column;
+  padding: 20px 0 0 0;
+  align-items: left;
+  position: absolute;
+  z-index: 50;
+  border-radius: 50px 0 0 0px;
+  
 }
 #buttonGroup button {
   font-size: 1em;
@@ -90,19 +97,68 @@ input[type=range] {
 }
 
 .figuresContiner{
-  display: inline-block;
+  display: block;
+  width: 100px;
 }
 
 .figuresChilgyoBox{
-  display: block;
-  flex-direction: column;
+  display: inline-block;
+  flex-direction: row;
   position: absolute;
   z-index: 1;
+  width: 100px;
+  margin-left: 10px; 
+  text-align: center;
 }
 
 .figuresBox{
   display: block;
+  
+}
+
+.materialContiner{
+  display: block; 
+  
+}
+
+.materialBox{
+  display: inline-block;
+  flex-direction: row;
+  position: absolute;
+  z-index: 1;
+  width: 100px; 
+  margin-left: 25px; 
+  text-align: center;
+}
+
+.drowContainer{
+  display: block;
   width: 100px;
+}
+
+.drowBox{
+  display: inline-block;
+  flex-direction: row;
+  position: absolute;
+  z-index: 1;
+  width: 100px; 
+  margin-left: 15px; 
+  text-align: center;
+}
+
+.colorPicker{
+  margin: 0 auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 28px;
+  border: none;
+  background-color: transparent;
+}
+
+.colorPicker::-webkit-color-swatch {
+  border-radius: 50%;
 }
 
 
