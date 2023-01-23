@@ -8,7 +8,7 @@ import Canvas from './Canvas';
 import './css/live_style.css';
 
 
-import cursor from '../svg/mouse.svg';
+// import cursor from '../svg/mouse.svg';
 
 
 // ✨클릭 추가
@@ -91,7 +91,6 @@ const LiveMain = () => {
                 {/* //todo: ! 여기까지 잠시 주석처리해둠 */}
             </>
     
-
 
         <Box
             className='canvarsContiner'

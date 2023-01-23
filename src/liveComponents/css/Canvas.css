@@ -106,6 +106,52 @@ input[type=range] {
 }
 
 
+.canvarsPosition {
+  position: relative;
+}
+
+.mouse{
+  position : relative;
+}
+
+.namefill {
+  /* position: absolute; 
+  z-index: 30;
+  /* background-image: .17346.png; */
+  /* background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  /* align-items: flex-end; */
+  /* align-items: center; */ 
+
+
+  overflow: hidden;
+  top: 10px;
+  left: 1rem;
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  
+}
+
+
+
+/* .mousePosition span {
+  font-size: 18px;
+  color: white;
+  font-weight: 800;
+  overflow: visible;
+} */
 
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
