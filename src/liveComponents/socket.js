@@ -41,12 +41,14 @@ export const addObj = canvas => {
         fill: obj.fill,
         skewX: obj.skewX,
         left: obj.left,
-        right: obj.right,
         top: obj.top,
         angle: obj.angle
       })
     } else if (obj.type === 'circle') {
       object = new fabric.Circle({
+        fill: obj.fill,
+        left: obj.left,
+        top: obj.top,
         radius: obj.radius,
       })
     } else if (obj.type === 'triangle') {
@@ -54,7 +56,6 @@ export const addObj = canvas => {
         width: obj.width,
         height: obj.height,
         left: obj.left,
-        right: obj.right,
         top: obj.top,
         angle: obj.angle,
         fill: obj.fill,

@@ -1,7 +1,6 @@
 import "./css/Canvas.css";
 import React, { useState, useEffect } from "react";
 import { fabric } from "fabric";
-// import { uuid } from 'uuidv4'
 import { v1 as uuid } from "uuid";
 import {
   emitModify,
@@ -125,57 +124,6 @@ function Canvas() {
     };
     getClassMaterials();
   }, []);
-
-  ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
-
-  // const data = new FormData();
-  // data.append("_id","63c7b57d4424a5f77498335a")
-
-  //   const bringimage = async()=>{
-  //     const config = {
-  //       method: 'post',
-  //       url: `/api/live/image`,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `${localStorage.getItem('token')}`
-  //       },
-  //       data : data
-  //     };
-
-  //     await axios(config)
-  //         .then(response => {
-  //           console.log(response.data.image)
-  //             setimagearraydata(response.data.image)
-  //         }).catch(error => {
-  //             console.error(error);
-  //         }
-  //     );
-  //   };
-
-  //   const data2 = new FormData();
-  // data2.append("_id","63c7b57d4424a5f77498335a")
-
-  //   const bringpuzzleimage = async()=>{
-  //     const config = {
-  //       method: 'post',
-  //       url: `/api/live/puzzle`,
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `${localStorage.getItem('token')}`
-  //       },
-  //       data : data2
-  //     };
-
-  //     await axios(config)
-  //         .then(response => {
-  //           setpuzzlearraydata(response.data.puzzle);
-  //         }).catch(error => {
-  //             console.error(error);
-  //         }
-  //     );
-  //   };
-
-  ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
@@ -347,6 +295,7 @@ function Canvas() {
         top: object.top,
       });
       canvas.renderAll();
+      setShowimage(false)
     });
   };
 
