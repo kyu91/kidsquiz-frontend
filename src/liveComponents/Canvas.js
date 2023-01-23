@@ -37,7 +37,6 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Crop32Icon from "@mui/icons-material/Crop32";
 import { useLocation } from "react-router-dom";
 
-
 // let puzzleurl
 
 function Canvas() {
@@ -105,9 +104,9 @@ function Canvas() {
 
       await axios(config)
         .then((response) => {
-          console.log('몇번 드러오는지 보자',response.data);
+          console.log("몇번 드러오는지 보자", response.data);
           setClassMaterials(response.data);
-          console.log(response.data.image)
+          console.log(response.data.image);
         })
         .catch((error) => {
           console.error(error);
@@ -115,11 +114,6 @@ function Canvas() {
     };
     getClassMaterials();
   }, []);
-
-  //버튼 마우스 후버시 툴팁
-  const [showTooltip, setShowTooltip] = useState(false);
-  
-
 
   ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -309,36 +303,47 @@ function Canvas() {
 
   /////////////////////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////
 
-   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
 
-   const DragandDrop = (e) =>{
+  const DragandDrop = (e) => {
     // settempurl(e.target.src)
-    e.stopPropagation()
-    let tempurl = e.target.src
-    console.log(tempurl,'테스트용콘솔')
+    e.stopPropagation();
+    let tempurl = e.target.src;
+    console.log(tempurl, "테스트용콘솔");
     // canvas.on("mouse:move", function(e){
     //   console.log(e.pointer)
     // })
-    console.log(e.clientX,e.clientY)
-      let object;
-      fabric.Image.fromURL(tempurl, function (Image) {
-        Image.scale(0.4);
-        object = Image;
-        console.log(object)
-        // console.log(((object.height)*0.8))
-        object.set({left : e.clientX - ((object.width)*0.278), top : e.clientY - ((object.height)*0.425), originX: 'left', originY: 'top', id: uuid()})
-        // object.set({left : e.clientX - ((object.width) * 0.5), top : e.clientX, id: uuid()})
-        canvas.add(object);
-        emitAddImage({ url: tempurl, id: object.id, left: object.left, top: object.top});
-        canvas.renderAll();
+    console.log(e.clientX, e.clientY);
+    let object;
+    fabric.Image.fromURL(tempurl, function (Image) {
+      Image.scale(0.4);
+      object = Image;
+      console.log(object);
+      // console.log(((object.height)*0.8))
+      object.set({
+        left: e.clientX - object.width * 0.278,
+        top: e.clientY - object.height * 0.425,
+        originX: "left",
+        originY: "top",
+        id: uuid(),
       });
-  } 
+      // object.set({left : e.clientX - ((object.width) * 0.5), top : e.clientX, id: uuid()})
+      canvas.add(object);
+      emitAddImage({
+        url: tempurl,
+        id: object.id,
+        left: object.left,
+        top: object.top,
+      });
+      canvas.renderAll();
+    });
+  };
 
   const prevent = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
-////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {
@@ -403,7 +408,6 @@ function Canvas() {
       //   console.log(e.pointer)
       // })
 
-
       canvas.on("path:created", function (options) {
         if (options.path) {
           options.path.set({ id: uuid() });
@@ -423,7 +427,6 @@ function Canvas() {
       addimageObj(canvas);
     }
   }, [canvas]);
-
 
   const addImage = (imageURL) => {
     let object;
@@ -457,8 +460,7 @@ function Canvas() {
         {/* 리셋 */}
         {hostBool ? (
           <>
-            
-              <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
+            <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
             {/* 선택 삭제 */}
             <Deletes
               drawmodeonoff={drawmodeonoff}
@@ -468,7 +470,6 @@ function Canvas() {
 
             {/* 도형 묶음 */}
             <div className="figuresContiner">
-
               <Button onClick={showFigureBundleHandler}>
                 {/* <CategoryIcon /> */}
                 도형모음
@@ -489,7 +490,6 @@ function Canvas() {
                   ></Chilgyo>
                 </div>
               ) : null}
-
             </div>
 
             {!drawmodeonoff && (
@@ -530,8 +530,6 @@ function Canvas() {
               setShowimagePuzzle={setShowimagePuzzle}
               setShowimagePuzzlediv={setShowimagePuzzlediv}
             ></PuzzleBundle>
-
-            {/* <button onClick={finditem} > 테스트용버튼</button> */}
           </>
         ) : null}
 
@@ -560,15 +558,14 @@ function Canvas() {
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
-
               {classMaterials.image.map((a, i) => {
                 return (
                   <li className="item" key={"imageitem" + i}>
                     <img
                       className="image"
-                      draggable = 'true'
+                      draggable="true"
                       onDragOver={prevent}
-                      onDragEnd= {DragandDrop}
+                      onDragEnd={DragandDrop}
                       src={a.image}
                       onClick={bringimageinhtml}
                       alt="이미지"
@@ -598,7 +595,6 @@ function Canvas() {
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
-
               {classMaterials.puzzle.map((b, i) => {
                 return (
                   <li className="item" key={"puzzleitem" + i}>
@@ -630,9 +626,8 @@ function Canvas() {
       </div>} */}
 
       {/* 퀴즈! */}
-      <Quiz
-        ></Quiz>
-      
+      <Quiz></Quiz>
+
       {showimagePuzzlediv && (
         <Puzzle puzzleurl={puzzleurl} setpuzzleurl={setpuzzleurl}></Puzzle>
       )}
