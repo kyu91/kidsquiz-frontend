@@ -66,6 +66,17 @@ function Canvas() {
     }
   };
 
+  //석규 교구모음 항목 on/off 상태값
+  const [showMaterial, setShowMaterial] = useState(false);
+
+  const showMaterialHandler = () => {
+    if (showMaterial === false) {
+      setShowMaterial(true);
+    } else {
+      setShowMaterial(false);
+    }
+  };
+
   //현재URL에서 /intro를 제거
 
   const location = useLocation();
@@ -450,86 +461,111 @@ function Canvas() {
     <div className="App">
       <div id="buttonGroup">
         {/* 팬/도형 토글 */}
-        <DrawToggle
-          canvas={canvas}
-          setShow={setShow}
-          setdrawmodeonoff={setdrawmodeonoff}
-          size="small"
-        ></DrawToggle>
+        <div className="drowContainer">
+          <DrawToggle
+            canvas={canvas}
+            setShow={setShow}
+            setdrawmodeonoff={setdrawmodeonoff}
+            size="small"
+          ></DrawToggle>
 
+          {/* 드로우 툴 boxs */}
+          <div className="drowBox">
+            {show && (
+              <input
+                type="range"
+                onChange={changeWidth}
+                defaultValue={widthvalue}
+                min="1"
+                max="150"
+              ></input>
+            )}
+            {!drawmodeonoff && (
+              <>
+                <Button
+                  key="pencil"
+                  type="button"
+                  className="navBtn"
+                  name="pencil"
+                  onClick={pencilmode}
+                >
+                  <BorderColorIcon />
+                </Button>
+                <Button
+                  key="erase"
+                  type="button"
+                  className="navBtn"
+                  name="eraser"
+                  onClick={erasemode}
+                >
+                  <Crop32Icon />
+                </Button>
+              </>
+            )}
+          </div>
+        </div>
         {/* 리셋 */}
         {hostBool ? (
           <>
-            <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
+            <NewCanvas 
+              canvas={canvas} 
+              emitClear={emitClear}
+            ></NewCanvas>
             {/* 선택 삭제 */}
             <Deletes
-              drawmodeonoff={drawmodeonoff}
               canvas={canvas}
               emitDelete={emitDelete}
             ></Deletes>
 
-            {/* 도형 묶음 */}
-            <div className="figuresContiner">
-              <Button onClick={showFigureBundleHandler}>
-                {/* <CategoryIcon /> */}
-                도형모음
-              </Button>
-              {showFigureBundle ? (
-                <div className="figuresChilgyoBox">
-                  <Figures
-                    canvas={canvas}
-                    colorvalue={colorvalue}
-                    emitAdd={emitAdd}
-                    showFigureBundleHandler={showFigureBundleHandler}
-                  ></Figures>
-                  <Chilgyo
-                    drawmodeonoff={drawmodeonoff}
-                    emitAdd={emitAdd}
-                    canvas={canvas}
-                    showFigureBundleHandler={showFigureBundleHandler}
-                  ></Chilgyo>
+            {/* 교구 모음 */}
+            <div className="materialContiner">
+              <Button onClick={showMaterialHandler}>교구모음</Button>
+
+              {showMaterial ? (
+                <div className="materialBox">
+                  {/* 도형 묶음 */}
+                  <div className="figuresContiner">
+                    <Button onClick={showFigureBundleHandler}>
+                      {/* <CategoryIcon /> */}
+                      도형모음
+                    </Button>
+                    {showFigureBundle ? (
+                      <div className="figuresChilgyoBox">
+                        <Figures
+                          canvas={canvas}
+                          colorvalue={colorvalue}
+                          emitAdd={emitAdd}
+                          showFigureBundleHandler={showFigureBundleHandler}
+                        ></Figures>
+                        <Chilgyo
+                          drawmodeonoff={drawmodeonoff}
+                          emitAdd={emitAdd}
+                          canvas={canvas}
+                          showFigureBundleHandler={showFigureBundleHandler}
+                        ></Chilgyo>
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <ImageBundle
+                    showimage={showimage}
+                    setShowimage={setShowimage}
+                    showimagePuzzle={showimagePuzzle}
+                    setShowimagePuzzle={setShowimagePuzzle}
+                  ></ImageBundle>
+
+                  <PuzzleBundle
+                    showimage={showimage}
+                    setShowimage={setShowimage}
+                    showimagePuzzle={showimagePuzzle}
+                    setShowimagePuzzle={setShowimagePuzzle}
+                    setShowimagePuzzlediv={setShowimagePuzzlediv}
+                  ></PuzzleBundle>
+                  {/* 퀴즈! */}
+                  <Quiz></Quiz>
                 </div>
               ) : null}
             </div>
-
-            {!drawmodeonoff && (
-              <Button
-                key="pencil"
-                type="button"
-                className="navBtn"
-                name="pencil"
-                onClick={pencilmode}
-              >
-                <BorderColorIcon />
-              </Button>
-            )}
-
-            {!drawmodeonoff && (
-              <Button
-                key="erase"
-                type="button"
-                className="navBtn"
-                name="eraser"
-                onClick={erasemode}
-              >
-                <Crop32Icon />
-              </Button>
-            )}
-
-            <ImageBundle
-              showimage={showimage}
-              setShowimage={setShowimage}
-              showimagePuzzle={showimagePuzzle}
-              setShowimagePuzzle={setShowimagePuzzle}
-            ></ImageBundle>
-
-            <PuzzleBundle
-              showimage={showimage}
-              setShowimage={setShowimage}
-              showimagePuzzle={showimagePuzzle}
-              setShowimagePuzzle={setShowimagePuzzle}
-              setShowimagePuzzlediv={setShowimagePuzzlediv}
-            ></PuzzleBundle>
           </>
         ) : null}
 
@@ -543,15 +579,6 @@ function Canvas() {
         ></input>
 
         {/* <span className='info'>{widthvalue}</span> */}
-        {show && (
-          <input
-            type="range"
-            onChange={changeWidth}
-            defaultValue={widthvalue}
-            min="1"
-            max="150"
-          ></input>
-        )}
       </div>
 
       {showimage && (
@@ -624,9 +651,6 @@ function Canvas() {
         </ul>
         </ScrollContainer>
       </div>} */}
-
-      {/* 퀴즈! */}
-      <Quiz></Quiz>
 
       {showimagePuzzlediv && (
         <Puzzle puzzleurl={puzzleurl} setpuzzleurl={setpuzzleurl}></Puzzle>
