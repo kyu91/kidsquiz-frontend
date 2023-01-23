@@ -8,6 +8,7 @@ import Avatar from "@mui/material/Avatar";
 import WorkIcon from "@mui/icons-material/Work";
 import PetsIcon from "@mui/icons-material/Pets";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
+import Button from "@mui/material/Button";
 import "./css/quiz.css";
 const socket = getSocket();
 
@@ -131,9 +132,9 @@ function Quiz() {
     <>
       {hostBool ? (
         <div>
-          <button id="btnnn" onClick={setdiv}>
+          <Button id="btnnn" onClick={setdiv}>
             퀴즈 시작
-          </button>
+          </Button>
 
           {tempdiv && (
             <List

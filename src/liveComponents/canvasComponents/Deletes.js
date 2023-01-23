@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Tooltip from "@mui/material/Tooltip";
 
-const Deletes = ({ drawmodeonoff, canvas, emitDelete }) => {
+const Deletes = ({ canvas, emitDelete }) => {
   const deleteObject = () => {
     let object;
     object = canvas.getActiveObject();
@@ -12,20 +12,18 @@ const Deletes = ({ drawmodeonoff, canvas, emitDelete }) => {
   };
   return (
     <div>
-      {drawmodeonoff && (
-        <Tooltip title="선택 삭제">
-          <Button
-            key="delete"
-            type="button"
-            className="navBtn"
-            name="delete"
-            onClick={deleteObject}
-          >
-            {" "}
-            <DeleteIcon />
-          </Button>
-        </Tooltip>
-      )}
+      <Tooltip title="선택 삭제">
+        <Button
+          key="delete"
+          type="button"
+          className="navBtn"
+          name="delete"
+          onClick={deleteObject}
+        >
+          {" "}
+          <DeleteIcon />
+        </Button>
+      </Tooltip>
     </div>
   );
 };

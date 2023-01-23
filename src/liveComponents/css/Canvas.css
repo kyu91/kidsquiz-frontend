@@ -77,8 +77,13 @@ input[type=range] {
 }
 #buttonGroup {
   display: flex;
+  flex-direction: column;
   padding: 15px 0 0 20px;
-  align-items: center;
+  align-items: left;
+  position: absolute;
+  z-index: 50;
+  border-radius: 50px 0 0 0px;
+  
 }
 #buttonGroup button {
   font-size: 1em;
@@ -91,19 +96,53 @@ input[type=range] {
 }
 
 .figuresContiner{
-  display: inline-block;
+  display: block;
+  width: 100px;
 }
 
 .figuresChilgyoBox{
-  display: block;
-  flex-direction: column;
+  display: inline-block;
+  flex-direction: row;
   position: absolute;
   z-index: 1;
+  width: 100px;
+  margin-left: 10px; 
+  text-align: center;
 }
 
 .figuresBox{
   display: block;
+  
+}
+
+.materialContiner{
+  display: block; 
+  
+}
+
+.materialBox{
+  display: inline-block;
+  flex-direction: row;
+  position: absolute;
+  z-index: 1;
+  width: 100px; 
+  margin-left: 25px; 
+  text-align: center;
+}
+
+.drowContainer{
+  display: block;
   width: 100px;
+}
+
+.drowBox{
+  display: inline-block;
+  flex-direction: row;
+  position: absolute;
+  z-index: 1;
+  width: 100px; 
+  margin-left: 15px; 
+  text-align: center;
 }
 
 
