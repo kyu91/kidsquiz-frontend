@@ -37,6 +37,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Crop32Icon from "@mui/icons-material/Crop32";
 import { useLocation } from "react-router-dom";
 
+
 // let puzzleurl
 
 function Canvas() {
@@ -96,7 +97,6 @@ function Canvas() {
       const config = {
         method: "get",
         url: `/api/class/material/${roomName}`,
-        // url: `/api/class/material/63cae319ef9f5b63ce6b6e4b`,
         headers: {
           "Content-Type": "application/json",
           Authorization: `${localStorage.getItem("token")}`,
@@ -105,6 +105,7 @@ function Canvas() {
 
       await axios(config)
         .then((response) => {
+          console.log('몇번 드러오는지 보자',response.data);
           setClassMaterials(response.data);
           console.log(response.data.image)
         })
@@ -114,6 +115,11 @@ function Canvas() {
     };
     getClassMaterials();
   }, []);
+
+  //버튼 마우스 후버시 툴팁
+  const [showTooltip, setShowTooltip] = useState(false);
+  
+
 
   ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -451,8 +457,8 @@ function Canvas() {
         {/* 리셋 */}
         {hostBool ? (
           <>
-            <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
-
+            
+              <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
             {/* 선택 삭제 */}
             <Deletes
               drawmodeonoff={drawmodeonoff}
@@ -623,8 +629,10 @@ function Canvas() {
         </ScrollContainer>
       </div>} */}
 
-      {/* <button onClick={()=> alert()}>퀴즈 시작</button> */}
-      <Quiz></Quiz>
+      {/* 퀴즈! */}
+      <Quiz
+        ></Quiz>
+      
       {showimagePuzzlediv && (
         <Puzzle puzzleurl={puzzleurl} setpuzzleurl={setpuzzleurl}></Puzzle>
       )}
