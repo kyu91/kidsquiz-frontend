@@ -52,7 +52,6 @@ export default function Boards() {
   const [hostBool, setHostBool] = React.useState(false);
 
   //호스트 이름, 토큰확인 해서 이 방의 호스트인지 확인
-  
 
   const getHost = async (hostToken, roomNmes) => {
     const params = { room: roomNmes };

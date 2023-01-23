@@ -35,7 +35,6 @@ import ImageBundle from "./canvasComponents/ImageBundle";
 import PuzzleBundle from "./canvasComponents/PuzzleBundle";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Crop32Icon from "@mui/icons-material/Crop32";
-import { useLocation } from "react-router-dom";
 
 // let puzzleurl
 
@@ -66,17 +65,6 @@ function Canvas() {
     }
   };
 
-  //석규 교구모음 항목 on/off 상태값
-  const [showMaterial, setShowMaterial] = useState(false);
-
-  const showMaterialHandler = () => {
-    if (showMaterial === false) {
-      setShowMaterial(true);
-    } else {
-      setShowMaterial(false);
-    }
-  };
-
   //현재URL에서 /intro를 제거
 
   const location = useLocation();
@@ -97,6 +85,7 @@ function Canvas() {
     setShowimagePuzzlediv(true);
     setShowimagePuzzle(false);
   };
+
 
   //퍼즐, 이미지 묶음 데이터 담을 state(수업의 오브젝트 아이디를 줌)
   const [classMaterials, setClassMaterials] = useState([]);
@@ -125,6 +114,7 @@ function Canvas() {
     };
     getClassMaterials();
   }, []);
+
 
   ////////////////////////////////////////////////API 요청부분/////////////////////////////////////////////////////////
 
@@ -517,6 +507,7 @@ function Canvas() {
               emitDelete={emitDelete}
             ></Deletes>
 
+
             {/* 교구 모음 */}
             <div className="materialContiner">
               <Button onClick={showMaterialHandler}>교구모음</Button>
@@ -585,7 +576,7 @@ function Canvas() {
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
-              {classMaterials.image.map((a, i) => {
+              {setimagearraydata.map((a, i) => {
                 return (
                   <li className="item" key={"imageitem" + i}>
                     <img
@@ -595,7 +586,6 @@ function Canvas() {
                       onDragEnd={DragandDrop}
                       src={a.image}
                       onClick={bringimageinhtml}
-                      alt="이미지"
                     ></img>
                   </li>
                 );
@@ -622,14 +612,13 @@ function Canvas() {
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
             <ul className="list">
-              {classMaterials.puzzle.map((b, i) => {
+              {setpuzzlearraydata.map((b, i) => {
                 return (
                   <li className="item" key={"puzzleitem" + i}>
                     <img
                       className="puzzleimage"
-                      src={b.image}
+                      src={b}
                       onClick={bringimageinhtmlPuzzle}
-                      alt="puzzle"
                     ></img>
                   </li>
                 );
