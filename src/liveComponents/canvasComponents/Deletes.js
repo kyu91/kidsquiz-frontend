@@ -12,8 +12,8 @@ const Deletes = ({ drawmodeonoff, canvas, emitDelete }) => {
   };
   return (
     <div>
-      <Tooltip title="선택 삭제">
-        {drawmodeonoff && (
+      {drawmodeonoff && (
+        <Tooltip title="선택 삭제">
           <Button
             key="delete"
             type="button"
@@ -24,8 +24,8 @@ const Deletes = ({ drawmodeonoff, canvas, emitDelete }) => {
             {" "}
             <DeleteIcon />
           </Button>
-        )}
-      </Tooltip>
+        </Tooltip>
+      )}
     </div>
   );
 };
