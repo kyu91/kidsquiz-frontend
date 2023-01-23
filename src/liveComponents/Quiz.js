@@ -139,7 +139,7 @@ function Quiz() {
           {tempdiv && (
             <List
               sx={{
-                width: "100%",
+                width: "300px",
                 maxWidth: 180,
                 bgcolor: "orange",
                 borderRadius: "15%",
