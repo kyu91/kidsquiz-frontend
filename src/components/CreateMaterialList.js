@@ -75,6 +75,7 @@ export default function CreateMaterialList() {
     await axios(config)
       .then((response) => {
         alert("모음집이 생성되었습니다.");
+        window.location.reload();
         console.log(response);
       })
       .catch((error) => {
@@ -265,9 +266,9 @@ export default function CreateMaterialList() {
           component={Box}
           style={{ width: "10em", fontSize: "1em" }}
         >
-          {Puzzle.title}
+          [퍼즐] {Puzzle.title}
         </Button>
-        <h2 style={{ fontSize: "1em" }}></h2>
+        <p style={{ fontSize: "1em" }}></p>
                 <input
                   type="checkbox"
                   value={Puzzle.data}
@@ -326,7 +327,7 @@ export default function CreateMaterialList() {
           component={Box}
           style={{ width: "10em", fontSize: "1em" }}
         >
-          {MultipleChoice.question}
+          [퀴즈] {MultipleChoice.question}
         </Button>
         <h2 style={{ fontSize: "1em" }}></h2>
                 <input
@@ -387,7 +388,7 @@ export default function CreateMaterialList() {
           component={Box}
           style={{ width: "10em", fontSize: "1em" }}
         >
-          {"교육용 이미지"}
+          {"[이미지]"}
         </Button>
         <h2 style={{ fontSize: "1em" }}></h2>
                 <input

@@ -8,7 +8,6 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CardCover from '@mui/material/CardMedia';
 
 import axios from 'axios';
@@ -25,8 +24,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-const theme = createTheme();
 
 export default function SignIn() {
 

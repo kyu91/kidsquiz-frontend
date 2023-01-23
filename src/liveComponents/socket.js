@@ -13,7 +13,7 @@ export const emitAdd = (obj) => {
 }
 export const emitAddImage = (data) => {
   socket.emit('imageobj-added', data)
-  console.log("이미지 전송 완료")
+  // console.log("이미지 전송 완료")
   console.log(data)
 }
 export const emitAddP = (path) =>{
@@ -41,12 +41,14 @@ export const addObj = canvas => {
         fill: obj.fill,
         skewX: obj.skewX,
         left: obj.left,
-        right: obj.right,
         top: obj.top,
         angle: obj.angle
       })
     } else if (obj.type === 'circle') {
       object = new fabric.Circle({
+        fill: obj.fill,
+        left: obj.left,
+        top: obj.top,
         radius: obj.radius,
       })
     } else if (obj.type === 'triangle') {
@@ -54,7 +56,6 @@ export const addObj = canvas => {
         width: obj.width,
         height: obj.height,
         left: obj.left,
-        right: obj.right,
         top: obj.top,
         angle: obj.angle,
         fill: obj.fill,
@@ -68,12 +69,12 @@ export const addObj = canvas => {
 export const addimageObj = canvas => {
   socket.off('new-addimg')
   socket.on('new-addimg', data =>{
-    const {url, id} = data
+    const {url, id, left, top} = data
     let object
     fabric.Image.fromURL(url, function(Image){
       Image.scale(0.4);
       object = Image
-      object.set({id : id})
+      object.set({id : id, left : left, top : top})
       canvas.add(object);
       canvas.renderAll()
     })

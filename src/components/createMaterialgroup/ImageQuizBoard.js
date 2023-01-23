@@ -1,22 +1,31 @@
 import React from "react";
+import { useState } from "react";
 import { Grid, Typography, TextField, Stack, Button } from "@mui/material";
 import { onhandlePostImgQuiz } from "./createMaterialPost";
 
-const ImageQuizBoard = ({ radio, filesQuiz, setFilesQuiz, inputRef }) => {
+const ImageQuizBoard = ({ radio, files, setFiles, inputRef }) => {
+
+  const [imageNames, setImageNames] = useState([]);
+
   //이미지퀴즈 submit
   const handleSubmitImg = (event) => {
     event.preventDefault();
     const data = new FormData();
     data.append("question", event.target.question.value);
     data.append("category", radio);
-    for (const file of filesQuiz) {
+    for (let file of files) {
       data.append("image", file);
     }
     data.append("answer", event.target.answer.value);
     onhandlePostImgQuiz(data);
   };
   const handleChangeFile2 = (event) => {
-    setFilesQuiz(event.target.files);
+    setFiles(event.target.files);
+    //테스트용
+    const imgFiles = event.target.files
+    const names = Array.from(imgFiles).map(file => file.name);
+    setImageNames(names);
+    console.log("테스트테스트", names)
   };
   return (
     <Grid
@@ -85,7 +94,7 @@ const ImageQuizBoard = ({ radio, filesQuiz, setFilesQuiz, inputRef }) => {
       />
       <Grid item xs={12}>
         <Typography variant="h5" mt={2}>
-          이미지 업로드 2개*
+          퀴즈이미지 업로드.*
         </Typography>
         <Stack direction="row" alignItems="center">
           <Button
@@ -109,9 +118,12 @@ const ImageQuizBoard = ({ radio, filesQuiz, setFilesQuiz, inputRef }) => {
             mt={2}
             style={{ color: "#c0c0c0", marginLeft: "1em" }}
           >
-            {filesQuiz
-              ? filesQuiz.name
-              : "퀴즈로 사용할 이미지 두 개를 업로드해주세요."}
+          {/*이미지 업로드 */}
+          <div>
+            {imageNames.map(name => (
+              <div key={name}>{name}</div>
+            ))}
+          </div> 
           </Typography>
         </Stack>
       </Grid>
