@@ -76,9 +76,10 @@ input[type=range] {
   width: 100%;
 }
 #buttonGroup {
+  text-align: center;
   display: flex;
   flex-direction: column;
-  padding: 15px 0 0 20px;
+  padding: 20px 0 0 0;
   align-items: left;
   position: absolute;
   z-index: 50;
@@ -143,6 +144,21 @@ input[type=range] {
   width: 100px; 
   margin-left: 15px; 
   text-align: center;
+}
+
+.colorPicker{
+  margin: 0 auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 28px;
+  border: none;
+  background-color: transparent;
+}
+
+.colorPicker::-webkit-color-swatch {
+  border-radius: 50%;
 }
 
 

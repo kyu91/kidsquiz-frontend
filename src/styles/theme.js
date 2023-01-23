@@ -6,10 +6,12 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          boxShadow: "none",
+          
+          
         },
         contained: {
-          color: "white"
+          color: "black"
+          
         }
       },
     },
@@ -17,7 +19,7 @@ const theme = createTheme({
 
   palette: {
     primary: {
-      main: "#00D282",
+      main: "rgb(254,202,62)",
     },
   },
 
