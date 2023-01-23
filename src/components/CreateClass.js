@@ -190,6 +190,7 @@ export default function CreateClass() {
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
+                defaultValue={radioValue[0]}
               >
                 {
                   radioValue.map((item, index) => {
