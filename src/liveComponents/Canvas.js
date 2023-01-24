@@ -1,7 +1,6 @@
 import "./css/Canvas.css";
 import React, { useState, useEffect } from "react";
 import { fabric } from "fabric";
-// import { uuid } from 'uuidv4'
 import { v1 as uuid } from "uuid";
 import {
   emitModify,
@@ -154,6 +153,7 @@ function Canvas() {
         top: object.top,
       });
       canvas.renderAll();
+      setShowimage(false)
     });
   };
 

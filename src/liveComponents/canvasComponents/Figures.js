@@ -12,6 +12,8 @@ const Figures = ({canvas, colorvalue, emitAdd, showFigureBundleHandler}) => {
         if (type === 'rectangle') {
           object = new fabric.Rect({
             fill : colorvalue,
+            left : 230,
+            top: 150,
             height: 75,
             width: 150,
           });
@@ -19,6 +21,8 @@ const Figures = ({canvas, colorvalue, emitAdd, showFigureBundleHandler}) => {
         } else if (type === 'triangle') {
           object = new fabric.Triangle({
             fill : colorvalue,
+            left : 230,
+            top: 150,
             width: 100,
             height: 100,
           })
@@ -26,13 +30,15 @@ const Figures = ({canvas, colorvalue, emitAdd, showFigureBundleHandler}) => {
         } else if (type === 'circle') {
           object = new fabric.Circle({
             fill : colorvalue,
+            left : 230,
+            top: 150,
             radius: 50,
           })
         }
         object.set({id: uuid()})
         canvas.add(object)
         canvas.renderAll()
-        emitAdd({obj: object, id: object.id})
+        emitAdd({obj: object, id: object.id, left: object.left, top: object.top})
         showFigureBundleHandler();
       };
   return (
