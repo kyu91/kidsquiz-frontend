@@ -186,21 +186,13 @@ function Canvas() {
     canvas.freeDrawingBrush.color = colorvalue;
     canvas.renderAll();
   };
-  const initCanvas = () => {
-     const canvas = new fabric.Canvas("canv", {
-      isDrawingMode: false,
-    });
-  // set the initial size of the canvas
-  canvas.setWidth(window.innerWidth*0.9);
-  canvas.setHeight(window.innerHeight*0.95);
 
-    window.addEventListener("resize", () => {
-      canvas.setWidth(window.innerWidth);
-      canvas.setHeight(window.innerHeight);
+  const initCanvas = () =>
+  new fabric.Canvas("canv", {
+    isDrawingMode: false,
+    height: 1920,
+    width: 4000,
   });
-
-  
-}
 
   useEffect(() => {
     setCanvas(initCanvas());
