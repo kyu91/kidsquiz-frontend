@@ -144,6 +144,8 @@ function Canvas() {
       object.set({
         left: e.clientX - object.width * 0.26,
         top: e.clientY - object.height * 0.28,
+        left: e.clientX - object.width * 0.26,
+        top: e.clientY - object.height * 0.28,
         originX: "left",
         originY: "top",
         id: uuid(),
@@ -407,6 +409,7 @@ function Canvas() {
           </>
         ) : null}
 
+        <button onClick={canvasCopy}>테스트용</button>
 
         <input
           key="color"
