@@ -15,29 +15,21 @@
 }
 
 .canvarsContiner:after {
-    /* 토끼 배경 */
-    background-image: url("https://img.freepik.com/premium-vector/cute-bunny-seamless-pattern-rabbit-pattern_553915-149.jpg"); 
-
-    /* 다람쥐 배경 */
-    /* background-image: url("https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/upload/%E1%84%83%E1%85%A1%E1%84%85%E1%85%A1%E1%86%B7%E1%84%8C%E1%85%B1.png");  */
-
-    /* 아래 공룡 배경 */
-    /* background-image: url("https://mblogthumb-phinf.pstatic.net/MjAxOTA2MTlfMjYx/MDAxNTYwOTEzNTA3ODE3.7NG4Q8ZouJeuGviFdrhe_4B8kHSwf0hR_VJL4nN3Niwg.K_P-RevcN_zQUEIjGT-qRlVoHgCFJNmvn4sMxYPbZowg.JPEG.jutiti0523/190619_01.jpg?type=w800");  */
-
-    /* 아래 꽃 배경 */
-    /* background-image: url("https://img.freepik.com/free-vector/colorful-flower-background-cute-yellow-border-nature-doodle-retro-design-vector_53876-151423.jpg?w=826&t=st=1673991635~exp=1673992235~hmac=5a9bf090408e3505e94ddac0f6acbc79eda46d5e5b59f00320716d2b62edd72c"); */
-    background-repeat: repeat;
+    background-image: url("https://blog.kakaocdn.net/dn/dYrOg0/btrG9LtIQq6/BEIFN8upCK3vWud04oPkH1/img.png"); 
+    background-repeat: no-repeat;
     background-size: contain;
-    top:0;
+    top: 30px;
     left:0;
     position:absolute;
-    opacity: 0.9;
+    opacity: 0.5;
     filter:alpha(opacity=100);
     z-index:-1;
     content:"";
     width:100%;
     height:100%;
 }
+
+
 
 /* 왼쪽 하단의 선생님 화면 정보 */
 .hostVideoPosition{
@@ -54,15 +46,15 @@
 
 /* 캔버스 자체 */
 .canvarsPosition{
-    margin-top: 3%;
+    margin-top: 1%;
     width: 94vw;
-    height: 93vh;
+    height: 98vh;
     background-color: rgba(255,255,255,0.9);
     border-radius: 50px;
 }
 
 #hostCol, #videoContainer {
-    width: 10em;
+    width: 11em;
     background: transparent;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
@@ -77,11 +69,13 @@
 }
 
 #hostName {
+    display: block;
     margin: 7px;
     font-size: 24px;
-}
+  }
+
 video{
-    border-radius: 40px;
+    border-radius: 20px;
     width: 100%;
 
 }
@@ -90,26 +84,35 @@ video{
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    bottom: 3px;
+    right: 1px;
 
 }
 .controllers button {
-    padding: 4px 14px 1px 14px;
+    padding: 4px 12px 1px 12px;
     margin: 5px 4px;
-    background-color: rgba(0, 190, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 20px;
     border: none
 }
 .controllers button:hover {
-    background-color: rgba(255,50,120,0.6);
+    background-color: rgba(245, 202, 62, 0.7);
     transform: scale( 1.1, 1.1 )
 } 
 
 .micAndVid {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 #localUserName, .guestNameDisplay {
-    margin-right: 10px;
-    margin-top: 6px;
+    margin-right: 1em;
+    /* margin: 10px 4px; */
     font-size: 1.2em;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+    padding: 6px 12px;
+    border-radius: 20px;
 }
+

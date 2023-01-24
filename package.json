@@ -33,6 +33,7 @@
     "fabric": "^5.3.0",
     "http": "^0.0.1-security",
     "http-proxy-middleware": "^2.0.6",
+    "lodash": "^4.17.21",
     "mediasoup-client": "^3.6.70",
     "prop-types": "^15.8.1",
     "quill-cursors": "^4.0.0",
