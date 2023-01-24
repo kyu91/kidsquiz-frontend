@@ -113,9 +113,6 @@ const LiveMain = () => {
             <div className = "guestVideoPosition">
                 <GuestVideo></GuestVideo>
             </div>    
-            {/* <div className = "multiCursor">
-                <Cursor></Cursor>
-            </div> */}
         </Box>
         
     </div>
