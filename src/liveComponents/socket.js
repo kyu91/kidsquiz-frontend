@@ -170,7 +170,6 @@ export const clearObj = canvas =>{
         canvas.renderAll()
     })
 }
-
 export const canvasChange = canvas => {
   socket.on('canvassetnewuser', data => {
     const {objs} = data
