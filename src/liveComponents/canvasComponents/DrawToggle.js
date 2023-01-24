@@ -10,6 +10,7 @@ const DrawToggle = ({canvas, setShow, setdrawmodeonoff}) => {
   const [buttonState, setButtonState] = React.useState(false);
 
   const drawmode = () => {
+    console.log('비상',canvas)
       if (canvas.isDrawingMode === true){
         canvas.isDrawingMode = false
         setShow(false)
@@ -35,7 +36,7 @@ const DrawToggle = ({canvas, setShow, setdrawmodeonoff}) => {
           {
             buttonState ? 
               <><CreateIcon fontSize='large'/> </> 
-              : <>  <SwipeDownIcon fontSize='large'/></> 
+              : <><SwipeDownIcon fontSize='large'/></> 
           }
     </Button>
     
