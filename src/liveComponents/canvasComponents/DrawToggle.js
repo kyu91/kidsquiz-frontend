@@ -18,6 +18,7 @@ const DrawToggle = ({canvas, setShow, setdrawmodeonoff}) => {
       }
       else {
         canvas.isDrawingMode = true
+        canvas.freeDrawingBrush.width = 10
         setShow(true)
         setdrawmodeonoff(false)
         setButtonState(true)

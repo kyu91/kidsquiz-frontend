@@ -2,7 +2,6 @@ import socket from "../liveComponents/socketExport";
 import * as mediasoupClient from "mediasoup-client";
 import _  from "lodash"
 import { color } from "@mui/system";
-
 //익스포트 함수
 export const getSocket = () => {
   return socket;
@@ -429,6 +428,10 @@ const MediasoupController = () => {
           socketId,
           isNewSocketHost
         );
+
+/////////////////////////////////////난입////////////////////////////////
+    socket.emit("atarashimember", socketId)
+
       }
     );
 

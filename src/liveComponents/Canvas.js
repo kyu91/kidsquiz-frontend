@@ -4,6 +4,7 @@ import { fabric } from "fabric";
 import { v1 as uuid } from "uuid";
 import {
   emitCanvas,
+  canvasChange,
   emitModify,
   emitAdd,
   emitAddP,
@@ -39,12 +40,13 @@ import { useLocation } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Tooltip from "@mui/material/Tooltip";
 import InterestsIcon from '@mui/icons-material/Interests';
+import MediasoupController from "../controller/MediasoupController";
 
 // let puzzleurl
 
 function Canvas() {
   const [canvas, setCanvas] = useState("");
-  const [widthvalue, setWidthvalue] = useState(1);
+  const [widthvalue, setWidthvalue] = useState(10);
   const [colorvalue, setColorvalue] = useState("#000000");
   // const [imageURL,setimageURL] = useState('');
   const [show, setShow] = useState(false);
@@ -128,16 +130,16 @@ function Canvas() {
     // settempurl(e.target.src)
     e.stopPropagation();
     let tempurl = e.target.src;
-    console.log(tempurl, "테스트용콘솔");
+    // console.log(tempurl, "테스트용콘솔");
     // canvas.on("mouse:move", function(e){
     //   console.log(e.pointer)
     // })
-    console.log(e.clientX, e.clientY);
+    // console.log(e.clientX, e.clientY);
     let object;
     fabric.Image.fromURL(tempurl, function (Image) {
       Image.scale(0.4);
       object = Image;
-      console.log(object);
+      // console.log(object);
       // console.log(((object.height)*0.8))
       object.set({
         left: e.clientX - object.width * 0.26,
@@ -165,6 +167,32 @@ function Canvas() {
 
   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
+  socket.on('newestmember', socketId =>{
+    if (hostBool)
+      emitCanvas(socketId,{objs: canvas._objects})
+
+  })
+
+
+
+
+ const canvasCopy = () => {
+    console.log('캔버스 전송')
+    console.log(canvas._objects)
+    emitCanvas({objs: canvas._objects})
+
+  }
+
+  // socket.on('canvassetnewuser', data => {
+  //   const {objs} = data
+  //   objs.map((v,i) => {
+  //     console.log(v)
+  //   })
+  //   // console.log(data)
+  //   // console.log(objs)
+  // })
+
+   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {
     canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
@@ -186,14 +214,14 @@ function Canvas() {
     canvas.freeDrawingBrush.color = colorvalue;
     canvas.renderAll();
   };
-
   const initCanvas = () =>
   new fabric.Canvas("canv", {
     isDrawingMode: false,
     height: 1920,
     width: 4000,
   });
-
+  // canvas.setWidth(window.innerWidth*0.9);
+  // canvas.setHeight(window.innerHeight*0.95);
   useEffect(() => {
     setCanvas(initCanvas());
 
@@ -240,6 +268,7 @@ function Canvas() {
       clearObj(canvas);
       addPObj(canvas);
       addimageObj(canvas);
+      canvasChange(canvas);
     }
   }, [canvas]);
 
@@ -310,6 +339,8 @@ function Canvas() {
             )}
           </div>
         </div>
+
+        <button onClick={canvasCopy}>테스트용버튼</button>
         {/* 리셋 */}
         {hostBool ? (
           <>
@@ -375,6 +406,7 @@ function Canvas() {
             </div>
           </>
         ) : null}
+
 
         <input
           key="color"
