@@ -15,7 +15,6 @@ const GuestVideo = () => {
   }, []);
 
   return (
-    <>
       <div id="videos">
           <div id="videoContainer" className="remoteColumn">
             <div id="guestMeWrap">
@@ -35,7 +34,6 @@ const GuestVideo = () => {
             </div>
           </div>
         </div> 
-    </>
   );
 };
 

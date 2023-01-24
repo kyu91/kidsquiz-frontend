@@ -1,14 +1,17 @@
-import { io } from "socket.io-client";
 import socket from "../liveComponents/socketExport";
 import * as mediasoupClient from "mediasoup-client";
-import _, { random } from "lodash"
-import { async } from "q";
+import _  from "lodash"
 import { color } from "@mui/system";
 
 //익스포트 함수
 export const getSocket = () => {
   return socket;
 };
+export const getSocketName = () => {
+  const guestNameTemp = localStorage.getItem("guestName");
+  return guestNameTemp ? guestNameTemp : "선생";
+};
+
 
 //멀티 커서 
 export const multiCurosr = () =>{
@@ -24,22 +27,11 @@ export const multiCurosr = () =>{
     hostMultiCursor.innerText = "멀티커서 끄기"
     hostMultiCursor.className = 'inactive'
     socket.emit('mouseShow', {roomName});    
-  }
-  
+  }  
 }
 
-export const getSocketName = () => {
-  const guestNameTemp = localStorage.getItem("guestName");
-  return guestNameTemp ? guestNameTemp : "선생";
-};
-
 const MediasoupController = () => {
-  //비디오 소스 임시로 담아둘 것
-  let tempVideoId;
-  let guestRoducerId = [];
   let remoteProducerIdPair= {}
-  //호스트라면 userName은 호스트 이름, 게스트라면 게스트 이름
-
   let params = {
     // mediasoup params
     encodings: [
@@ -63,8 +55,6 @@ const MediasoupController = () => {
       videoGoogleStartBitrate: 1000,
     },
   };
-
-
 
   const initCall = async () => {
     //로컬에서 hostName, guestName hostBool을 가져온다.
@@ -97,16 +87,6 @@ const MediasoupController = () => {
 
     //!! [커서]
     socket.on('mouseStart', function (data) {
-      if (data.cursorPositionsSaved) { 
-        // 같은 방에 존재하는 소켓의 마우스 좌표들이 있는 경우 각 소켓의 좌표를 moveCursorToPosition 함수로 전달
-        console.log("✅cursorpositionsSave!!!", data.cursorPositionsSaved);
-
-          // for (let key in data.cursorPositionsSaved) {
-          //     console.log('key' + key); //? 왜 undefined? 
-          //     moveCursorToPosition(data.cursorPositionsSaved[key], key);
-          //   }
-        }
-
         // mousemove 이벤트리스너=> 스로틀을 사용해서 50ms 마다 마우스 움직임을 감지하여 socket으로 데이터 전송
         document.getElementsByClassName("App")[0].addEventListener("mousemove", handleMouseMove);
         let sendMousePosition_throttled = _.throttle(sendMousePosition, 50);
@@ -167,32 +147,21 @@ const MediasoupController = () => {
       });
     }
 
-      //If a mouse move from socket.io is received, draw it
-      socket.on('mousemove', function (data, sid, name) {
-        moveCursorToPosition(data, sid, name);
-      })
+    //If a mouse move from socket.io is received, draw it
+    socket.on('mousemove', function (data, sid, name) {
+      moveCursorToPosition(data, sid, name);
+    })
 
-      // 랜덤 색상표  
-      function getRandomColor() {
-        // const letters = '0123456789ABCDEF';
-        // let color = '#';
-        // for (let i = 0; i < 6; i++) {
-        //   color += letters[Math.floor(Math.random() * 16)];
-        // }
-        // return color;
-        // let color_r = Math.floor(Math.random() * 127 + 128).toString(16);
-        // let color_g = Math.floor(Math.random() * 127 + 128).toString(16);
-        // let color_b = Math.floor(Math.random() * 127 + 128).toString(16);
-
-        let color = ["#3811F2", "#F512FC", "#E6341B", "#FC9112", "#F2D011", "#F6E72F", "FFFFFF", "FFCCE5","#FE2E9A", '#FF0099', '#FF7A00','#002A95', '#00A0D2' , '#6116FF', '#E32DD1','#0EC4D1', '#1BCC00', '#FF00C3', '#FF3333', '#00C04D', '#00FFF0', '#5A2BBE', '#C967EC', '#46BE2B', '#67EC86', '#F49300', '#FFE600', '#F42900', '#FF9000','#22BC09', '#002B1B', '#9A501B', '#1E0505']
-        let randomIndex = Math.floor(Math.random() * color.length);
-        return color[randomIndex]
-      }
-  
-                            
-    //! 커서 관련 코드 끝! 
+    // 랜덤 색상표  
+    function getRandomColor() {
+      let color = ["#3811F2", "#F512FC", "#E6341B", "#FC9112", "#F2D011", "#F6E72F", "FFFFFF", "FFCCE5","#FE2E9A", '#FF0099', '#FF7A00','#002A95', '#00A0D2' , '#6116FF', '#E32DD1','#0EC4D1', '#1BCC00', '#FF00C3', '#FF3333', '#00C04D', '#00FFF0', '#5A2BBE', '#C967EC', '#46BE2B', '#67EC86', '#F49300', '#FFE600', '#F42900', '#FF9000','#22BC09', '#002B1B', '#9A501B', '#1E0505']
+      let randomIndex = Math.floor(Math.random() * color.length);
+      return color[randomIndex]
+    }              
+  //! 커서 관련 코드 끝! 
 
     
+ 
     //! 1.가장 먼저 실행되는 함수 ( io()로 서버에 소켓 연결이 되면 서버의 emit에 의해 가장 먼저 호출된다. )
     socket.on("connection-success", ({ socketId }) => {
       console.log("🚀🚀🚀🚀🚀 내 소켓 아이디", socket.id)
@@ -204,7 +173,7 @@ const MediasoupController = () => {
       navigator.mediaDevices
         .getUserMedia({
           audio: true,
-          video: {
+          video: { 
             width: {
               min: 640,
               max: 1920,
@@ -223,31 +192,29 @@ const MediasoupController = () => {
 
     let audioParams;
     let videoParams = { params };
-    let consumingTransports = [];
+    let consumingTransports = []; // consume 하고 있는 reportProducerid 리스트
 
     let myStream;
-    // 성공적으로 미디어를 가져온 경우에 실행됨
+    
     //!3. 2번에서 성공적으로 미디어를 가져오면 실행되는 함수
     const streamSuccess = (stream) => {
-
-      //id가 hostMe인 태그를 가져온다.
-      const hostMe = document.getElementById("hostMe"); //추가한거
-      const guestMeWrap = document.getElementById("guestMeWrap"); //추가한거
-      const guestMe = document.getElementById("guestMe"); //추가한거
+      const hostMe = document.getElementById("hostMe"); 
+      const guestMeWrap = document.getElementById("guestMeWrap"); 
+      const guestMe = document.getElementById("guestMe"); 
+      const hostName = document.getElementById("hostName"); 
       
       myStream = stream;
 
-      const hostName = document.getElementById("hostName"); //추가한거
-      const hostCol = document.getElementById("hostCol"); //추가한거
-
       function myAudioController() {
         if (this.className === "off") {
-              const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`
+              // 켜진 스피커 svg 이미지
+              const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>`
               this.innerHTML=svg
               this.className="on"
         }
         else {
-          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>`
+          //꺼진 스피커 svg 이미지
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`
           this.innerHTML=svg
           this.className="off"
         }
@@ -255,18 +222,20 @@ const MediasoupController = () => {
     }  
       function myVideoController() {
         if (this.className === "off") {
-          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg>`
+          // 켜진 카메라 svg 이미지
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg>`
           this.innerHTML=svg
           this.className="on"
         }
         else {
-          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg>`
+          // 꺼진 카메라 svg 이미지
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg>`
           this.innerHTML=svg
           this.className="off"
         }
         stream.getVideoTracks().forEach((track) => {(track.enabled = !track.enabled);}) 
     }  
-
+    
       if (hostBool) {
         hostMe.srcObject = stream;
 
@@ -274,16 +243,19 @@ const MediasoupController = () => {
         guestMeWrap.setAttribute("visibility", "none");
         guestMeWrap.style.display = "none"; 
 
-        hostName.innerText = `${userName} 선생님`;
-        const mute = document.getElementById("hostMemute"); //추가한거
-        const camera = document.getElementById("hostMecamera"); //추가한거
+        // hostName.innerText = `${userName} 선생님`;
+        hostName.innerHTML = `<span id="teacherName">${userName}</span> <span id="tea">선</span><span id="ch">생</span><span id="er">님</span>`;
+        const mute = document.getElementById("hostMemute");
+        const camera = document.getElementById("hostMecamera");
         mute.addEventListener("click", myAudioController)
         camera.addEventListener("click", myVideoController)
+
+                 
       } else {
         guestMe.srcObject = stream;
 
-        const mute = document.getElementById("guestMemute"); //추가한거
-        const camera = document.getElementById("guestMecamera"); //추가한거
+        const mute = document.getElementById("guestMemute");
+        const camera = document.getElementById("guestMecamera");
         mute.addEventListener("click", myAudioController)
         camera.addEventListener("click", myVideoController)
       }
@@ -297,11 +269,8 @@ const MediasoupController = () => {
     //! 4. 3번에서 유저 미디어를 잘 받아서 비디오로 송출한 후에 호출되는 함수. 이 함수를 통해 실제 room에 조인하게 된다.
     const joinRoom = () => {
       socket.emit("joinRoom", roomName, userName, hostBool, (data) => {
-        // console.log(`Router RTP Capabilities... ${data.rtpCapabilities}`);
-        // we assign to local variable and will be used when loading the client Device (see createDevice above)
-        rtpCapabilities = data.rtpCapabilities;
-        // once we have rtpCapabilities from the Router, create Device
-        createDevice();
+      rtpCapabilities = data.rtpCapabilities;
+      createDevice();
       });
     };
 
@@ -310,16 +279,7 @@ const MediasoupController = () => {
     const createDevice = async () => {
       try {
         device = new mediasoupClient.Device();
-
-        // Loads the device with RTP capabilities of the Router (server side)
-        await device.load({
-          // see getRtpCapabilities() below
-          routerRtpCapabilities: rtpCapabilities,
-        });
-
-        // console.log('Device RTP Capabilities', device.rtpCapabilities)
-
-        // once the device loads, create transport
+        await device.load({ routerRtpCapabilities: rtpCapabilities });
         createSendTransport();
       } catch (error) {
         console.log(error);
@@ -330,43 +290,23 @@ const MediasoupController = () => {
 
     //! 6. 5번에서 Device 객체를 생성하고나서 호출되느 함수. 비디오를 송출하기 위해 클라이언트 측 SEND Transport 를 생성한다.
     const createSendTransport = () => {
-      // see server's socket.on('createWebRtcTransport', sender?, ...)
-      // this is a call from Producer, so sender = true
-      //! 방에 조인할 때는 아직 다른 producer가 있는지 모르는 상태 -> 우선은 consumer를 false로 한다.
-      //! 방에 다른 참여자(producer)가 있다면 그때서야 recv transport를 생성하고 그때  consumer:true가 된다.
-      //! 그 작업은 signalNewConsumerTransport 에서 하게 됨 :-)
       socket.emit(
         "createWebRtcTransport",
         { consumer: false },
         ({ params }) => {
-          // The server sends back params needed
-          // to create Send Transport on the client side
           if (params.error) {
             console.log(params.error);
             return;
           }
-
-          // console.log(params)
-
-          // creates a new WebRTC Transport to send media
-          // based on the server's producer transport params
-
           producerTransport = device.createSendTransport(params);
-
-          // this event is raised when a first call to transport.produce() is made
-          // see connectSendTransport() below
           //!! producer client가 SEND Trnasport(LP)의 메서드 produce 메서드를 호출하면 connect 이벤트와 produce 이벤트가 발생됨 
           producerTransport.on(
             "connect",
             async ({ dtlsParameters }, callback, errback) => {
               try {
-                // Signal local DTLS parameters to the server side transport
-                // see server's socket.on('transport-connect', ...)
                 await socket.emit("transport-connect", {
                   dtlsParameters,
                 });
-
-                // Tell the transport that parameters were transmitted.
                 //! transport에 parameters들이 전송되었다는 것을 알려주는 역할!
                 callback();
               } catch (error) {
@@ -378,14 +318,7 @@ const MediasoupController = () => {
           producerTransport.on(
             "produce",
             async (parameters, callback, errback) => {
-              // console.log(parameters)
-              // console.log("produce 이벤트가 발생하였습니다!", parameters)
-
               try {
-                // tell the server to create a Producer
-                // with the following parameters and produce
-                // and expect back a server side producer id
-                // see server's socket.on('transport-produce', ...)
                 await socket.emit(
                   "transport-produce",
                   {
@@ -395,11 +328,8 @@ const MediasoupController = () => {
                     mysocket: socket.id
                   },
                   ({ id, producersExist }) => {
-                    // Tell the transport that parameters were transmitted and provide it with the
                     //! server side producer's id.
                     callback({ id });
-
-                    // if producers exist, then join room
                     if (producersExist) getProducers();
                   }
                 );
@@ -416,122 +346,83 @@ const MediasoupController = () => {
 
     //! 7. 6번에서 SEND transport를 생성한 후 connect 하기 위해 호출되는 함수
     const connectSendTransport = async () => {
-      // we now call produce() to instruct the producer transport
-      // to send media to the Router
-
-      // this action will trigger the 'connect' and 'produce' events above
       audioProducer = await producerTransport.produce(audioParams);
       videoProducer = await producerTransport.produce(videoParams);
 
       audioProducer.on("trackended", () => {
-        console.log("audio track ended");
-
+        console.log("audio track ended"); 
         // close audio track
       });
 
       audioProducer.on("transportclose", () => {
         console.log("audio transport ended");
-
         // close audio track
       });
 
       videoProducer.on("trackended", () => {
         console.log("video track ended");
-
         // close video track
       });
 
       videoProducer.on("transportclose", () => {
         console.log("video transport ended");
-
         // close video track
       });
     };
 
     //! 8 6번에서 방에 입장했을 때 이미 다른 참여자들이 있는 경우 실행됨
     const getProducers = () => {
-      
+      //위의 log는 최초 참여자의 경우 1번만, 이후에 들어온 사람의 경우 2번 찍힘 
+      //처음 연결될 때 audio 가 들어올때는 producer 자체가 없지만, 이후 video가 들어올 때는 audio producer가 존재하기 때문에 getProducer가 한번은 실행되는 것.
       socket.emit("getProducers", (producerList) => {
         // for each of the producer create a consumer
         producerList.forEach((id) => {
           signalNewConsumerTransport(id[0], id[1], id[2], id[3]);
         });
-
-        // producerIds.forEach(signalNewConsumerTransport)
       });
     };
 
+    
     //! 새 참여자 발생시 또는 8번에서 호출됨   1. ** 정해진 순서는 없고, new-producer 이벤트가 발생하면 호출되는 함수
-    const signalNewConsumerTransport = async (
-      remoteProducerId,
-      socketName,
-      newSocketId,
-      isNewSocketHost
-    ) => {
-      //check if we are already consuming the remoteProducerId
+    const signalNewConsumerTransport = async (remoteProducerId,socketName,newSocketId,isNewSocketHost) => {
+      //인자로 들어온 remoteProducerId 를 이미 consume 하고 있다면 바로 return 
       if (consumingTransports.includes(remoteProducerId)) return;
       consumingTransports.push(remoteProducerId);
 
-      await socket.emit(
-        "createWebRtcTransport",
-        { consumer: true },
-        ({ params }) => {
-          // The server sends back params needed
-          // to create Send Transport on the client side
+      await socket.emit( "createWebRtcTransport", { consumer: true }, ({ params }) => {
           if (params.error) {
             console.log(params.error);
             return;
           }
-          // console.log(`PARAMS... ${params}`)
 
           let consumerTransport;
           try {
             consumerTransport = device.createRecvTransport(params);
           } catch (error) {
-            // exceptions:
-            // {InvalidStateError} if not loaded
-            // {TypeError} if wrong arguments.
             console.log(error);
             return;
           }
 
-          consumerTransport.on(
-            "connect",
-            async ({ dtlsParameters }, callback, errback) => {
+          consumerTransport.on( "connect", async ({ dtlsParameters }, callback, errback) => {
               try {
-                // Signal local DTLS parameters to the server side transport
-                // see server's socket.on('transport-recv-connect', ...)
                 await socket.emit("transport-recv-connect", {
                   dtlsParameters,
                   serverConsumerTransportId: params.id,
                 });
-
-                // Tell the transport that parameters were transmitted.
                 callback();
               } catch (error) {
-                // Tell the transport that something was wrong
                 errback(error);
               }
             }
           );
-
-          connectRecvTransport(
-            consumerTransport,
-            remoteProducerId,
-            params.id,
-            socketName,
-            newSocketId,
-            isNewSocketHost
-          );
+          connectRecvTransport( consumerTransport, remoteProducerId, params.id, socketName, newSocketId, isNewSocketHost );
         }
       );
     };
 
-    // server informs the client of a new producer just joined
     // 새로운 producer가 있다고 서버가 알려주는 경우!
-    socket.on(
-      "new-producer",
-      ({ producerId, socketName, socketId, isNewSocketHost }) => {
+    socket.on( "new-producer",
+      ({ producerId, socketName, socketId, isNewSocketHost, kind }) => {
         signalNewConsumerTransport(
           producerId,
           socketName,
@@ -550,16 +441,8 @@ const MediasoupController = () => {
       newSocketId,
       isNewSocketHost
     ) => {
-      // for consumer, we need to tell the server first
-      // to create a consumer based on the rtpCapabilities and consume
-      // if the router can consume, it will send back a set of params as below
-      
-      // [커서] remoteProducerId와 socketId 관계를 저장해둠 (추후 producer close 시 사용 )
-      remoteProducerIdPair.remoteProducerId = newSocketId
-
-      //소켓내임이 있으면 소켓 네임으로 없으면 유저네임
-      await socket.emit(
-        "consume",
+  
+      await socket.emit( "consume",
         {
           rtpCapabilities: device.rtpCapabilities,
           remoteProducerId,
@@ -571,9 +454,6 @@ const MediasoupController = () => {
             return;
           }
 
-          // console.log(`Consumer Params ${params}`)
-          // then consume with the local consumer transport
-          // which creates a consumer
           const consumer = await consumerTransport.consume({
             id: params.id,
             producerId: params.producerId,
@@ -591,40 +471,25 @@ const MediasoupController = () => {
             },
         ]
         
-
-        // destructure and retrieve the video track from the producer
         const { track } = consumer
-        console.log("새 소켓은 host인가? ", isNewSocketHost)
-        
-        // console.log("cameraBtn!!", cameraBtn)
+        console.log(`${socketName}의 producer ${consumer.producerId}의 ${track.kind}를 소비하는 ${consumer._id}`)
 
           //! 새 소켓이 선생님인 경우 -> 선생님 칸으로 srcObject 넣어주기
           if (isNewSocketHost) {
-            // 선생님에게 들어가야해
-            const hostMe = document.getElementById("hostMe"); //추가한거
-            const hostName = document.getElementById("hostName"); //추가한거
-            const hostMeAudio = document.getElementById("hostMeAudio"); //추가한거
-            const hostMultiCursor = document.getElementById("hostMultiCursor");
+            const hostMe = document.getElementById("hostMe"); 
+            const hostName = document.getElementById("hostName"); 
+            const hostMeAudio = document.getElementById("hostMeAudio"); 
             if (track.kind === "audio") {
               hostMeAudio.srcObject = new MediaStream([track]);
             }
             else {
               hostMe.srcObject = new MediaStream([track]);
             }
-            hostName.innerText = `${socketName} 선생님`;
-
-            // hostMultiCursor.addEventListener('click', async(e) =>{
-            //   let cursorStatus = hostMultiCursor.className
-            //   console.log('클릭 이벤트가 해당합니다!')
-            // })
-
             
+            hostName.innerHTML = `<span id="teacherName">${userName}</span> <span id="tea">선</span><span id="ch">생</span><span id="er">님</span>`;;
           }
           //! 그렇지 않은 경우 학생 요소로 넣어주기!
           else {
-            // create a new div element for the new consumer media
-            // console.log("params.kind 는 ", params.kind, "remoteProducerId는 ", remoteProducerId)
-
             if (params.kind === "audio") {
               //! 항상 오디오 요청이 먼저 들어옴. 따라서 모든 새 태그는 오디오일 때만 만들고, 비디오일때는 오디오에서 생성한 것을 찾아서 사용한다. 
               const wrapper = document.createElement("div"); //상위 div (이 안에 오디오, 비디오, micAndVid div 까지 들어가게 될 것)
@@ -632,23 +497,16 @@ const MediasoupController = () => {
               wrapper.setAttribute("class", newSocketId);
             
               const audio = document.createElement("audio") //! 오디오 태그 생성하고, 속성 설정한 후 srcObject에 스트림 넣어준다
-              // const video = document.createElement("video") //???
-              // video.srcObject = new MediaStream([track]) //???
-
-              // audio.setAttribute("id", remoteProducerId) //? 굳이 필요 없을듯???
               audio.setAttribute("autoplay", "true")
               wrapper.appendChild(audio)
               
               audio.srcObject = new MediaStream([track])
               videoContainer.appendChild(wrapper)
-
-              // wrapper.innerHTML =
-              //   '<audio id="' + remoteProducerId + '" autoplay></audio>';
             } else {
               const existingWrapper = document.getElementsByClassName(newSocketId)[0]
               const video = document.createElement("video")
-              // const video = existingWrapper.getElementsByTagName("video") //???
               
+              video.setAttribute("style", "position: relative;");
               video.setAttribute("id", remoteProducerId) 
               video.setAttribute("autoplay", "true")
               existingWrapper.appendChild(video)
@@ -656,19 +514,17 @@ const MediasoupController = () => {
 
               const newElem = document.createElement("div"); // 비디오, 오디오 화면
               newElem.setAttribute("class", "controllers")
+              
               newElem.innerHTML =
-              '<div class="micAndVid"> <p class="guestNameDisplay">"' +  socketName +
-               '"</p> <button id="' + newSocketId + '-mute" class="off"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg></button><button id="' 
-               + newSocketId + '-camera" class="off"> <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg></button></div></div> '
+              '<div class="micAndVid"> <p class="guestNameDisplay">' +  socketName +
+               '</p> <button id="' + newSocketId + '-mute" class="off"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button id="' 
+               + newSocketId + '-camera" class="off"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg></button></div></div> '
                existingWrapper.appendChild(newElem)
-            // }
-
-            // document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
             
             //!버튼 이벤트리스너
+            
             let muteBtn = document.getElementById(newSocketId+'-mute')
             let cameraBtn = document.getElementById(newSocketId+'-camera')
-            // let hostMultiCursorBtn = document.getElementById()
             
             if (cameraBtn){
                 cameraBtn.addEventListener('click', async (e) => {
@@ -676,7 +532,7 @@ const MediasoupController = () => {
                   if (camCheck === 'off') {
                       cameraBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg>`
                       cameraBtn.setAttribute("class", "on")
-                      
+
                       let tempSocket = e.target.id.replace('-camera', '');//e.srcElement.id 뒤에 camera 택스트 제거
                       socket.emit("video-out",{
                           studentSocketId: tempSocket,
@@ -685,7 +541,7 @@ const MediasoupController = () => {
                       // console.log("socket event video-out 완료 ")
 
                       
-                  } else {
+                  } else { ////////!!!!! 테스트!!!
                     cameraBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg>`
                     cameraBtn.setAttribute("class", "off")
                       //e.srcElement.id 뒤에 camera 택스트 제거
@@ -697,7 +553,7 @@ const MediasoupController = () => {
                   }
                 })
             }
-
+ 
             if (muteBtn){
               muteBtn.addEventListener('click', async (e) => {
                   console.log("mute 버튼 클릭했어요!!!! 현재 상태는 : ", muteBtn.className)
@@ -729,8 +585,9 @@ const MediasoupController = () => {
               })
           }
             // document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
-            }
-      } 
+
+          }       
+      } // else 문 종료 
 
         await socket.on('student-video-controller', ( on ) => {
             myStream
@@ -781,26 +638,27 @@ const MediasoupController = () => {
       }
     })
 
+
     //! 누군가가 연결 종료될 때 발생 -> 해당 비디오 요소가 제거된다.
     socket.on("producer-closed", ({ remoteProducerId }) => {
-      // server notification is received when a producer is closed
-      // we need to close the client-side consumer and associated transport
       const producerToClose = consumerTransports.find(
         (transportData) => transportData.producerId === remoteProducerId
       );
       producerToClose.consumerTransport.close();
       producerToClose.consumer.close();
 
-      // remove the consumer transport from the list
+      // consumerTransports 에서 제외하기
       consumerTransports = consumerTransports.filter(
         (transportData) => transportData.producerId !== remoteProducerId
       );
       const socketIdLeaving = remoteProducerIdPair.remoteProducerId
-      // remove the video div element
-      //todo! 여기 뭔가 수정 필요..
-      // videoContainer.removeChild(
-      //   document.getElementById(`td-${remoteProducerId}`)
-      // );
+      
+        
+    // 연결이 끊긴 사람의 비디오 화면을 지우기 
+      const nodeToDelete = document.getElementById(`td-${remoteProducerId}`)
+      if (nodeToDelete) {
+        videoContainer.removeChild(document.getElementById(`td-${remoteProducerId}`));
+      }
       
       //! [커서] 마우스 커서 remove 
       console.log('mousePosition-' + socketIdLeaving," 남아있으면 안돼요!")
