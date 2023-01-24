@@ -1,75 +1,60 @@
 * {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 16px;
-    padding: 0; 
-    margin : 0;
   }
+
 
 .canvarsContiner{
     position: relative;
     overflow: hidden;
-    width: 100vw;
     height: 100vh;
     z-index: 3; 
-    padding-left: 3% ;
+    padding: 1.5% 1% 2% 1% ;
 }
 
+/* 캔버스 배경화면  */
 .canvarsContiner:after {
-    /* 토끼 배경 */
-    background-image: url("https://img.freepik.com/premium-vector/cute-bunny-seamless-pattern-rabbit-pattern_553915-149.jpg"); 
-
-    /* 다람쥐 배경 */
-    /* background-image: url("https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/upload/%E1%84%83%E1%85%A1%E1%84%85%E1%85%A1%E1%86%B7%E1%84%8C%E1%85%B1.png");  */
-
-    /* 아래 공룡 배경 */
-    /* background-image: url("https://mblogthumb-phinf.pstatic.net/MjAxOTA2MTlfMjYx/MDAxNTYwOTEzNTA3ODE3.7NG4Q8ZouJeuGviFdrhe_4B8kHSwf0hR_VJL4nN3Niwg.K_P-RevcN_zQUEIjGT-qRlVoHgCFJNmvn4sMxYPbZowg.JPEG.jutiti0523/190619_01.jpg?type=w800");  */
-
-    /* 아래 꽃 배경 */
-    /* background-image: url("https://img.freepik.com/free-vector/colorful-flower-background-cute-yellow-border-nature-doodle-retro-design-vector_53876-151423.jpg?w=826&t=st=1673991635~exp=1673992235~hmac=5a9bf090408e3505e94ddac0f6acbc79eda46d5e5b59f00320716d2b62edd72c"); */
+    background-image: url("https://mblogthumb-phinf.pstatic.net/MjAxNjEyMTBfMjM5/MDAxNDgxMzA1NjQ4NTQ4.3lNIEB9BtSHgqItkIrujffxMVY53x2ZbwDDn-AMxxJEg.Aig5AtPOzRrtfAUpMuhDI5ocy_nOdCdu9tcUp0gMBKgg.PNG.rimiy/%EC%8A%AC%EB%9D%BC%EC%9D%B4%EB%93%9C1.PNG?type=w800"); 
     background-repeat: repeat;
     background-size: contain;
     top:0;
     left:0;
     position:absolute;
     opacity: 0.9;
-    filter:alpha(opacity=100);
     z-index:-1;
     content:"";
     width:100%;
     height:100%;
 }
 
-/* 왼쪽 하단의 선생님 화면 정보 */
-.hostVideoPosition{
-    position: absolute;
-    bottom: 3%;
-    left: 50px;
-}
-/* 오른쪽에 학생들 화면 */
-.guestVideoPosition{
-    position: absolute;
-    top: 50px;
-    right: 50px;
-}
-
 /* 캔버스 자체 */
 .canvarsPosition{
-    margin-top: 3%;
-    width: 94vw;
-    height: 93vh;
     background-color: rgba(255,255,255,0.9);
     border-radius: 50px;
 }
 
+/* 왼쪽 하단의 선생님 화면 정보 */
+.hostVideoPosition{
+    position: absolute;
+    bottom: 2.5%;
+    left: 1.5%;
+}
+/* 오른쪽에 학생들 화면 */
+.guestVideoPosition{
+    position: absolute;
+    top: 3%;
+    right: 1%;
+}
+/* 선생님 화면, 학생 화면 공통 */
 #hostCol, #videoContainer {
-    width: 10em;
-    background: transparent;
+    width: 12em;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
 }
 
+/* 선생님 화면 */
 #hostCol {
-    border-radius: 50%;
+    width: 20em;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -80,36 +65,46 @@
     margin: 7px;
     font-size: 24px;
 }
-video{
-    border-radius: 40px;
-    width: 100%;
 
+video{
+    border-radius: 12%;
+    width: 100%;
 }
+
 .controllers {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     flex-direction: column;
     align-items: center;
-
 }
 .controllers button {
     padding: 4px 14px 1px 14px;
     margin: 5px 4px;
-    background-color: rgba(0, 190, 0, 0.3);
+    background-color: rgba(200, 200, 200, 0.8);
     border-radius: 20px;
     border: none
 }
-.controllers button:hover {
-    background-color: rgba(255,50,120,0.6);
-    transform: scale( 1.1, 1.1 )
+.controllers button:hover,.controllers svg:hover  {
+    transform: scale( 1.1, 1.1 );
+    width: 40;
 } 
 
 .micAndVid {
+    width: 93%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    position: absolute ;
+    bottom: 2px;
 }
+/* 학생화면에서의 학생과 선생님이 보는 학생 이름 */
 #localUserName, .guestNameDisplay {
-    margin-right: 10px;
-    margin-top: 6px;
+    margin-right: 20px;
+    margin-top: 10px;
     font-size: 1.2em;
+    color: white;
+    font-weight: 800;
+}
+
+#guestMeWarp {
+    position: relative;
 }

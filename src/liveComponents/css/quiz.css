@@ -42,14 +42,14 @@
 }
 
 #btnnn {
-    padding: 1em 1em; 
+    /* padding: 1em 1em; 
     background-color: rgba(0,40,250,0.2);
     padding: 2px 10px;
     margin-top: 10px;
     margin-left: 15px;
     color:rgba(0,0,0,0.5);
     border: none;
-    border-radius: 10px;
+    border-radius: 10px; */
 }
 #finishQuiz {
     /* padding: 1em 1em; */

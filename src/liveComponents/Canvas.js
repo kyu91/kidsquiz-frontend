@@ -38,6 +38,7 @@ import Crop32Icon from "@mui/icons-material/Crop32";
 import { useLocation } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Tooltip from "@mui/material/Tooltip";
+import InterestsIcon from '@mui/icons-material/Interests';
 
 // let puzzleurl
 
@@ -185,12 +186,21 @@ function Canvas() {
     canvas.freeDrawingBrush.color = colorvalue;
     canvas.renderAll();
   };
-  const initCanvas = () =>
-    new fabric.Canvas("canv", {
+  const initCanvas = () => {
+     const canvas = new fabric.Canvas("canv", {
       isDrawingMode: false,
-      height: 1920,
-      width: 4000,
     });
+  // set the initial size of the canvas
+  canvas.setWidth(window.innerWidth*0.9);
+  canvas.setHeight(window.innerHeight*0.95);
+
+    window.addEventListener("resize", () => {
+      canvas.setWidth(window.innerWidth);
+      canvas.setHeight(window.innerHeight);
+  });
+
+  
+}
 
   useEffect(() => {
     setCanvas(initCanvas());
@@ -333,7 +343,7 @@ function Canvas() {
                     <Tooltip title="도형모음">
                       <Button onClick={showFigureBundleHandler}>
                         {/* <CategoryIcon /> */}
-                        도형모음
+                        <InterestsIcon fontSize="large"/>
                       </Button>
                     </Tooltip>
                     {showFigureBundle ? (

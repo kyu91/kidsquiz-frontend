@@ -10,14 +10,13 @@ const HostVideo = () => {
     <>
     <div>
         <div id="videoColumn" className="mainTable">
+                <button id="hostMultiCursor" onClick={multiCurosr} className="inactive">멀티커서</button>
             <div id="hostCol" className="localColumn">
                 <p id="hostName"></p>
                 <audio id="hostMeAudio" autoPlay></audio>
                 <video id="hostMe" autoPlay muted></video>
                 <div className="controllers">
                     <div className="micAndVid">
-                        {/* // 멀티커서! */}
-                        <button id="hostMultiCursor" onClick={multiCurosr} className="inactive">멀티커서</button>
                         <button id="hostMemute" className="off">
                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>
                         </button>
