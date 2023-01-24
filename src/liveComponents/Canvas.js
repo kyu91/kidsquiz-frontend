@@ -119,7 +119,7 @@ function Canvas() {
     await axios(config)
       .then((response) => {
         setClassMaterials(response.data);
-        console.log("바뀐 거 어떻게오나 보자", response.data);
+        // console.log("바뀐 거 어떻게오나 보자", response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -169,30 +169,16 @@ function Canvas() {
 
   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
-  socket.on('newestmember', socketId =>{
-    if (hostBool)
+  socket.on('newestmember', (socketId) =>{ 
       emitCanvas(socketId,{objs: canvas._objects})
-
   })
-
-
-
 
  const canvasCopy = () => {
     console.log('캔버스 전송')
     console.log(canvas._objects)
     emitCanvas({objs: canvas._objects})
-
   }
 
-  // socket.on('canvassetnewuser', data => {
-  //   const {objs} = data
-  //   objs.map((v,i) => {
-  //     console.log(v)
-  //   })
-  //   // console.log(data)
-  //   // console.log(objs)
-  // })
 
    ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
