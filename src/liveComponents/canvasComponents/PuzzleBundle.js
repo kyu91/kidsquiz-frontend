@@ -42,7 +42,7 @@ const PuzzleBundle = ({
             name="imageaddeee2ddd"
             onClick={imageshowlistPuzzledivexit}
           >
-            <ExtensionOffIcon />
+            <ExtensionOffIcon fontSize='large' />
           </Button>
         </Tooltip>
       ) : (
@@ -54,7 +54,7 @@ const PuzzleBundle = ({
             name="imageaddeee2"
             onClick={imageshowlistPuzzle}
           >
-            <ExtensionIcon />
+            <ExtensionIcon fontSize='large'/>
           </Button>
         </Tooltip>
       )}

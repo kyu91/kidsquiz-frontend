@@ -21,7 +21,7 @@ const ImageBundle = ({ showimage, setShowimage, setShowimagePuzzle }) => {
         name="imageaddeee"
         onClick={imageshowlist}
       >
-        <ImageSearchIcon />
+        <ImageSearchIcon fontSize='large'/>
       </Button>
     </Tooltip>
   );
