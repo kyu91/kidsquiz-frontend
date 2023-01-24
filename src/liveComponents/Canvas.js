@@ -37,6 +37,7 @@ import Crop32Icon from "@mui/icons-material/Crop32";
 import { useLocation } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Tooltip from "@mui/material/Tooltip";
+import InterestsIcon from '@mui/icons-material/Interests';
 
 // let puzzleurl
 
@@ -326,7 +327,7 @@ function Canvas() {
                     <Tooltip title="도형모음">
                       <Button onClick={showFigureBundleHandler}>
                         {/* <CategoryIcon /> */}
-                        도형모음
+                        <InterestsIcon fontSize="large"/>
                       </Button>
                     </Tooltip>
                     {showFigureBundle ? (
