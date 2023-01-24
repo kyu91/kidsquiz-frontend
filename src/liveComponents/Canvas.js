@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { fabric } from "fabric";
 import { v1 as uuid } from "uuid";
 import {
+  emitCanvas,
   emitModify,
   emitAdd,
   emitAddP,
@@ -139,8 +140,8 @@ function Canvas() {
       console.log(object);
       // console.log(((object.height)*0.8))
       object.set({
-        left: e.clientX - object.width * 0.278,
-        top: e.clientY - object.height * 0.425,
+        left: e.clientX - object.width * 0.26,
+        top: e.clientY - object.height * 0.28,
         originX: "left",
         originY: "top",
         id: uuid(),
@@ -255,9 +256,11 @@ function Canvas() {
     fabric.Image.fromURL(imageURL, function (Image) {
       Image.scale(0.4);
       object = Image;
-      object.set({ id: uuid() });
+      object.set({ id: uuid(),
+        left : 230,
+        top: 150});
       canvas.add(object);
-      emitAddImage({ url: imageURL, id: object.id });
+      emitAddImage({ url: imageURL, id: object.id, left: object.left, top: object.top });
       canvas.renderAll();
     });
   };
@@ -288,7 +291,7 @@ function Canvas() {
                 onChange={changeWidth}
                 defaultValue={widthvalue}
                 min="1"
-                max="150"
+                max="100"
               ></input>
             )}
             {!drawmodeonoff && (
@@ -318,7 +321,11 @@ function Canvas() {
         {/* 리셋 */}
         {hostBool ? (
           <>
-            <NewCanvas canvas={canvas} emitClear={emitClear}></NewCanvas>
+            <NewCanvas 
+            canvas={canvas}
+            emitClear={emitClear} 
+            showimagePuzzlediv = {showimagePuzzlediv} 
+            setShowimagePuzzlediv = {setShowimagePuzzlediv}></NewCanvas>
             {/* 선택 삭제 */}
             <Deletes canvas={canvas} emitDelete={emitDelete}></Deletes>
 
@@ -376,6 +383,7 @@ function Canvas() {
             </div>
           </>
         ) : null}
+
         <input
           key="color"
           type="color"
