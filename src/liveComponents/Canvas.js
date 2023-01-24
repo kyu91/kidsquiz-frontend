@@ -100,30 +100,26 @@ function Canvas() {
   //퍼즐, 이미지 묶음 데이터 담을 state(수업의 오브젝트 아이디를 줌)
   const [classMaterials, setClassMaterials] = useState([]);
 
-  //퍼즐, 이미지 묶음 데이터 get 요청으로 받아옴
-  useEffect(() => {
-    const getClassMaterials = async () => {
-      const config = {
-        method: "get",
-        url: `/api/class/material/${roomName}`,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      };
-
-      await axios(config)
-        .then((response) => {
-          console.log("몇번 드러오는지 보자", response.data);
-          setClassMaterials(response.data);
-          console.log(response.data.image);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  const getClassMaterials = async () => {
+    const config = {
+      method: "get",
+      url: `/api/class/material/${roomName}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("token")}`,
+      },
     };
-    getClassMaterials();
-  }, []);
+
+    await axios(config)
+      .then((response) => {
+        setClassMaterials(response.data);
+        console.log('바뀐 거 어떻게오나 보자',response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
 
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
@@ -335,6 +331,9 @@ function Canvas() {
 
   useEffect(() => {
     setCanvas(initCanvas());
+    
+    //퍼즐, 이미지 묶음 데이터 get 요청으로 받아옴
+    getClassMaterials();
   }, []);
 
   // useEffect(() => {
@@ -525,7 +524,9 @@ function Canvas() {
           id="drawing-color"
         ></input>
         {/* 퀴즈! */}
-        <Quiz></Quiz>
+        <Quiz
+         classMaterials={classMaterials}
+         ></Quiz>
         {/* <span className='info'>{widthvalue}</span> */}
       </div>
 
