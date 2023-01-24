@@ -171,10 +171,9 @@ export const clearObj = canvas =>{
     })
 }
 
-
 export const canvasChange = canvas => {
   socket.on('canvassetnewuser', data => {
-    const {objs} = data.objs
+    const {objs} = data
     let object
     objs.map((v,i) => {
       // console.log(v)
