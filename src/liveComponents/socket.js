@@ -5,6 +5,10 @@ import socket from "./socketExport"
 
 // emitters
 
+export const emitCanvas = (obj) => {
+  socket.emit("canvasUpdate", obj)
+  console.log("캔버스 업데이트 확인")
+}
 export const emitUrl = (obj) => {
   socket.emit("sendPuzzleURL", obj)
 }
@@ -166,4 +170,10 @@ export const clearObj = canvas =>{
         canvas.renderAll()
     })
 }
+
+// export const unknownusersetcanvas = () => {
+//   socket.on('canvassetnewuser', data => {
+//     setCanvas()
+//   })
+// }
 export default socket

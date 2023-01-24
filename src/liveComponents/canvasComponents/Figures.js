@@ -37,7 +37,9 @@ const Figures = ({canvas, colorvalue, emitAdd, showFigureBundleHandler}) => {
         }
         object.set({id: uuid()})
         canvas.add(object)
+        // console.log(canvas)
         canvas.renderAll()
+        // console.log(canvas)
         emitAdd({obj: object, id: object.id, left: object.left, top: object.top})
         showFigureBundleHandler();
       };

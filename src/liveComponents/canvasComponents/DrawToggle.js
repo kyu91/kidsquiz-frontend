@@ -1,8 +1,7 @@
 import React from 'react'
 import Button from '@mui/material/Button';
 import CreateIcon from '@mui/icons-material/Create';
-import CropRotateIcon from '@mui/icons-material/CropRotate';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import SwipeDownIcon from '@mui/icons-material/SwipeDown';
 
 
 
@@ -35,8 +34,8 @@ const DrawToggle = ({canvas, setShow, setdrawmodeonoff}) => {
           onClick={drawmode}> 
           {
             buttonState ? 
-              <><CreateIcon/> </> 
-              : <>  <CropRotateIcon/></> 
+              <><CreateIcon fontSize='large'/> </> 
+              : <>  <SwipeDownIcon fontSize='large'/></> 
           }
     </Button>
     
