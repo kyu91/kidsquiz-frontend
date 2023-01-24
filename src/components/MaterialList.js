@@ -7,6 +7,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "./component_style.css";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
+import { requirePropFactory } from "@mui/material";
+
+
 
 export default function MaterialList() {
   const [materialList, setMaterialList] = React.useState([]);
@@ -103,8 +106,9 @@ export default function MaterialList() {
               }}>
               <Paper elevation={0}
                     component="img"
-                    src={!material.image? material.image : "https://images.chosun.com/resizer/5UBvfTU-pa3fiMELyLWDZ1QVPLs=/530x576/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/JC53LPAYARPTIYHZKBA5BHT7MA.png"}
+                    src={!material.image? material.image : 'https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/upload/1674238515687_7875399.png'}
                     sx={{
+                      padding: "3.75em",
                       width: "13rem",
                       height: "13rem",
                       borderRadius: "1.5rem",

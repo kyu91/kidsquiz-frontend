@@ -94,6 +94,7 @@ function App() {
                           }}>
               <ResponsiveAppBar></ResponsiveAppBar>
               <Boards></Boards>
+            
               </Container> 
             }/>
         

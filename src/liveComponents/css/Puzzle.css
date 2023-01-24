@@ -1,7 +1,7 @@
 .jigsaw-puzzle {
     width: 580px;
     height: 500px;
-    position: relative;
+    position: absolute;
     border: 2px soild black;
     
   }
