@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import "./css/quiz.css";
 const socket = getSocket();
 
-function Quiz() {
+function Quiz({ classMaterials }) {
   const [quizStarted, setquizStarted] = useState(false);
   const [ansChosen, setansChosen] = useState(false);
   const [question, setquestion] = useState(null);
@@ -34,6 +34,21 @@ function Quiz() {
     }
   };
 
+
+  //퀴즈 첫번쨰 사진 두번째 사진 저장할 state
+  const [firstImage, setfirstImage] = useState(null);
+  const [secondImage, setsecondImage] = useState(null);
+  const [answer, setAnswer] = useState(null);
+  const [questionText, setQuestionText] = useState(null);
+  if (classMaterials?.imageMultipleChoiceList !== undefined) {
+    firstImage == null && setfirstImage(classMaterials.imageMultipleChoiceList[0].firstChoice)
+    secondImage == null && setsecondImage(classMaterials.imageMultipleChoiceList[0].secondChoice)
+    answer == null && setAnswer(classMaterials.imageMultipleChoiceList[0].answer)
+    questionText == null && setQuestionText(classMaterials.imageMultipleChoiceList[0].question)
+
+  }
+  
+  
   //////////////////////////////////////////////////////////////테스트용 임시//////////////////////////////////////////////
 
   // 이 방의 호스트 인가 아닌가 확인 -> isHost 변수 설정 (근데 어차피 퀴즈 시작은 선생님만 할 수 있으니까 꼭 안해도 될듯..?)
@@ -72,6 +87,7 @@ function Quiz() {
     }
   }
   socket.on("startQuiz", (q, c1, c2, rightAnswer, hostSocket) => {
+    
     setquestion(q);
     setchoice1(c1);
     setchoice2(c2);
@@ -155,18 +171,24 @@ function Quiz() {
                   primary="동물 퀴즈"
                   onClick={() => {
                     //todo: 아래 quizId는 퀴즈 objectId여야 함
-                    let quizId = 1;
-                    socket.emit(
-                      "startQuiz",
-                      quizId,
-                      socket.id,
-                      (q, c1, c2, ans) => {
-                        setquestion(q);
-                        setchoice1(c1);
-                        setchoice2(c2);
-                        setrightAnswer(ans);
-                      }
-                    );
+                    // let quizId = 1;
+                    // socket.emit(
+                    //   "startQuiz",
+                    //   quizId,
+                    //   socket.id,
+                    //   (q, c1, c2, ans) => {
+                    //     setquestion(q);
+                    //     setchoice1(c1);
+                    //     setchoice2(c2);
+                    //     setrightAnswer(ans);
+                    //   }
+                    // );
+                    socket.emit("startQuiz", questionText, firstImage, secondImage, answer, socket.id, (q, c1, c2, ans) => {
+                      setquestion(q);
+                      setchoice1(c1);
+                      setchoice2(c2);
+                      setrightAnswer(ans);
+                    });
                     setquizStarted(true);
                   }}
                 />
