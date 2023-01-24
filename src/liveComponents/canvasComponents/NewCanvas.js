@@ -22,7 +22,7 @@ const NewCanvas = ({ canvas, emitClear }) => {
           onMouseLeave={() => setHover(false)}
           onClick={clearCanvas}
         >
-          <RefreshIcon />
+          <RefreshIcon fontSize='large'/>
         </Button>
       </Tooltip>
     </div>

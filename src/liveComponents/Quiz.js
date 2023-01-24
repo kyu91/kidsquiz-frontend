@@ -193,36 +193,8 @@ function Quiz({ classMaterials }) {
                   }}
                 />
               </ListItem>
-              <ListItem>
-                {/* <ListItemAvatar>
-                  <Avatar>
-                    <WorkIcon />
-                  </Avatar>
-                </ListItemAvatar> */}
-                <ListItemText primary="물건 퀴즈" />
-              </ListItem>
-              <ListItem>
-                {/* <ListItemAvatar>
-                  <Avatar>
-                    <DirectionsBusIcon />
-                  </Avatar>
-                </ListItemAvatar> */}
-                <ListItemText primary="탈것 퀴즈" />
-              </ListItem>
             </List>
           )}
-
-          {/* <button id="btnnn" onClick={()=>{
-                //todo: 아래 quizId는 퀴즈 objectId여야 함 
-                let quizId = 1
-                socket.emit("startQuiz", quizId, socket.id, (q, c1, c2, ans)=>{
-                    setquestion(q)
-                    setchoice1(c1)
-                    setchoice2(c2)
-                    setrightAnswer(ans)
-                })
-                setquizStarted(true)
-            }}> 퀴즈 시작 </button> */}
         </div>
        : null}
     </>
