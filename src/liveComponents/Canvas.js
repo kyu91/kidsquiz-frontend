@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { fabric } from "fabric";
 import { v1 as uuid } from "uuid";
 import {
+  emitCanvas,
+  canvasChange,
   emitModify,
   emitAdd,
   emitAddP,
@@ -35,12 +37,16 @@ import PuzzleBundle from "./canvasComponents/PuzzleBundle";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import Crop32Icon from "@mui/icons-material/Crop32";
 import { useLocation } from "react-router-dom";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import Tooltip from "@mui/material/Tooltip";
+import InterestsIcon from '@mui/icons-material/Interests';
+import MediasoupController from "../controller/MediasoupController";
 
 // let puzzleurl
 
 function Canvas() {
   const [canvas, setCanvas] = useState("");
-  const [widthvalue, setWidthvalue] = useState(1);
+  const [widthvalue, setWidthvalue] = useState(10);
   const [colorvalue, setColorvalue] = useState("#000000");
   // const [imageURL,setimageURL] = useState('');
   const [show, setShow] = useState(false);
@@ -100,188 +106,46 @@ function Canvas() {
   //퍼즐, 이미지 묶음 데이터 담을 state(수업의 오브젝트 아이디를 줌)
   const [classMaterials, setClassMaterials] = useState([]);
 
-  //퍼즐, 이미지 묶음 데이터 get 요청으로 받아옴
-  useEffect(() => {
-    const getClassMaterials = async () => {
-      const config = {
-        method: "get",
-        url: `/api/class/material/${roomName}`,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${localStorage.getItem("token")}`,
-        },
-      };
-
-      await axios(config)
-        .then((response) => {
-          console.log("몇번 드러오는지 보자", response.data);
-          setClassMaterials(response.data);
-          console.log(response.data.image);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  const getClassMaterials = async () => {
+    const config = {
+      method: "get",
+      url: `/api/class/material/${roomName}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${localStorage.getItem("token")}`,
+      },
     };
-    getClassMaterials();
-  }, []);
 
-  ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
-
-  // finditem
-
-  // const finditem = (imageURL)=> {
-  //   fabric.Image.fromURL(imageURL, function(Image){
-
-  //     var shell = new fabric.Circle({
-  //       fill:'',
-  //       stroke: 'blue',
-  //       strokeWidth: 5,
-  //       scaleX: 2,
-  //       scaleY: 2,
-  //       originX: 'center',
-  //       originY: 'center',
-  //     });
-  //     var clipPath = new fabric.Circle({
-  //       absolutePositioned: true,
-  //       originX: 'center',
-  //       originY: 'center',
-  //       scaleX: 2,
-  //       scaleY: 2
-  //     })
-  //   });
-
-  //   function animate(){
-  //     abort = fabric.util.animate({
-  //       // startValue: 0,
-  //       // endValue: 360 * scalar,
-  //       // duration: 1000,
-  //       easing: fabric.util.ease.easeInOutSine,
-  //       onChange: function (value) {
-  //         shell.set('angle', value);
-  //         // clipPath.set('angle', value);
-  //         Image.set('dirty', true);
-  //       },
-  //       // onComplete: function () {
-  //       //   scalar += Math.sign(scalar);
-  //       //   scalar *= -1;
-  //       //   animate();
-  //       // }
-  //     });
-  //   }
-
-  // }
-
-  //     Image.scale(0.4);
-  //     object = Image
-  //     object.set({id: uuid()})
-  //     canvas.add(object);
-  //     emitAddImage({url: imageURL, id: object.id})
-  //     canvas.renderAll()
-  //   })
-  // }
-
-  /////////////////////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////
-  // const finditem = () => {
-  //   // fabric.Object.prototype.transparentCorners = false;
-  //   // var radius = 300;
-  //   canvas.preserveObjectStacking = true;
-
-  // var url = 'https://img.hankyung.com/photo/202208/03.30968100.1.jpg'
-
-  //   fabric.Image.fromURL(url, function(img) {
-  //     var scalar = 1, abort;
-  //     var path = 'M 230 230 A 45 45, 0, 1, 1, 275 275 L 275 230 Z';
-  //     var shell = new fabric.Path(path, {
-  //       fill: '',
-  //       stroke: 'blue',
-  //       strokeWidth: 5,
-  //       scaleX: 2,
-  //       scaleY: 2,
-  //       lockScalingX: true,
-  //       lockScalingY: true,
-  //       lockSkewingX: true,
-  //       lockSkewingY: true,
-  //       originX: 'center',
-  //       originY: 'center',
-  //     })
-  //     var clipPath = new fabric.Path(path, {
-  //       absolutePositioned: true,
-  //       originX: 'center',
-  //       originY: 'center',
-  //       scaleX: 2,
-  //       scaleY: 2
-  //     })
-
-  //     function animate() {
-  //       abort = fabric.util.animate({
-  //         startValue: 0,
-  //         endValue: 360 * scalar,
-  //         duration: 1000,
-  //         easing: fabric.util.ease.easeInOutSine,
-  //         onChange: function (value) {
-  //           shell.set('angle', value);
-  //           clipPath.set('angle', value);
-  //           img.set('dirty', true);
-  //         },
-  //         onComplete: function () {
-  //           scalar += Math.sign(scalar);
-  //           scalar *= -1;
-  //           animate();
-  //         }
-  //       });
-  //     }
-
-  //     img.scale(0.5).set({
-  //       left: 200,
-  //       top: 180,
-  //       clipPath: clipPath
-  //     });
-  //     shell.on('moving', ({ e, transform, pointer }) => {
-  //       //  only because they are absolutePositioned
-  //       clipPath.setPositionByOrigin(shell.getCenterPoint(), 'center', 'center');
-  //       img.set('dirty', true);
-  //     });
-  //     shell.on('rotating', () => {
-  //       clipPath.set({ angle: shell.angle });
-  //       img.set('dirty', true);
-  //     });
-  //     shell.on('selected', () => {
-  //       abort();
-  //     });
-  //     shell.on('deselected', () => {
-  //       scalar = 1;
-  //       animate()
-  //     });
-  //     img.clipPath = clipPath;
-  //     canvas.add(img, shell);
-  //     canvas.setActiveObject(img);
-
-  //     animate();
-  //   });
-  // };
-
-  /////////////////////////////////////////////////////////////////테스트중/////////////////////////////////////////////////////////
-
-  ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
+    await axios(config)
+      .then((response) => {
+        setClassMaterials(response.data);
+        console.log("바뀐 거 어떻게오나 보자", response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const DragandDrop = (e) => {
     // settempurl(e.target.src)
     e.stopPropagation();
     let tempurl = e.target.src;
-    console.log(tempurl, "테스트용콘솔");
+    // console.log(tempurl, "테스트용콘솔");
     // canvas.on("mouse:move", function(e){
     //   console.log(e.pointer)
     // })
-    console.log(e.clientX, e.clientY);
+    // console.log(e.clientX, e.clientY);
     let object;
     fabric.Image.fromURL(tempurl, function (Image) {
       Image.scale(0.4);
       object = Image;
-      console.log(object);
+      // console.log(object);
       // console.log(((object.height)*0.8))
       object.set({
-        left: e.clientX - object.width * 0.278,
-        top: e.clientY - object.height * 0.425,
+        left: e.clientX - object.width * 0.26,
+        top: e.clientY - object.height * 0.28,
+        left: e.clientX - object.width * 0.26,
+        top: e.clientY - object.height * 0.28,
         originX: "left",
         originY: "top",
         id: uuid(),
@@ -305,6 +169,32 @@ function Canvas() {
 
   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
+  socket.on('newestmember', socketId =>{
+    if (hostBool)
+      emitCanvas(socketId,{objs: canvas._objects})
+
+  })
+
+
+
+
+ const canvasCopy = () => {
+    console.log('캔버스 전송')
+    console.log(canvas._objects)
+    emitCanvas({objs: canvas._objects})
+
+  }
+
+  // socket.on('canvassetnewuser', data => {
+  //   const {objs} = data
+  //   objs.map((v,i) => {
+  //     console.log(v)
+  //   })
+  //   // console.log(data)
+  //   // console.log(objs)
+  // })
+
+   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {
     canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
@@ -327,20 +217,19 @@ function Canvas() {
     canvas.renderAll();
   };
   const initCanvas = () =>
-    new fabric.Canvas("canv", {
-      isDrawingMode: false,
-      height: 1920,
-      width: 4000,
-    });
-
+  new fabric.Canvas("canv", {
+    isDrawingMode: false,
+    height: 1920,
+    width: 4000,
+  });
+  // canvas.setWidth(window.innerWidth*0.9);
+  // canvas.setHeight(window.innerHeight*0.95);
   useEffect(() => {
     setCanvas(initCanvas());
-  }, []);
 
-  // useEffect(() => {
-  //   bringimage()
-  //   bringpuzzleimage()
-  // }, [])
+    //퍼즐, 이미지 묶음 데이터 get 요청으로 받아옴
+    getClassMaterials();
+  }, []);
 
   useEffect(() => {
     if (canvas) {
@@ -364,10 +253,6 @@ function Canvas() {
         }
       });
 
-      // canvas.on("mouse:move", function(e){
-      //   console.log(e.pointer)
-      // })
-
       canvas.on("path:created", function (options) {
         if (options.path) {
           options.path.set({ id: uuid() });
@@ -385,6 +270,7 @@ function Canvas() {
       clearObj(canvas);
       addPObj(canvas);
       addimageObj(canvas);
+      canvasChange(canvas);
     }
   }, [canvas]);
 
@@ -393,9 +279,11 @@ function Canvas() {
     fabric.Image.fromURL(imageURL, function (Image) {
       Image.scale(0.4);
       object = Image;
-      object.set({ id: uuid() });
+      object.set({ id: uuid(),
+        left : 230,
+        top: 150});
       canvas.add(object);
-      emitAddImage({ url: imageURL, id: object.id });
+      emitAddImage({ url: imageURL, id: object.id, left: object.left, top: object.top });
       canvas.renderAll();
     });
   };
@@ -409,7 +297,6 @@ function Canvas() {
     //!리턴
     <div className="App">
       <div id="buttonGroup">
-        
         {/* 팬/도형 토글 */}
         <div className="drowContainer">
           <DrawToggle
@@ -427,7 +314,7 @@ function Canvas() {
                 onChange={changeWidth}
                 defaultValue={widthvalue}
                 min="1"
-                max="150"
+                max="100"
               ></input>
             )}
             {!drawmodeonoff && (
@@ -439,7 +326,7 @@ function Canvas() {
                   name="pencil"
                   onClick={pencilmode}
                 >
-                  <BorderColorIcon />
+                  <BorderColorIcon fontSize="large" />
                 </Button>
                 <Button
                   key="erase"
@@ -448,37 +335,42 @@ function Canvas() {
                   name="eraser"
                   onClick={erasemode}
                 >
-                  <Crop32Icon />
+                  <Crop32Icon fontSize="large" />
                 </Button>
               </>
             )}
           </div>
         </div>
+
+        <button onClick={canvasCopy}>테스트용버튼</button>
         {/* 리셋 */}
         {hostBool ? (
           <>
             <NewCanvas 
-              canvas={canvas} 
-              emitClear={emitClear}
-            ></NewCanvas>
+            canvas={canvas}
+            emitClear={emitClear} 
+            showimagePuzzlediv = {showimagePuzzlediv} 
+            setShowimagePuzzlediv = {setShowimagePuzzlediv}></NewCanvas>
             {/* 선택 삭제 */}
-            <Deletes
-              canvas={canvas}
-              emitDelete={emitDelete}
-            ></Deletes>
+            <Deletes canvas={canvas} emitDelete={emitDelete}></Deletes>
 
             {/* 교구 모음 */}
             <div className="materialContiner">
-              <Button onClick={showMaterialHandler}>교구모음</Button>
-
+              <Tooltip title="교구모음">
+                <Button onClick={showMaterialHandler}>
+                  <BusinessCenterIcon fontSize="large" />
+                </Button>
+              </Tooltip>
               {showMaterial ? (
                 <div className="materialBox">
                   {/* 도형 묶음 */}
                   <div className="figuresContiner">
-                    <Button onClick={showFigureBundleHandler}>
-                      {/* <CategoryIcon /> */}
-                      도형모음
-                    </Button>
+                    <Tooltip title="도형모음">
+                      <Button onClick={showFigureBundleHandler}>
+                        {/* <CategoryIcon /> */}
+                        <InterestsIcon fontSize="large"/>
+                      </Button>
+                    </Tooltip>
                     {showFigureBundle ? (
                       <div className="figuresChilgyoBox">
                         <Figures
@@ -516,6 +408,9 @@ function Canvas() {
             </div>
           </>
         ) : null}
+
+        <button onClick={canvasCopy}>테스트용</button>
+
         <input
           key="color"
           type="color"
@@ -525,7 +420,7 @@ function Canvas() {
           id="drawing-color"
         ></input>
         {/* 퀴즈! */}
-        <Quiz></Quiz>
+        <Quiz classMaterials={classMaterials}></Quiz>
         {/* <span className='info'>{widthvalue}</span> */}
       </div>
 
@@ -553,19 +448,6 @@ function Canvas() {
         </div>
       )}
 
-      {/* {showimage && <div>
-        <ScrollContainer className="scroll-container" activationDistance = "10">
-            <ul className="list">
-        {
-        imagearraydata.map((a,i) => {
-          return <li className="item" key = {'imageitem'+i}>
-              <img className="image" src={a.image} onClick = {bringimageinhtml}></img>
-      </li>
-        })}
-        </ul>
-        </ScrollContainer>
-      </div>} */}
-
       {showimagePuzzle && (
         <div>
           <ScrollContainer className="scroll-container" activationDistance="10">
@@ -586,19 +468,6 @@ function Canvas() {
           </ScrollContainer>
         </div>
       )}
-
-      {/* {showimagePuzzle && <div>
-        <ScrollContainer className="scroll-container" activationDistance = "10">
-            <ul className="list">
-        {
-        puzzlearraydata.map((b,i) => {
-          return <li className="item" key = {'puzzleitem'+i}>
-              <img className="puzzleimage" src={b.image} onClick = {bringimageinhtmlPuzzle}></img>
-            </li>
-        })}
-        </ul>
-        </ScrollContainer>
-      </div>} */}
 
       {showimagePuzzlediv && (
         <Puzzle puzzleurl={puzzleurl} setpuzzleurl={setpuzzleurl}></Puzzle>

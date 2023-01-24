@@ -3,16 +3,17 @@ import { getSocket, getSocketName } from "../controller/MediasoupController";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import WorkIcon from "@mui/icons-material/Work";
-import PetsIcon from "@mui/icons-material/Pets";
-import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import Button from "@mui/material/Button";
 import "./css/quiz.css";
+
+//석규
+import QuizIcon from "@mui/icons-material/Quiz";
+import Box from "@mui/material/Box";
+import { ClassSharp } from "@mui/icons-material";
+
 const socket = getSocket();
 
-function Quiz() {
+function Quiz({ classMaterials }) {
   const [quizStarted, setquizStarted] = useState(false);
   const [ansChosen, setansChosen] = useState(false);
   const [question, setquestion] = useState(null);
@@ -25,7 +26,6 @@ function Quiz() {
   //////////////////////////////////////////////////////////////테스트용 임시//////////////////////////////////////////////
   const [tempdiv, settempdiv] = useState(false);
 
-
   const setdiv = () => {
     if (tempdiv == true) {
       settempdiv(false);
@@ -33,6 +33,37 @@ function Quiz() {
       settempdiv(true);
     }
   };
+
+  // console.log("처음 들어올때", classMaterials)
+  // console.log("처음 들어올때2", classMaterials.imageMultipleChoiceList)
+  //퀴즈 첫번쨰 사진 두번째 사진 저장할 state
+  const [firstImage, setfirstImage] = useState(
+    "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg"
+  );
+  const [secondImage, setsecondImage] = useState(
+    "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg"
+  );
+  const [answer, setAnswer] = useState("1");
+  const [questionText, setQuestionText] = useState("문제가 없습니다.");
+
+  if (classMaterials) {
+    if (classMaterials.imageMultipleChoiceList) {
+      if (classMaterials.imageMultipleChoiceList[0]) {
+        firstImage ===
+          "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg" &&
+          setfirstImage(classMaterials.imageMultipleChoiceList[0].firstChoice);
+        secondImage ===
+          "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg" &&
+          setsecondImage(
+            classMaterials.imageMultipleChoiceList[0].secondChoice
+          );
+        answer === "1" &&
+          setAnswer(classMaterials.imageMultipleChoiceList[0].answer);
+        questionText === "문제가 없습니다." &&
+          setQuestionText(classMaterials.imageMultipleChoiceList[0].question);
+      }
+    }
+  }
 
   //////////////////////////////////////////////////////////////테스트용 임시//////////////////////////////////////////////
 
@@ -130,14 +161,14 @@ function Quiz() {
   // if (ansChosed) return ()
   return (
     <>
-      {hostBool ? 
+      {hostBool ? (
         <div>
           <Button id="btnnn" onClick={setdiv}>
-            퀴즈 시작
+            <QuizIcon fontSize="large" />
           </Button>
 
           {tempdiv && (
-            <List
+            <Box
               sx={{
                 width: "100px",
                 maxWidth: 180,
@@ -145,20 +176,16 @@ function Quiz() {
                 borderRadius: "15%",
               }}
             >
-              <ListItem>
-                {/* <ListItemAvatar>
-                  <Avatar>
-                    <PetsIcon />
-                  </Avatar>
-                </ListItemAvatar> */}
-                <ListItemText
+              <div>
+                <Button
                   primary="동물 퀴즈"
                   onClick={() => {
-                    //todo: 아래 quizId는 퀴즈 objectId여야 함
-                    let quizId = 1;
                     socket.emit(
                       "startQuiz",
-                      quizId,
+                      questionText,
+                      firstImage,
+                      secondImage,
+                      answer,
                       socket.id,
                       (q, c1, c2, ans) => {
                         setquestion(q);
@@ -169,40 +196,14 @@ function Quiz() {
                     );
                     setquizStarted(true);
                   }}
-                />
-              </ListItem>
-              <ListItem>
-                {/* <ListItemAvatar>
-                  <Avatar>
-                    <WorkIcon />
-                  </Avatar>
-                </ListItemAvatar> */}
-                <ListItemText primary="물건 퀴즈" />
-              </ListItem>
-              <ListItem>
-                {/* <ListItemAvatar>
-                  <Avatar>
-                    <DirectionsBusIcon />
-                  </Avatar>
-                </ListItemAvatar> */}
-                <ListItemText primary="탈것 퀴즈" />
-              </ListItem>
-            </List>
+                >
+                  퀴즈
+                </Button>
+              </div>
+            </Box>
           )}
-
-          {/* <button id="btnnn" onClick={()=>{
-                //todo: 아래 quizId는 퀴즈 objectId여야 함 
-                let quizId = 1
-                socket.emit("startQuiz", quizId, socket.id, (q, c1, c2, ans)=>{
-                    setquestion(q)
-                    setchoice1(c1)
-                    setchoice2(c2)
-                    setrightAnswer(ans)
-                })
-                setquizStarted(true)
-            }}> 퀴즈 시작 </button> */}
         </div>
-       : null}
+      ) : null}
     </>
   );
 }

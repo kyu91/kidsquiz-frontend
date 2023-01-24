@@ -21,7 +21,7 @@ const Deletes = ({ canvas, emitDelete }) => {
           onClick={deleteObject}
         >
           {" "}
-          <DeleteIcon />
+          <DeleteIcon fontSize='large'/>
         </Button>
       </Tooltip>
     </div>
