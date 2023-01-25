@@ -13,7 +13,7 @@ const NewCanvas = ({ canvas, emitClear,showimagePuzzlediv,setShowimagePuzzlediv 
 
   return (
     <div>
-      <Tooltip title="전체 삭제">
+      <Tooltip title="전체 삭제" placement="right">
         <Button
           key="clear"
           type="button"

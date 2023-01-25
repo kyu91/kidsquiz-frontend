@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { getSocket, getSocketName } from "../controller/MediasoupController";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
 import "./css/quiz.css";
 
 //석규
 import QuizIcon from "@mui/icons-material/Quiz";
 import Box from "@mui/material/Box";
-import { ClassSharp } from "@mui/icons-material";
+import Tooltip from "@mui/material/Tooltip";
 
 const socket = getSocket();
 
@@ -162,22 +159,16 @@ function Quiz({ classMaterials }) {
   return (
     <>
       {hostBool ? (
-        <div>
-          <Button id="btnnn" onClick={setdiv}>
-            <QuizIcon fontSize="large" />
-          </Button>
-
+        <div className="quizFindContainer">
+          <Tooltip title="퀴즈 버튼" placement="right">
+            <Button id="btnnn" onClick={setdiv}>
+              <QuizIcon fontSize="large" />
+            </Button>
+          </Tooltip>
           {tempdiv && (
-            <Box
-              sx={{
-                width: "100px",
-                maxWidth: 180,
-                bgcolor: "orange",
-                borderRadius: "15%",
-              }}
-            >
-              <div>
-                <Button 
+            
+              <div className="quizFindBox">
+                <Button
                   className="quizFindBtn"
                   primary="동물 퀴즈"
                   onClick={() => {
@@ -198,10 +189,10 @@ function Quiz({ classMaterials }) {
                     setquizStarted(true);
                   }}
                 >
-                  퀴즈
+                  퀴즈 시작
                 </Button>
               </div>
-            </Box>
+            
           )}
         </div>
       ) : null}
