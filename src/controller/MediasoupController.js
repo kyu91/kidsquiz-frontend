@@ -119,15 +119,12 @@ const MediasoupController = () => {
         const cursorImage = document.createElement('div');
         cursorImage.setAttribute('width', '50px')
         cursorImage.setAttribute('height', '50px')
-        // cursorImage.setAttribute('position', 'absolute')
-        // cursorImage.setAttribute('top', '0px')
-        // cursorImage.setAttribute('left', '-30px')
+
         const color = getRandomColor()
         cursorImage.innerHTML=getsvg(color)
         cursorImage.className="off"
 
         const cursorNameSpan = document.createElement('span')
-        // cursorNameSpan.setAttribute('id', 'mousePosition-',key )
         cursorNameSpan.setAttribute('class','namefill')
         cursorNameSpan.innerHTML = name
         cursorDiv.appendChild(cursorImage)
@@ -144,8 +141,6 @@ const MediasoupController = () => {
       // cursorDiv.style.left= (myScreenWidth/getScreenWidth) * data.x + 'px'
       // cursorDiv.style.top = (myScreenHeight/getScreenHeight) * data.y + 'px'
 
-        //cursorDiv.style.left = data.x_pct + 'px';
-        //cursorDiv.style.top = data.y_pct + 'px';
         cursorDiv.style.position = 'absolute';
     }
 
@@ -169,8 +164,6 @@ const MediasoupController = () => {
       //If a mouse move from socket.io is received, draw it
       socket.on('mousemove', function (data, sid, name) {
         moveCursorToPosition(data, sid, name);
-        // console.log(data.screenHeight)
-        // console.log(data.screenWidth)
       })
 
       // 커서 랜덤 색상표!
@@ -517,6 +510,7 @@ const MediasoupController = () => {
               const wrapper = document.createElement("div"); //상위 div (이 안에 오디오, 비디오, micAndVid div 까지 들어가게 될 것)
               wrapper.setAttribute("id", `td-${remoteProducerId}`);
               wrapper.setAttribute("class", newSocketId);
+              wrapper.setAttribute("style", "position: relative;"); // ! 확인!
             
               const audio = document.createElement("audio") //! 오디오 태그 생성하고, 속성 설정한 후 srcObject에 스트림 넣어준다
               audio.setAttribute("autoplay", "true")
@@ -528,7 +522,7 @@ const MediasoupController = () => {
               const existingWrapper = document.getElementsByClassName(newSocketId)[0]
               const video = document.createElement("video")
               
-              video.setAttribute("style", "position: relative;");
+              // video.setAttribute("style", "position: relative;");
               video.setAttribute("id", remoteProducerId) 
               video.setAttribute("autoplay", "true")
               existingWrapper.appendChild(video)
