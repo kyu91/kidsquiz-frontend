@@ -1,7 +1,9 @@
 // import io from 'socket.io-client'
 import {fabric} from 'fabric'
-
+import { useState } from 'react'
 import socket from "./socketExport"
+
+let tempcounting = 0
 
 // emitters
 
@@ -171,103 +173,110 @@ export const deleteObj = canvas => {
 //     })
 // }
 export const canvasChange = canvas => {
+  //조건 걸어서 똑같은 아이디가 있으면 더이상 만들어지지 않도록 해줘야 합니더
   socket.on('canvassetnewuser', data => {
-    const {objs} = data
+    const {objs, objsid} = data
+    console.log(objsid[0])
     let object
+    tempcounting += 1
+    if (tempcounting % 4 === 0) {
     objs.map((v,i) => {
-      // console.log(v)
-      if (v.type === 'image'){
-    fabric.Image.fromURL(v.src, function(Image){
-      Image.scale(0.4);
-      object = Image
-      object.set({id : v.id, left : v.left, top : v.top})
-      canvas.add(object);
-      canvas.renderAll()
-    })
-      }
-      else if (v.type === 'rect') {
-        object = new fabric.Rect({
-          height: v.height,
-          width: v.width,
-          fill: v.fill,
-          skewX: v.skewX,
-          left: v.left,
-          top: v.top,
-          angle: v.angle
-        })
-        object.set({v: v.id})
-        canvas.add(object)
-        canvas.renderAll()
-      } else if (v.type === 'circle') {
-        object = new fabric.Circle({
-          fill: v.fill,
-          left: v.left,
-          top: v.top,
-          radius: v.radius,
-        })
-        object.set({v: v.id})
-        canvas.add(object)
-        canvas.renderAll()
-      } else if (v.type === 'triangle') {
-        object = new fabric.Triangle({
-          width: v.width,
-          height: v.height,
-          left: v.left,
-          top: v.top,
-          angle: v.angle,
-          fill: v.fill,
-        })
-        object.set({id: v.id})
-        canvas.add(object)
-        canvas.renderAll()
-      } else if (v.type === 'path') {
-
-        object = new fabric.Path(v.path, {
-          fill: v.fill,
-          stroke: v.color,
-          strokeWidth: v.width,
-          strokeLineCap: v.strokeLineCap,
-          strokeMiterLimit: v.strokeLineJoin,
-          strokeDashArray: v.storkeDashArray,
-          })
-        object.set({id: v.id})
-        object.set({path: v.path})
-        object.set({type: v.type})
-        object.set({originX: v.originX})
-        object.set({originY: v.originY})
-        object.set({left: v.left})
-        object.set({top: v.top})
-        object.set({width: v.width})
-        object.set({height: v.height})
-        object.set({stroke: v.stroke})
-        object.set({strokeWidth: v.strokeWidth})
-        object.set({strokeDashArray: v.strokeDashArray})
-        object.set({strokeLineCap: v.strokeLineCap})
-        object.set({strokeDashOffset: v.strokeDashOffset})
-        object.set({strokeLineJoin: v.strokeLineJoin})
-        object.set({strokeUniform: v.strokeUniform})
-        object.set({strokeMiterLimit: v.strokeMiterLimit})
-        object.set({scaleX: v.scaleX})
-        object.set({scaleY: v.scaleY})
-        object.set({angle: v.angle})
-        object.set({flipX: v.flipX})
-        object.set({flipY: v.flipY})
-        object.set({opacity: v.opacity})
-        object.set({shadow: v.shadow})
-        object.set({visible: v.visible})
-        object.set({backgroundColor: v.backgroundColor})
-        object.set({fillRule: v.fillRule})
-        object.set({paintFirst: v.paintFirst})
-        object.set({globalCompositeOperation: v.globalCompositeOperation})
-        object.setCoords()
-        canvas.add(object)
-        canvas.requestRenderAll();
-      }
-
+      // canvas.getObjects().forEach(object => {
+      //   if (object.id !== objsid[i])
+      //     console.log('so long ')
+          if (v.type === 'image'){
+            fabric.Image.fromURL(v.src, function(Image){
+              Image.scale(0.4);
+              object = Image
+              object.set({id : objsid[i], left : v.left, top : v.top})
+              canvas.add(object);
+              canvas.renderAll()
+            })
+              }
+              else if (v.type === 'rect') {
+                object = new fabric.Rect({
+                  height: v.height,
+                  width: v.width,
+                  fill: v.fill,
+                  skewX: v.skewX,
+                  left: v.left,
+                  top: v.top,
+                  angle: v.angle
+                })
+                object.set({id: objsid[i]})
+                canvas.add(object)
+                canvas.renderAll()
+              } else if (v.type === 'circle') {
+                object = new fabric.Circle({
+                  fill: v.fill,
+                  left: v.left,
+                  top: v.top,
+                  radius: v.radius,
+                })
+                object.set({id: objsid[i]})
+                canvas.add(object)
+                canvas.renderAll()
+              } else if (v.type === 'triangle') {
+                object = new fabric.Triangle({
+                  width: v.width,
+                  height: v.height,
+                  left: v.left,
+                  top: v.top,
+                  angle: v.angle,
+                  fill: v.fill,
+                })
+                object.set({id: objsid[i]})
+                canvas.add(object)
+                canvas.renderAll()
+              } else if (v.type === 'path') {
+        
+                object = new fabric.Path(v.path, {
+                  fill: v.fill,
+                  stroke: v.color,
+                  strokeWidth: v.width,
+                  strokeLineCap: v.strokeLineCap,
+                  strokeMiterLimit: v.strokeLineJoin,
+                  strokeDashArray: v.storkeDashArray,
+                  })
+                object.set({id: objsid[i]})
+                object.set({path: v.path})
+                object.set({type: v.type})
+                object.set({originX: v.originX})
+                object.set({originY: v.originY})
+                object.set({left: v.left})
+                object.set({top: v.top})
+                object.set({width: v.width})
+                object.set({height: v.height})
+                object.set({stroke: v.stroke})
+                object.set({strokeWidth: v.strokeWidth})
+                object.set({strokeDashArray: v.strokeDashArray})
+                object.set({strokeLineCap: v.strokeLineCap})
+                object.set({strokeDashOffset: v.strokeDashOffset})
+                object.set({strokeLineJoin: v.strokeLineJoin})
+                object.set({strokeUniform: v.strokeUniform})
+                object.set({strokeMiterLimit: v.strokeMiterLimit})
+                object.set({scaleX: v.scaleX})
+                object.set({scaleY: v.scaleY})
+                object.set({angle: v.angle})
+                object.set({flipX: v.flipX})
+                object.set({flipY: v.flipY})
+                object.set({opacity: v.opacity})
+                object.set({shadow: v.shadow})
+                object.set({visible: v.visible})
+                object.set({backgroundColor: v.backgroundColor})
+                object.set({fillRule: v.fillRule})
+                object.set({paintFirst: v.paintFirst})
+                object.set({globalCompositeOperation: v.globalCompositeOperation})
+                object.setCoords()
+                canvas.add(object)
+                canvas.requestRenderAll();
+        }
+      })
+    }
     })
     // console.log(data)
     // console.log(objs)
-  })
+  // })
   }
 
 export default socket
