@@ -39,7 +39,7 @@ import Crop32Icon from "@mui/icons-material/Crop32";
 import { useLocation } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Tooltip from "@mui/material/Tooltip";
-import InterestsIcon from '@mui/icons-material/Interests';
+import InterestsIcon from "@mui/icons-material/Interests";
 import MediasoupController from "../controller/MediasoupController";
 
 // let puzzleurl
@@ -159,7 +159,7 @@ function Canvas() {
         top: object.top,
       });
       canvas.renderAll();
-      setShowimage(false)
+      setShowimage(false);
     });
   };
 
@@ -169,18 +169,17 @@ function Canvas() {
 
   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
-  socket.on('newestmember', (socketId) =>{ 
-      emitCanvas(socketId,{objs: canvas._objects})
-  })
+  socket.on("newestmember", (socketId) => {
+    emitCanvas(socketId, { objs: canvas._objects });
+  });
 
- const canvasCopy = () => {
-    console.log('캔버스 전송')
-    console.log(canvas._objects)
-    emitCanvas({objs: canvas._objects})
-  }
+  const canvasCopy = () => {
+    console.log("캔버스 전송");
+    console.log(canvas._objects);
+    emitCanvas({ objs: canvas._objects });
+  };
 
-
-   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
+  ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {
     canvas.freeDrawingBrush = new fabric.EraserBrush(canvas);
@@ -203,11 +202,11 @@ function Canvas() {
     canvas.renderAll();
   };
   const initCanvas = () =>
-  new fabric.Canvas("canv", {
-    isDrawingMode: false,
-    height: 1920,
-    width: 4000,
-  });
+    new fabric.Canvas("canv", {
+      isDrawingMode: false,
+      height: 1920,
+      width: 4000,
+    });
   // canvas.setWidth(window.innerWidth*0.9);
   // canvas.setHeight(window.innerHeight*0.95);
   useEffect(() => {
@@ -265,11 +264,14 @@ function Canvas() {
     fabric.Image.fromURL(imageURL, function (Image) {
       Image.scale(0.4);
       object = Image;
-      object.set({ id: uuid(),
-        left : 230,
-        top: 150});
+      object.set({ id: uuid(), left: 230, top: 150 });
       canvas.add(object);
-      emitAddImage({ url: imageURL, id: object.id, left: object.left, top: object.top });
+      emitAddImage({
+        url: imageURL,
+        id: object.id,
+        left: object.left,
+        top: object.top,
+      });
       canvas.renderAll();
     });
   };
@@ -332,17 +334,18 @@ function Canvas() {
         {/* 리셋 */}
         {hostBool ? (
           <>
-            <NewCanvas 
-            canvas={canvas}
-            emitClear={emitClear} 
-            showimagePuzzlediv = {showimagePuzzlediv} 
-            setShowimagePuzzlediv = {setShowimagePuzzlediv}></NewCanvas>
+            <NewCanvas
+              canvas={canvas}
+              emitClear={emitClear}
+              showimagePuzzlediv={showimagePuzzlediv}
+              setShowimagePuzzlediv={setShowimagePuzzlediv}
+            ></NewCanvas>
             {/* 선택 삭제 */}
             <Deletes canvas={canvas} emitDelete={emitDelete}></Deletes>
 
             {/* 교구 모음 */}
             <div className="materialContiner">
-              <Tooltip title="교구모음">
+              <Tooltip title="교구모음" placement="right">
                 <Button onClick={showMaterialHandler}>
                   <BusinessCenterIcon fontSize="large" />
                 </Button>
@@ -351,10 +354,10 @@ function Canvas() {
                 <div className="materialBox">
                   {/* 도형 묶음 */}
                   <div className="figuresContiner">
-                    <Tooltip title="도형모음">
+                    <Tooltip title="도형모음" placement="right">
                       <Button onClick={showFigureBundleHandler}>
                         {/* <CategoryIcon /> */}
-                        <InterestsIcon fontSize="large"/>
+                        <InterestsIcon fontSize="large" />
                       </Button>
                     </Tooltip>
                     {showFigureBundle ? (
@@ -397,14 +400,20 @@ function Canvas() {
 
         {/* <button onClick={canvasCopy}>테스트용</button> */}
 
-        <input
-          key="color"
-          type="color"
-          className="color colorPicker"
-          onChange={changeColor}
-          defaultValue="#000000"
-          id="drawing-color"
-        ></input>
+        {/* 색상 */}
+        <div className="colorPickerContainer">
+        <Button className="colorPickerButton">
+          <input
+            key="color"
+            type="color"
+            className="color colorPicker"
+            onChange={changeColor}
+            defaultValue="#000000"
+            id="drawing-color"
+          ></input>
+        </Button>
+        </div>
+
         {/* 퀴즈! */}
         <Quiz classMaterials={classMaterials}></Quiz>
         {/* <span className='info'>{widthvalue}</span> */}
