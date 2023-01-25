@@ -93,7 +93,7 @@ input[type=range] {
 
 .figuresContiner{
   display: block;
-  width: 100px;
+  width: 80px;
 }
 
 .figuresChilgyoBox{
@@ -101,7 +101,7 @@ input[type=range] {
   flex-direction: row;
   position: absolute;
   z-index: 1;
-  width: 100px;
+  width: 80px;
   margin-left: 10px; 
   text-align: center;
 }
@@ -121,8 +121,8 @@ input[type=range] {
   flex-direction: row;
   position: absolute;
   z-index: 1;
-  width: 100px; 
-  margin-left: 25px; 
+  width: 80px; 
+   
   text-align: center;
 }
 
@@ -136,7 +136,7 @@ input[type=range] {
   flex-direction: row;
   position: absolute;
   z-index: 1;
-  width: 100px; 
+  width: 80px; 
   margin-left: 15px; 
   text-align: center;
 }

@@ -2,6 +2,7 @@ import socket from "../liveComponents/socketExport";
 import * as mediasoupClient from "mediasoup-client";
 import _  from "lodash"
 import { color } from "@mui/system";
+import {audioOn, cameraOn, audioOff, cameraOff, getsvg} from "../liveComponents/icon.js"
 
 //익스포트 함수
 export const getSocket = () => {
@@ -14,7 +15,7 @@ export const getSocketName = () => {
 
 
 //멀티 커서 
-export const multiCurosr = () =>{
+export const multiCursor = () =>{
   const hostMultiCursor = document.getElementById("hostMultiCursor");
   const roomName = localStorage.getItem("roomName");
 
@@ -122,12 +123,7 @@ const MediasoupController = () => {
         // cursorImage.setAttribute('top', '0px')
         // cursorImage.setAttribute('left', '-30px')
         const color = getRandomColor()
-        const svgVariable = `<svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" enable-background="new 0 0 48 48">
-        <path fill="${color}" d="M27.8,39.7c-0.1,0-0.2,0-0.4-0.1c-0.2-0.1-0.4-0.3-0.6-0.5l-3.7-8.6l-4.5,4.2C18.5,34.9,18.3,35,18,35 c-0.1,0-0.3,0-0.4-0.1C17.3,34.8,17,34.4,17,34l0-22c0-0.4,0.2-0.8,0.6-0.9C17.7,11,17.9,11,18,11c0.2,0,0.5,0.1,0.7,0.3l16,15 c0.3,0.3,0.4,0.7,0.3,1.1c-0.1,0.4-0.5,0.6-0.9,0.7l-6.3,0.6l3.9,8.5c0.1,0.2,0.1,0.5,0,0.8c-0.1,0.2-0.3,0.5-0.5,0.6l-2.9,1.3 C28.1,39.7,27.9,39.7,27.8,39.7z"/>
-        <path fill="#212121" d="M18,12l16,15l-7.7,0.7l4.5,9.8l-2.9,1.3l-4.3-9.9L18,34L18,12 M18,10c-0.3,0-0.5,0.1-0.8,0.2 c-0.7,0.3-1.2,1-1.2,1.8l0,22c0,0.8,0.5,1.5,1.2,1.8C17.5,36,17.8,36,18,36c0.5,0,1-0.2,1.4-0.5l3.4-3.2l3.1,7.3 c0.2,0.5,0.6,0.9,1.1,1.1c0.2,0.1,0.5,0.1,0.7,0.1c0.3,0,0.5-0.1,0.8-0.2l2.9-1.3c0.5-0.2,0.9-0.6,1.1-1.1c0.2-0.5,0.2-1.1,0-1.5 l-3.3-7.2l4.9-0.4c0.8-0.1,1.5-0.6,1.7-1.3c0.3-0.7,0.1-1.6-0.5-2.1l-16-15C19,10.2,18.5,10,18,10L18,10z"/>
-    </svg>`
-        const svg = `${svgVariable}`
-        cursorImage.innerHTML=svg
+        cursorImage.innerHTML=getsvg(color)
         cursorImage.className="off"
 
         const cursorNameSpan = document.createElement('span')
@@ -227,36 +223,35 @@ const MediasoupController = () => {
       const hostName = document.getElementById("hostName"); 
       
       myStream = stream;
-
       function myAudioController() {
-        if (this.className === "off") {
-              // 켜진 스피커 svg 이미지
-              const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>`
-              this.innerHTML=svg
+        
+        if (this.className === "off") { // 꺼진 상태라면 클릭했을 때 켜야한다. 
+              this.innerHTML=audioOn
               this.className="on"
         }
         else {
-          //꺼진 스피커 svg 이미지
-          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`
-          this.innerHTML=svg
+          this.innerHTML=audioOff
           this.className="off"
         }
-        stream.getAudioTracks().forEach((track) => {(track.enabled = !track.enabled);}) 
+        stream.getAudioTracks().forEach((track) => {
+          (track.enabled = !track.enabled);
+          socket.emit("notifyAudio", socket.id, track.enabled, hostBool)
+        }) 
     }  
       function myVideoController() {
-        if (this.className === "off") {
-          // 켜진 카메라 svg 이미지
-          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg>`
-          this.innerHTML=svg
+        
+        if (this.className === "off") {// 꺼진 상태라면 클릭했을 때 켜야한다. 
+          this.innerHTML=cameraOn
           this.className="on"
         }
-        else {
-          // 꺼진 카메라 svg 이미지
-          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg>`
-          this.innerHTML=svg
+        else {          
+          this.innerHTML=cameraOff
           this.className="off"
         }
-        stream.getVideoTracks().forEach((track) => {(track.enabled = !track.enabled);}) 
+        stream.getVideoTracks().forEach((track) => {
+          (track.enabled = !track.enabled);
+          socket.emit("notifyVideo", socket.id, track.enabled, hostBool)
+        }) 
     }  
     
       if (hostBool) {
@@ -452,10 +447,10 @@ const MediasoupController = () => {
           socketId,
           isNewSocketHost
         );
-
-/////////////////////////////////////난입////////////////////////////////
-    socket.emit("atarashimember", socketId)
-
+        // 선생님 소켓이라면 캔버스정보를 보내주기 위해 추가 emit
+        if (hostBool) {
+          socket.emit("atarashimember", socketId, socket.id)
+        }
       }
     );
 
@@ -513,7 +508,7 @@ const MediasoupController = () => {
               hostMe.srcObject = new MediaStream([track]);
             }
             
-            hostName.innerHTML = `<span id="teacherName">${userName}</span> <span id="tea">선</span><span id="ch">생</span><span id="er">님</span>`;;
+            hostName.innerHTML = `<span id="teacherName">${socketName}</span> <span id="tea">선</span><span id="ch">생</span><span id="er">님</span>`;;
           }
           //! 그렇지 않은 경우 학생 요소로 넣어주기!
           else {
@@ -537,81 +532,82 @@ const MediasoupController = () => {
               video.setAttribute("id", remoteProducerId) 
               video.setAttribute("autoplay", "true")
               existingWrapper.appendChild(video)
+
               video.srcObject = new MediaStream([track])
 
               const newElem = document.createElement("div"); // 비디오, 오디오 화면
               newElem.setAttribute("class", "controllers")
               
-              newElem.innerHTML =
-              '<div class="micAndVid"> <p class="guestNameDisplay">' +  socketName +
-               '</p> <button id="' + newSocketId + '-mute" class="off"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button><button id="' 
-               + newSocketId + '-camera" class="off"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg></button></div></div> '
-               existingWrapper.appendChild(newElem)
+              const micAndVid = document.createElement("div") // 카메라, 마이크, 이름 요소 wrapper
+              micAndVid.setAttribute("class", "micAndVid")
+
+              const guestNameDisplay = document.createElement("p")
+              guestNameDisplay.setAttribute("class", "guestNameDisplay")
+              guestNameDisplay.innerText = socketName 
+
+              const micBtn = document.createElement("button")
+              micBtn.setAttribute("id", `${newSocketId}-mute`)
+              micBtn.setAttribute("class", "on")
+              micBtn.innerHTML = audioOn
+              
+              const camBtn = document.createElement("button")
+              camBtn.setAttribute("id", `${newSocketId}-camera`)
+              camBtn.setAttribute("class", "on")
+              camBtn.innerHTML = cameraOn
+
+              micAndVid.appendChild(guestNameDisplay)
+              micAndVid.appendChild(micBtn)
+              micAndVid.appendChild(camBtn)
+
+              newElem.appendChild(micAndVid)
+              existingWrapper.appendChild(newElem)
             
             //!버튼 이벤트리스너
             
             let muteBtn = document.getElementById(newSocketId+'-mute')
             let cameraBtn = document.getElementById(newSocketId+'-camera')
-            
-            if (cameraBtn){
-                cameraBtn.addEventListener('click', async (e) => {
-                  let camCheck = cameraBtn.className
-                  if (camCheck === 'off') {
-                      cameraBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-1zM4 5h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2z"/></svg>`
-                      cameraBtn.setAttribute("class", "on")
 
-                      let tempSocket = e.target.id.replace('-camera', '');//e.srcElement.id 뒤에 camera 택스트 제거
-                      socket.emit("video-out",{
-                          studentSocketId: tempSocket,
-                          on : false,
-                      })
-                      // console.log("socket event video-out 완료 ")
-
-                      
-                  } else { ////////!!!!! 테스트!!!
-                    cameraBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l19.8 19.8M15 15.7V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h.3m5.4 0H13a2 2 0 0 1 2 2v3.3l1 1L22 7v10"/></svg>`
-                    cameraBtn.setAttribute("class", "off")
-                      //e.srcElement.id 뒤에 camera 택스트 제거
-                      let tempSocket = e.target.id.replace('-camera', '');
-                      socket.emit("video-out",{
-                          studentSocketId: tempSocket,
-                          on : true,
-                      })
-                  }
+            function studentAudioController(e) {
+              let tempSocket = this.id.replace('-mute', '');
+              if (this.className === "off") { // 꺼진 상태라면 클릭했을 때 켜야한다. 
+                this.innerHTML=audioOn
+                this.className="on"
+                
+                socket.emit('audio-out',{
+                    studentSocketId: tempSocket,
+                    on : true,
                 })
-            }
- 
-            if (muteBtn){
-              muteBtn.addEventListener('click', async (e) => {
-                  console.log("mute 버튼 클릭했어요!!!! 현재 상태는 : ", muteBtn.className)
-                  if (muteBtn.className === 'off') {
-                      // 소리를 꺼야해! 
-                      muteBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`
-                      muteBtn.setAttribute("class", "on")
-                      
-                      //e.srcElement.id 뒤에 camera 택스트 제거
-                      let tempSocket = e.target.id.replace('-mute', '');
-                      //console.log("조용히 시킬 소켓: ", tempSocket)
-                      socket.emit('audio-out',{
+              }
+              else {
+                this.innerHTML=audioOff
+                this.className="off"
+                socket.emit("audio-out", {
                           studentSocketId: tempSocket,
-                          on : false,
-                      })
-                      
-                  } else {
-                      muteBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4zM22 9l-6 6M16 9l6 6"/></svg>`
-                      muteBtn.setAttribute("class", "off")
-                    //e.srcElement.id 뒤에 camera 택스트 제거
-                    let tempSocket = e.target.id.replace("-mute", "");
-                    //console.log("다시 말하게 해줄 소켓: ", tempSocket)
-  
-                    socket.emit("audio-out", {
-                      studentSocketId: tempSocket,
-                      on: true,
-                    });
-                  }
-              })
-          }
-            // document.getElementById(remoteProducerId).srcObject = new MediaStream([track])
+                          on: false,
+                        });
+              }
+          }  
+            function studentVideoController() {
+              let tempSocket = this.id.replace('-camera', ''); //e.srcElement.id 뒤에 camera 택스트 제거
+              if (this.className === "off") {// 꺼진 상태라면 클릭했을 때 켜야한다. 
+                this.innerHTML=cameraOn
+                this.className="on"
+                socket.emit("video-out",{
+                            studentSocketId: tempSocket,
+                            on : true,
+                        })         
+              }
+              else {          
+                this.innerHTML=cameraOff
+                this.className="off"
+                socket.emit("video-out",{
+                            studentSocketId: tempSocket,
+                            on : false,
+                        })
+              }
+          }  
+            muteBtn.addEventListener('click',studentAudioController)
+            cameraBtn.addEventListener('click',studentVideoController)
 
           }       
       } // else 문 종료 
@@ -623,20 +619,67 @@ const MediasoupController = () => {
                 (track.enabled = on.on);                    
             }); 
             console.log("현재 비디오 상태: ", on)
-            // 카메라 화면 요소를 키고 끄기 
+
+          let mycamBtn = document.getElementById("guestMecamera")
+          if (on.on) {// 
+            mycamBtn.innerHTML=cameraOn
+            mycamBtn.className="on"
+          }
+          else {                      
+            mycamBtn.innerHTML=cameraOff
+            mycamBtn.className="off"
+          }
         })
 
         await socket.on('student-audio-controller', ( on ) => {
           console.log(socket.id, " 마이크 ", on.on ," 하겠습니다. ")
+
             myStream
             .getAudioTracks()
             .forEach((track) => {
                 (track.enabled = on.on);                    
             }); 
             console.log("현재 오디오 상태: ", on)
-            // 마이크 화면 요소를 키고 끄기 
+            let mymicBtn = document.getElementById("guestMemute")
+            console.dir(mymicBtn)
+            if (on.on) {
+              mymicBtn.innerHTML=audioOn
+              mymicBtn.className="on"
+            }
+            else {                        
+              mymicBtn.innerHTML=audioOff
+              mymicBtn.className="off"              
+
+            }
         })
         
+        socket.on("notifyAudio", (studentSocketId, on, hostBool)=> {
+          let tempSocket = studentSocketId+'-mute'
+          let studentmicBtn = document.getElementById(tempSocket)
+          
+          if (on) {
+            studentmicBtn.innerHTML=audioOn
+            studentmicBtn.className="on"
+          }
+          else {          
+            studentmicBtn.innerHTML=audioOff
+            studentmicBtn.className="off"
+          }
+        })
+        socket.on("notifyVideo", (studentSocketId, on, hostBool)=> {
+          let tempSocket = studentSocketId+'-camera'
+          let studentcamBtn = document.getElementById(tempSocket)
+          
+          if (on) {// 
+            studentcamBtn.innerHTML=cameraOn
+            studentcamBtn.className="on"
+          }
+          else {                      
+            studentcamBtn.innerHTML=cameraOff
+            studentcamBtn.className="off"
+          }
+        })
+
         // the server consumer started with media paused
         // so we need to inform the server to resume
         socket.emit('consumer-resume', { serverConsumerId: params.serverConsumerId })
@@ -689,7 +732,10 @@ const MediasoupController = () => {
       
       //! [커서] 마우스 커서 remove 
       console.log('mousePosition-' + socketIdLeaving," 남아있으면 안돼요!")
-      document.getElementById('mousePosition-' + socketIdLeaving).remove();
+      const byemouse = document.getElementById('mousePosition-' + socketIdLeaving)
+      if (byemouse) {
+      byemouse.remove();
+    }  
       
       socket.emit("closeCursor", socketIdLeaving)
     });
