@@ -5,10 +5,11 @@ import {htmlaudioOn, htmlcameraOn} from "./icon.js"
 
 //컨트롤러 임포트
 import MediasoupController from "../controller/MediasoupController";
-const controller = MediasoupController();
+
 
 const GuestVideo = () => {
   React.useEffect(() => {
+    const controller = MediasoupController();
     controller.init();
   }, []);
 
