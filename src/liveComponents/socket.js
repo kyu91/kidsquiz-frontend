@@ -163,13 +163,13 @@ export const deleteObj = canvas => {
         })
     })
 }
-export const clearObj = canvas =>{
-    socket.on('clearcanvas', data => {
-        console.log(data)
-        canvas.clear();
-        canvas.renderAll()
-    })
-}
+// export const clearObj = canvas =>{
+//     socket.on('clearcanvas', data => {
+//         console.log(data)
+//         canvas.clear();
+//         canvas.renderAll()
+//     })
+// }
 export const canvasChange = canvas => {
   socket.on('canvassetnewuser', data => {
     const {objs} = data
