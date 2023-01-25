@@ -1,7 +1,6 @@
 import socket from "../liveComponents/socketExport";
 import * as mediasoupClient from "mediasoup-client";
 import _  from "lodash"
-import { color } from "@mui/system";
 import {audioOn, cameraOn, audioOff, cameraOff, getsvg} from "../liveComponents/icon.js"
 
 //익스포트 함수
@@ -449,6 +448,7 @@ const MediasoupController = () => {
         );
         // 선생님 소켓이라면 캔버스정보를 보내주기 위해 추가 emit
         if (hostBool) {
+          console.log('자자자자')
           socket.emit("atarashimember", socketId, socket.id)
         }
       }

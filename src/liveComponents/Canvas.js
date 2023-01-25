@@ -39,7 +39,6 @@ import { useLocation } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Tooltip from "@mui/material/Tooltip";
 import InterestsIcon from "@mui/icons-material/Interests";
-import MediasoupController from "../controller/MediasoupController";
 
 // let puzzleurl
 
