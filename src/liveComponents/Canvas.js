@@ -14,7 +14,6 @@ import {
   emitDelete,
   deleteObj,
   emitClear,
-  clearObj,
   emitAddImage,
   addimageObj,
   emitUrl,
@@ -264,10 +263,17 @@ function Canvas() {
           emitAddP(addedPath);
         }
       });
+
+      socket.on('clearcanvas', data => {
+        console.log(data)
+        canvas.clear();
+        setShowimagePuzzlediv(false)
+        canvas.renderAll()
+    })
       modifyObj(canvas);
       addObj(canvas);
       deleteObj(canvas);
-      clearObj(canvas);
+      // clearObj(canvas);
       addPObj(canvas);
       addimageObj(canvas);
       canvasChange(canvas);
@@ -341,8 +347,6 @@ function Canvas() {
             )}
           </div>
         </div>
-
-        <button onClick={canvasCopy}>테스트용버튼</button>
         {/* 리셋 */}
         {hostBool ? (
           <>
@@ -408,8 +412,6 @@ function Canvas() {
             </div>
           </>
         ) : null}
-
-        <button onClick={canvasCopy}>테스트용</button>
 
         <input
           key="color"
