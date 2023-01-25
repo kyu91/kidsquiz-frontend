@@ -177,7 +177,8 @@ function Quiz({ classMaterials }) {
               }}
             >
               <div>
-                <Button
+                <Button 
+                  className="quizFindBtn"
                   primary="동물 퀴즈"
                   onClick={() => {
                     socket.emit(

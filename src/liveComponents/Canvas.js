@@ -328,7 +328,7 @@ function Canvas() {
           </div>
         </div>
 
-        <button onClick={canvasCopy}>테스트용버튼</button>
+        {/* <button onClick={canvasCopy}>테스트용버튼</button> */}
         {/* 리셋 */}
         {hostBool ? (
           <>
@@ -395,7 +395,7 @@ function Canvas() {
           </>
         ) : null}
 
-        <button onClick={canvasCopy}>테스트용</button>
+        {/* <button onClick={canvasCopy}>테스트용</button> */}
 
         <input
           key="color"
