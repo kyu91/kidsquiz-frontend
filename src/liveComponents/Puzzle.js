@@ -22,7 +22,7 @@ function Puzzle({ puzzleurl, setpuzzleurl }) {
     }
     return value;
   };
-  const solveTolerancePercentage = 0.028;
+  const solveTolerancePercentage = 0.029;
 
   const JigsawPuzzle = ({
     imageSrc,
@@ -377,9 +377,18 @@ function Puzzle({ puzzleurl, setpuzzleurl }) {
 
   return (
     <div className="miniImage" style={{ position: "absolute" }}>
+
+      <div style={{ marginLeft: "40%",marginTop: "5%", height: "580px", width: "580px" }}>
+        <JigsawPuzzle
+          imageSrc={puzzleurl}
+          rows={2}
+          columns={2}
+          // onSolved={() => alert("참 잘했어요")}
+        />
+
       <img
         style={{
-          marginLeft: "3%",
+          marginLeft: "175%",
           marginTop: "3%",
           height: "200px",
           width: "200px",
@@ -387,15 +396,8 @@ function Puzzle({ puzzleurl, setpuzzleurl }) {
         }}
         alt="puzzle"
         src={puzzleurl}
-      ></img>
+       ></img>
 
-      <div style={{ marginLeft: "4%", height: "580px", width: "580px" }}>
-        <JigsawPuzzle
-          imageSrc={puzzleurl}
-          rows={2}
-          columns={2}
-          // onSolved={() => alert("참 잘했어요")}
-        />
       </div>
     </div>
   );

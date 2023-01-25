@@ -3,16 +3,17 @@ import Button from "@mui/material/Button";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import Tooltip from "@mui/material/Tooltip";
 
-const NewCanvas = ({ canvas, emitClear }) => {
+const NewCanvas = ({ canvas, emitClear,showimagePuzzlediv,setShowimagePuzzlediv }) => {
   const [hover, setHover] = React.useState(false);
   const clearCanvas = () => {
     canvas.clear();
     emitClear(1);
+    setShowimagePuzzlediv(false)
   };
 
   return (
     <div>
-      <Tooltip title="전체 삭제">
+      <Tooltip title="전체 삭제" placement="right">
         <Button
           key="clear"
           type="button"
@@ -22,7 +23,7 @@ const NewCanvas = ({ canvas, emitClear }) => {
           onMouseLeave={() => setHover(false)}
           onClick={clearCanvas}
         >
-          <RefreshIcon />
+          <RefreshIcon fontSize='large'/>
         </Button>
       </Tooltip>
     </div>
