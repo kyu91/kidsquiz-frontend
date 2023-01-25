@@ -166,9 +166,22 @@ function Canvas() {
 
   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
-  socket.on("newestmember", (socketId) => {
-    emitCanvas(socketId, { objs: canvas._objects });
-  });
+
+  socket.off('newestmember')
+  socket.on('newestmember', (socketId) =>{
+    const objectsid = []
+    canvas._objects.map((v,i) => {
+      objectsid.push(v.id)
+    })
+      emitCanvas(socketId,{objs: canvas._objects, objsid: objectsid})
+  })
+
+ const canvasCopy = () => {
+    console.log('캔버스 전송')
+    console.log(canvas._objects)
+    emitCanvas({objs: canvas._objects})
+  }
+
 
   const canvasCopy = () => {
     console.log("캔버스 전송");
