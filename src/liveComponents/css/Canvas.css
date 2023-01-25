@@ -59,13 +59,13 @@ input[type=range] {
 
 /* button[type=button] { */
 .navBtn {
-  border:transparent ;
+  /* border:transparent ;
   border-radius: 5px;
   padding : 1em 1em;
-  margin : 5px 5px;
+  
   background-color: rgba(100,200,200,0.4);
   color: black;
-  font-size: 0.7em;
+  font-size: 0.7em; */
 } 
 #canv{
   width: 100%;
@@ -83,10 +83,12 @@ input[type=range] {
 }
 #buttonGroup button {
   font-size: 1em;
+  color: #34475E;
   margin: 0;
+  box-shadow: 1px 1px 1px #34475E;
 }
 #buttonGroup button:hover {
-  color: rgba(255,0,0,0.9);
+  color: rgba(248, 98, 98, 0.9);
   transform: scale( 1.5, 1.5 );
   background: none;
 }
@@ -128,7 +130,7 @@ input[type=range] {
 
 .drowContainer{
   display: block;
-  width: 100px;
+  width: 80px;
 }
 
 .drowBox{
@@ -139,17 +141,6 @@ input[type=range] {
   width: 80px; 
   margin-left: 15px; 
   text-align: center;
-}
-
-.colorPicker{
-  margin: 0 auto;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 28px;
-  border: none;
-  background-color: transparent;
 }
 
 .colorPicker::-webkit-color-swatch {
@@ -181,3 +172,22 @@ input[type=range] {
   
 }
 
+.colorPickerContainer{
+  width: 80px;
+}
+
+.colorPickerButton{
+  width: 50px;
+  /* margin-left: 20px; */
+}
+
+.colorPicker{
+  margin: 0 auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background-color: transparent;
+}

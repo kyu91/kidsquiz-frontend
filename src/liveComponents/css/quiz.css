@@ -59,6 +59,15 @@
     border-radius: 10px; */
 }
 
-.quizFindBtn{
-    
+.quizFindContainer{
+    display: inline-block;
+}
+
+.quizFindBox{
+    display: inline-block;
+    flex-direction: row;
+    position: absolute;
+    z-index: 1;
+    width: 80px; 
+    text-align: center;
 }
