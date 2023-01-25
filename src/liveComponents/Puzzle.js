@@ -22,7 +22,7 @@ function Puzzle({ puzzleurl, setpuzzleurl }) {
     }
     return value;
   };
-  const solveTolerancePercentage = 0.028;
+  const solveTolerancePercentage = 0.029;
 
   const JigsawPuzzle = ({
     imageSrc,
