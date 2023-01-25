@@ -449,6 +449,7 @@ const MediasoupController = () => {
         );
         // 선생님 소켓이라면 캔버스정보를 보내주기 위해 추가 emit
         if (hostBool) {
+          console.log('아타라시')
           socket.emit("atarashimember", socketId, socket.id)
         }
       }

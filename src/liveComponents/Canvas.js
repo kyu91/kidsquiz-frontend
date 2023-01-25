@@ -40,6 +40,7 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Tooltip from "@mui/material/Tooltip";
 import InterestsIcon from '@mui/icons-material/Interests';
 import MediasoupController from "../controller/MediasoupController";
+import { object } from "prop-types";
 
 // let puzzleurl
 
@@ -166,8 +167,13 @@ function Canvas() {
 
   ////////////////////////////////////////////////드래그앤드랍/////////////////////////////////////////////////////////
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
-  socket.on('newestmember', (socketId) =>{ 
-      emitCanvas(socketId,{objs: canvas._objects})
+  socket.off('newestmember')
+  socket.on('newestmember', (socketId) =>{
+    const objectsid = []
+    canvas._objects.map((v,i) => {
+      objectsid.push(v.id)
+    })
+      emitCanvas(socketId,{objs: canvas._objects, objsid: objectsid})
   })
 
  const canvasCopy = () => {
