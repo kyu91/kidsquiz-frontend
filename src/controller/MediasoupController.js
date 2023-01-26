@@ -19,12 +19,12 @@ export const multiCursor = () =>{
   const roomName = localStorage.getItem("roomName");
 
   if(hostMultiCursor.className === 'inactive'){
-    hostMultiCursor.innerText = "멀티커서 켜기"
+    hostMultiCursor.innerText = "멀티커서 OFF"
     hostMultiCursor.className = 'active'
     socket.emit('mouseHidden', {roomName});
   
   } else if (hostMultiCursor.className === 'active'){
-    hostMultiCursor.innerText = "멀티커서 끄기"
+    hostMultiCursor.innerText = "멀티커서 ON"
     hostMultiCursor.className = 'inactive'
     socket.emit('mouseShow', {roomName});    
   }  
@@ -399,6 +399,8 @@ const MediasoupController = () => {
       if (consumingTransports.includes(remoteProducerId)) return;
       consumingTransports.push(remoteProducerId);
 
+      remoteProducerIdPair.remoteProducerId = newSocketId; 
+
       await socket.emit( "createWebRtcTransport", { consumer: true }, ({ params }) => {
           if (params.error) {
             console.log(params.error);
@@ -727,7 +729,8 @@ const MediasoupController = () => {
       console.log('mousePosition-' + socketIdLeaving," 남아있으면 안돼요!")
       const byemouse = document.getElementById('mousePosition-' + socketIdLeaving)
       if (byemouse) {
-      byemouse.remove();
+        document.getElementsByClassName("App")[0].removeChild(byemouse)
+      // byemouse.remove();
     }  
       
       socket.emit("closeCursor", socketIdLeaving)
