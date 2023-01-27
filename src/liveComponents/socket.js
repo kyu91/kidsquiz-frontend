@@ -1,6 +1,5 @@
 // import io from 'socket.io-client'
 import {fabric} from 'fabric'
-import { useState } from 'react'
 import socket from "./socketExport"
 
 let tempcounting = 0
@@ -176,14 +175,10 @@ export const canvasChange = canvas => {
   //조건 걸어서 똑같은 아이디가 있으면 더이상 만들어지지 않도록 해줘야 합니더
   socket.on('canvassetnewuser', data => {
     const {objs, objsid} = data
-    console.log(objsid[0])
     let object
     tempcounting += 1
     if (tempcounting % 4 === 0) {
     objs.map((v,i) => {
-      // canvas.getObjects().forEach(object => {
-      //   if (object.id !== objsid[i])
-      //     console.log('so long ')
           if (v.type === 'image'){
             fabric.Image.fromURL(v.src, function(Image){
               Image.scale(0.4);
@@ -274,9 +269,6 @@ export const canvasChange = canvas => {
       })
     }
     })
-    // console.log(data)
-    // console.log(objs)
-  // })
   }
 
 export default socket
