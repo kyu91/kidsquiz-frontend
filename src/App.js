@@ -2,6 +2,7 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
 import {
   Route,
   Routes,
@@ -104,6 +105,13 @@ function App() {
                 <SignIn></SignIn>
               </Container>
             }/>
+
+             {/* 회원가입 */}
+           <Route path="/join" element={
+            <Container maxWidth="lg" >
+            <SignUp/>
+          </Container>
+          }/>
             
 
             {/* 강의 생성 페이지 라우터 */}
@@ -137,12 +145,8 @@ function App() {
               </Container>
             }/>
 
-            {/* 회원가입 */}
-           <Route path="/SignIn" element={
-              <Container maxWidth="lg">
-                <GuestIntro></GuestIntro>
-              </Container>
-            }/>
+
+           
           
             {/* 교구생성 기본페이지 */}
             <Route path="/material" element={

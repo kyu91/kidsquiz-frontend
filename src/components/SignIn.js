@@ -92,7 +92,10 @@ export default function SignIn() {
         <Typography component="h1" variant="h5" style={{marginBottom: "30px"}}>
           로그인
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box 
+          component="form" 
+          onSubmit={handleSubmit}
+          noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -128,7 +131,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="join" variant="body2">
                 {"회원이 아니신가요? 회원가입"}
               </Link>
             </Grid>
