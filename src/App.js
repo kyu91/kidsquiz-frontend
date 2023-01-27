@@ -1,22 +1,28 @@
-import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
-import SignIn from "./components/SignIn";
-import { Route, Routes, useLocation } from "react-router-dom";
-import Boards from "./components/Boards";
-import ResponsiveAppBar from "./components/ResponsiveAppBar";
-import CreateClass from "./components/CreateClass";
+import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import {
+  Route,
+  Routes,
+  useLocation,
+} from 'react-router-dom';
+import Boards from './components/Boards';
+import ResponsiveAppBar from './components/ResponsiveAppBar';
+import CreateClass from './components/CreateClass';
 
-import LiveMain from "./liveComponents/LiveMain";
-import GuestIntro from "./liveComponents/GuestIntro";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import { useState } from "react";
-import Materials from "./components//Material";
-import CreateMaterial from "./components/createMaterialgroup/CreateMaterial";
-import MaterialList from "./components/MaterialList";
-import CreateMaterialList from "./components/CreateMaterialList";
+import LiveMain from './liveComponents/LiveMain';
+import GuestIntro from './liveComponents/GuestIntro';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { useState } from 'react';
+import Materials from './components//Material';
+import CreateMaterial from './components/createMaterialgroup/CreateMaterial';
+import MaterialList from './components/MaterialList';
+import CreateMaterialList from './components/CreateMaterialList';
+
 
 //메인페이지
 import Hero from "./mainComponents/Hero";
@@ -104,8 +110,15 @@ function App() {
               <Container maxWidth="lg">
                 <SignIn></SignIn>
               </Container>
-            }
-          />
+            }/>
+
+             {/* 회원가입 */}
+           <Route path="/join" element={
+            <Container maxWidth="lg" >
+            <SignUp/>
+          </Container>
+          }/>
+            
 
           {/* 강의 생성 페이지 라우터 */}
           <Route
@@ -141,15 +154,7 @@ function App() {
             }
           />
 
-          {/* 회원가입 */}
-          <Route
-            path="/SignIn"
-            element={
-              <Container maxWidth="lg">
-                <GuestIntro></GuestIntro>
-              </Container>
-            }
-          />
+
 
           {/* 교구생성 기본페이지 */}
           <Route
