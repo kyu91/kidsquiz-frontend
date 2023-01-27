@@ -176,19 +176,11 @@ function Canvas() {
       emitCanvas(socketId,{objs: canvas._objects, objsid: objectsid})
   })
 
- const canvasCopy = () => {
-    console.log('캔버스 전송')
-    console.log(canvas._objects)
-    emitCanvas({objs: canvas._objects})
-  }
-
-
-  const canvasCopy = () => {
-    console.log("캔버스 전송");
-    console.log(canvas._objects);
-    emitCanvas({ objs: canvas._objects });
-  };
-
+//  const canvasCopy = () => {
+//     console.log('캔버스 전송')
+//     console.log(canvas._objects)
+//     emitCanvas({objs: canvas._objects})
+//   }
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {

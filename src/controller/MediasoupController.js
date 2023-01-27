@@ -113,6 +113,7 @@ const MediasoupController = () => {
       //!커서 div 생성 newSocketId
       if (!document.getElementById('mousePosition-' + key)) {
         cursorDiv = document.createElement('div');
+        cursorDiv.setAttribute('style', "z-index : 100")
         cursorDiv.setAttribute('class', 'mouse')
         cursorDiv.setAttribute('id', 'mousePosition-' +  key);
             
