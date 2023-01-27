@@ -78,7 +78,7 @@ export default function SignIn() {
       <CardCover sx={{ width: 400 }}>
         <Button component={Link} href="/">
           <img
-            src="https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/kidsquiz_logo.png"
+            src="https://kidsquizbucket.s3.ap-northeast-2.amazonaws.com/1673975121662_kidsquiz_logo.png"
             loading="lazy"
             alt=""
             style={{

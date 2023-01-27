@@ -11,7 +11,7 @@ const HostVideo = () => {
     <>
     <div>
         <div id="videoColumn" className="mainTable">
-                <button id="hostMultiCursor" onClick={multiCursor} className="inactive">멀티커서</button>
+                <button id="hostMultiCursor" onClick={multiCursor} className="inactive">멀티커서 ON</button>
             <div id="hostCol" className="localColumn">
                 <p id="hostName"></p>
                 <audio id="hostMeAudio" autoPlay></audio>

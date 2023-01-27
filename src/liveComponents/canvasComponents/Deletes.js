@@ -12,7 +12,7 @@ const Deletes = ({ canvas, emitDelete }) => {
   };
   return (
     <div>
-      <Tooltip title="선택 삭제">
+      <Tooltip title="선택 삭제" placement="right">
         <Button
           key="delete"
           type="button"
