@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getSocket, getSocketName } from "../controller/MediasoupController";
 import Button from "@mui/material/Button";
 import "./css/quiz.css";
 
 //석규
 import QuizIcon from "@mui/icons-material/Quiz";
-import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
 
 const socket = getSocket();
@@ -31,26 +30,21 @@ function Quiz({ classMaterials }) {
     }
   };
 
-  // console.log("처음 들어올때", classMaterials)
-  // console.log("처음 들어올때2", classMaterials.imageMultipleChoiceList)
+  //고정 이미지
+  const defaultImage = "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg";
+
   //퀴즈 첫번쨰 사진 두번째 사진 저장할 state
-  const [firstImage, setfirstImage] = useState(
-    "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg"
-  );
-  const [secondImage, setsecondImage] = useState(
-    "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg"
-  );
+  const [firstImage, setfirstImage] = useState(defaultImage);
+  const [secondImage, setsecondImage] = useState(defaultImage);
   const [answer, setAnswer] = useState("1");
   const [questionText, setQuestionText] = useState("문제가 없습니다.");
 
   if (classMaterials) {
     if (classMaterials.imageMultipleChoiceList) {
       if (classMaterials.imageMultipleChoiceList[0]) {
-        firstImage ===
-          "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg" &&
+        firstImage === defaultImage &&
           setfirstImage(classMaterials.imageMultipleChoiceList[0].firstChoice);
-        secondImage ===
-          "https://src.hidoc.co.kr/image/lib/2022/5/12/1652337370806_0.jpg" &&
+        secondImage === defaultImage &&
           setsecondImage(
             classMaterials.imageMultipleChoiceList[0].secondChoice
           );

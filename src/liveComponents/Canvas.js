@@ -39,7 +39,6 @@ import { useLocation } from "react-router-dom";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import Tooltip from "@mui/material/Tooltip";
 import InterestsIcon from "@mui/icons-material/Interests";
-import MediasoupController from "../controller/MediasoupController";
 
 // let puzzleurl
 
@@ -181,6 +180,7 @@ function Canvas() {
 //     console.log(canvas._objects)
 //     emitCanvas({objs: canvas._objects})
 //   }
+
   ///////////////////////////////////////////////신기능 개발 돌입 /////////////////////////////////////////////////////
 
   const erasemode = () => {
