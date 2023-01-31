@@ -19,7 +19,12 @@ COVID-19로 인한 유치원에서의 마스크 착용으로 아이들의 언어
 ## 🔎 기능 소개
 
 ### 어린이와 상호작용을 도와줄 기본 교구
-![canvas.png](./readme_img/canvas.png)
+<img
+  src="./readme_img/canvas.png"
+  width="400"
+  height="300"
+/>
+
 
 아래의 기본 교구들을 교사와 아이들이 함께 쓰고 지우고 움직일 수 있어요! 
 
