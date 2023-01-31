@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# kidsquiz 공통
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## ✅ Kidsquiz 서비스 소개
 
-## Available Scripts
+COVID-19로 인한 유치원에서의 마스크 착용으로 아이들의 언어와 인지발달이 늦어진다는 사회적 문제를 개선하고자 생겨난 온라인 화상교육 플랫폼입니다. 선생님이 수업에 필요한 이미지, 퍼즐놀이, 그림 퀴즈, 글자 퀴즈 등 교구를 직접 만들고, 아이들과 마스크 없이 얼굴을 마주하고 직접 만든 교구로 다양한 상호작용을 할 수 있습니다.
 
-In the project directory, you can run:
+## ✅ 서비스 구조도
 
-### `npm start`
+![kidsquiz_archi.png](./readme_img/kidsquiz_archi.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**
+    - ReactJS with socket.io-client / mediasoup-client
+    - 🔗[frontend github repository](https://github.com/yoojinLiz/kidsquiz-frontend.git)
+- **Backend**
+    - nodeJS/Express with socket.io / mediasoup
+    - mongoDB with mongoose
+    - 🔗[backend github repository](https://github.com/yoojinLiz/kidsQuiz-backend.git) / 🔗[socket github repository](https://github.com/yoojinLiz/kidsquiz-socket)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🔎 기능 소개
 
-### `npm test`
+### 어린이와 상호작용을 도와줄 기본 교구
+![canvas.png](./readme_img/canvas.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+아래의 기본 교구들을 교사와 아이들이 함께 쓰고 지우고 움직일 수 있어요! 
 
-### `npm run build`
+- 공유 캔버스
+- 다양한 색깔과 두께의 펜과 지우개
+- 다양한 색깔과 크기의 원, 삼각형, 사각형과 칠교 놀이
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 선생님이 **직접 만드는 교구**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+교사가 수업에 사용할 이미지, 퀴즈, 퍼즐 교구를 직접 생성하고, 교구 묶음을 만들어 수업에 사용할 교구들을 지정할 수 있습니다
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<img
+  src="./readme_img/materials.png"
+  width="400"
+  height="300"
+/>
 
-### `npm run eject`
+<img
+  src="./readme_img/drawing.png"
+  width="400"
+  height="300"
+/>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 수업에 필요한 이미지들을 꺼내서 아이들과 함께 보고, 이미지 위에 직접 그림을 그릴 수 있어요
+- 수업 중에 퀴즈를 꺼내서 풀면, 선생님은 각 아이들의 문제 풀이 결과를 알 수 있습니다
+- 수업 중에 퍼즐을 꺼내서 풀면, 선생님과 아이들이 하나의 퍼즐을 함께 맞출 수 있습니다.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 멀티커서
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![multicursor.png](readme_img/multicursor.png)
 
-## Learn More
+라이브 수업 진행 중 멀티 커서 모드를 on 하여 선생님과 아이들의 마우스 위치를 실시간으로 보여주는 기능.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+선생님의 시점에서 특정 위치를 지정하거나, 어떤 아이가 무엇을 하고 있는지 확인 가능
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+아이들은 수업 중 친구들과 선생님의 커서를 인지하며 놀이에 참여할 수 있다.
 
-### Code Splitting
+### **지연없는 화상 채팅**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- mediasoup 라이브러리를 사용한 SFU 방식의 화상회의 시스템
+- 클라이언트에 대한 부하를 줄여 지연이나 끊김없이 선생님의 목소리와 얼굴을 보며 상호작용
+- 선생님이 직접 아이들의 화면/영상 제어가 가능
