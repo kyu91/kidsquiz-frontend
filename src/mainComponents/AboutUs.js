@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import useStyles from '../styles/styles';
+import {Link} from '@mui/material';
 
 const AboutUs = () => {
   const classes = useStyles();
@@ -20,13 +21,16 @@ const AboutUs = () => {
           <Typography className={classes.aboutUsSubtitle}>
             키즈퀴즈의 라이브 강의를 만들기 위해선 회원가입이 필수 입니다. <br/>지금 무료로 회원가입 하고 이용해 보세요. 
           </Typography>
+          <Link href="join" variant="body2">
           <Button
             variant="contained"
             color="primary"
             sx={{ width: '300px', fontSize: '25px' }}
+            
           >
             회원가입
           </Button>
+          </Link>
         </Grid>
       </Grid>
     </Box>
