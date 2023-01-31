@@ -54,8 +54,12 @@ COVID-19로 인한 유치원에서의 마스크 착용으로 아이들의 언어
 - 수업 중에 퍼즐을 꺼내서 풀면, 선생님과 아이들이 하나의 퍼즐을 함께 맞출 수 있습니다.
 
 ### 멀티커서
+<img
+  src="./readme_img/multicursor.png"
+  width="400"
+  height="300"
+/>
 
-![multicursor.png](readme_img/multicursor.png)
 
 라이브 수업 진행 중 멀티 커서 모드를 on 하여 선생님과 아이들의 마우스 위치를 실시간으로 보여주는 기능.
 
