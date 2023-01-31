@@ -39,13 +39,13 @@ COVID-19로 인한 유치원에서의 마스크 착용으로 아이들의 언어
 <img
   src="./readme_img/materials.png"
   width="400"
-  height="300"
+  height="250"
 />
 
 <img
   src="./readme_img/drawing.png"
   width="400"
-  height="300"
+  height="250"
 />
 
 
@@ -57,7 +57,7 @@ COVID-19로 인한 유치원에서의 마스크 착용으로 아이들의 언어
 <img
   src="./readme_img/multicursor.png"
   width="400"
-  height="300"
+  height="250"
 />
 
 
