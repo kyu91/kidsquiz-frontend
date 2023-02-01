@@ -10,6 +10,7 @@ import MediasoupController from "../controller/MediasoupController";
 const GuestVideo = () => {
   React.useEffect(() => {
     const controller = MediasoupController();
+    
     controller.init();
   }, []);
 
