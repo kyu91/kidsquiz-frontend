@@ -5,7 +5,7 @@ import {Link} from '@mui/material';
 
 const AboutUs = () => {
   const classes = useStyles();
-
+  
   return (
     <Box className={classes.aboutUsContainer} style={{background: "white"}}>
       <Grid container spacing={6} className={classes.gridContainer}>
