@@ -10,11 +10,11 @@ COVID-19로 인한 유치원에서의 마스크 착용으로 아이들의 언어
 
 - **Frontend**
     - ReactJS with socket.io-client / mediasoup-client
-    - 🔗[frontend github repository](https://github.com/yoojinLiz/kidsquiz-frontend.git)
+    - 🔗[frontend github repository](https://github.com/SeokKyuHong/kidsquiz-frontend.git)
 - **Backend**
     - nodeJS/Express with socket.io / mediasoup
     - mongoDB with mongoose
-    - 🔗[backend github repository](https://github.com/yoojinLiz/kidsQuiz-backend.git) / 🔗[socket github repository](https://github.com/yoojinLiz/kidsquiz-socket)
+    - 🔗[backend github repository](https://github.com/SeokKyuHong/kidsQuiz-backend.git) / 🔗[socket github repository](https://github.com/SeokKyuHong/kidsquiz-socket)
 
 ## 🔎 기능 소개
 
